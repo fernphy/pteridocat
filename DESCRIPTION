@@ -17,7 +17,7 @@ Suggests:
     assertthat,
     data.table,
     dplyr,
-    dwctaxr (>= 0.0.0.9000),
+    dwctaxon (>= 0.0.0.9000),
     fs,
     janitor,
     roxyglobals (>= 0.2.1),
@@ -26,7 +26,7 @@ Suggests:
 Imports: 
     tibble
 Remotes: 
-    joelnitta/dwctaxr,
+    joelnitta/dwctaxon,
     anthonynorth/roxyglobals
 Depends: 
     R (>= 2.10)

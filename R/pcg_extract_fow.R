@@ -39,5 +39,5 @@ pcg_extract_fow <- function(col_data) {
 			)
 		) |>
 		# Run taxonomic database checks
-		dwctaxr::dct_validate_tax_dat()
+		dwctaxon::dct_validate_tax_dat()
 }

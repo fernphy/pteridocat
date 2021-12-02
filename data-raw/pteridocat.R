@@ -1,6 +1,6 @@
 ## code to prepare `pteridocat` dataset goes here
 
-library(dwctaxr)
+library(dwctaxon)
 
 # Load Ferns of the World database from Catalog of Life
 fow <- pcg_load_col(here::here("data-raw/2021-10-18_dwca.zip")) |>
