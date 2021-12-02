@@ -10,3 +10,18 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+Suggests: 
+    assertr,
+    assertthat,
+    data.table,
+    dplyr,
+    dwctaxr (>= 0.0.0.9000),
+    fs,
+    stringr,
+    utils
+Imports: 
+    tibble
+Remotes: 
+    joelnitta/dwctaxr
+Depends: 
+    R (>= 2.10)
