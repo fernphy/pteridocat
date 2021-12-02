@@ -12,6 +12,7 @@
 #' from the zip file (usually named "Taxon.tsv").
 #'
 #' @return Dataframe (tibble)
+#' @autoglobal
 #' @export
 pcg_load_col <- function(col_data_path) {
 	assertthat::assert_that(fs::file_exists(col_data_path))

@@ -5,6 +5,7 @@
 #' @param col_data Catalog of Life data. Output of of \code{\link{pcg_load_col}()}.
 #'
 #' @return Dataframe (tibble)
+#' @autoglobal
 #' @export
 pcg_extract_fow <- function(col_data) {
 	# Filter Catalog of Life data to only Ferns of the World
