@@ -54,7 +54,7 @@ Run `help(pteridocat)` to see more details about the data.
 
 The data were downloaded from the [Catalog of
 Life](https://www.catalogueoflife.org/) and modified according to code
-in (data-raw/pteridocat.R)\[data-raw/pteridocat.R\] under the [Creative
+in [data-raw/pteridocat.R](data-raw/pteridocat.R) under the [Creative
 Commons Attribution (CC BY)
 4.0](https://creativecommons.org/licenses/by/4.0/) license. They were
 originally compiled by Michael Hassler, who maintains the [World Ferns
