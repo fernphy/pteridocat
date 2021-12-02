@@ -19,6 +19,7 @@ Suggests:
     dplyr,
     dwctaxr (>= 0.0.0.9000),
     fs,
+    janitor,
     roxyglobals (>= 0.2.1),
     stringr,
     utils

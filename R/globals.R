@@ -2,13 +2,9 @@
 
 utils::globalVariables(c(
   "dwc:datasetID", # <pcg_extract_fow>
-  "dwc:taxonID", # <pcg_extract_fow>
-  "dwc:acceptedNameUsageID", # <pcg_extract_fow>
-  "dwc:taxonomicStatus", # <pcg_extract_fow>
-  "dwc:taxonRank", # <pcg_extract_fow>
-  "dwc:scientificName", # <pcg_extract_fow>
-  "dwc:namePublishedIn", # <pcg_extract_fow>
-  "dwc:taxonRemarks", # <pcg_extract_fow>
+  "datasetID", # <pcg_extract_fow>
+  "scientificNameID", # <pcg_extract_fow>
+  "taxonRank", # <pcg_extract_fow>
   "scientificName", # <pcg_extract_fow>
   "taxonID", # <pcg_extract_fow>
   NULL

@@ -11,26 +11,20 @@ pcg_extract_fow <- function(col_data) {
 	# Filter Catalog of Life data to only Ferns of the World
 	col_data |>
 		dplyr::filter(`dwc:datasetID` == "1140") |>
-		dplyr::select(
-			taxonID = `dwc:taxonID`,
-			acceptedNameUsageID = `dwc:acceptedNameUsageID`,
-			taxonomicStatus = `dwc:taxonomicStatus`,
-			rank = `dwc:taxonRank`,
-			scientificName = `dwc:scientificName`,
-			namePublishedIn = `dwc:namePublishedIn`,
-			taxonRemarks = `dwc:taxonRemarks`) |>
+		dplyr::rename_with(~stringr::str_remove_all(., "dwc:|dcterms:")) |>
+		# Replace empty strings with NA
+		dplyr::mutate(dplyr::across(dplyr::everything(), ~dplyr::na_if(., ""))) |>
+		# Drop empty columns, unused columns
+		janitor::remove_empty("cols") |>
+		dplyr::select(-datasetID, -scientificNameID) |>
 		# Keep only species level and below
-		dplyr::filter(rank %in% c("form", "infraspecific name", "species", "subform", "subspecies", "subvariety", "variety")) |>
+		# FIXME: eventually add higher ranks back making sure they conform to PPGI
+		dplyr::filter(taxonRank %in% c("form", "infraspecific name", "species", "subform", "subspecies", "subvariety", "variety")) |>
 		# Filter some names that were incorrectly labeled species level
 		dplyr::filter(stringr::str_detect(scientificName, "Polypodiaceae tribe Thelypterideae|Asplenium grex Triblemma|Pteridaceae tribus Platyzomateae|Filicaceae tribus Taenitideae", negate = TRUE)) |>
-		dplyr::select(-rank) |>
 		# Note: taxonID is unique, but scientificName may not be (esp in case of ambiguous synonyms)
 		assertr::assert(assertr::not_na, taxonID, scientificName) |>
 		assertr::assert(assertr::is_uniq, taxonID) |>
-		# Replace empty strings with NA
-		dplyr::mutate(
-			dplyr::across(dplyr::everything(), ~dplyr::na_if(., ""))
-		) |>
 		# Fix scientific names that are both synonyms and accepted names
 		dplyr::filter(
 			!taxonID %in% c(
@@ -45,5 +39,5 @@ pcg_extract_fow <- function(col_data) {
 			)
 		) |>
 		# Run taxonomic database checks
-		dwctaxr::dct_assert_tax_dat()
+		dwctaxr::dct_validate_tax_dat()
 }

@@ -9,6 +9,8 @@ fow <- pcg_load_col(here::here("data-raw/2021-10-18_dwca.zip")) |>
 # Modify Ferns of the World to produce pteridocat database
 pteridocat <-
 	fow |>
+	# Add 'modified' column
+	dplyr::mutate(modified = NA) |>
 	# not synonym
 	dct_change_status(
 		sci_name = "Deparia petersenii var. yakusimensis",
@@ -89,7 +91,7 @@ pteridocat <-
 		tax_status = "synonym", usage_id = "34BS9"
 	) |>
 	# Run final check
-	dct_assert_tax_dat()
+	dct_validate_tax_dat()
 
 # Set encoding of columns with non-ascii characters to UTF-8
 Encoding(pteridocat$scientificName) <- "UTF-8"
