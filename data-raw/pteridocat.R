@@ -1,16 +1,120 @@
 ## code to prepare `pteridocat` dataset goes here
 
 library(dwctaxon)
+library(tidyverse)
+library(assertr)
+library(pteridocat)
+
+# Load data ----
 
 # Load Ferns of the World database from Catalog of Life
 fow <- pcg_load_col(here::here("data-raw/2021-10-18_dwca.zip")) |>
 	pcg_extract_fow()
 
-# Modify Ferns of the World to produce pteridocat database
+# Load fuzzily matched names from Fern Tree of Life project
+fuzzy_updates <- readr::read_csv(here::here("data-raw/matched_fuzzy_inspected.csv"))
+
+# Load other data of new names to add
+other_names <- readr::read_csv(here::here("data-raw/new_names.csv")) |>
+	# Add new taxonID for new names
+	mutate(
+		taxonID = case_when(
+			!scientificName %in% fow$scientificName ~ purrr::map_chr(scientificName, digest::digest),
+			TRUE ~ NA_character_
+		)
+	) |>
+	left_join(
+		select(fow, taxonID, scientificName), by = "scientificName"
+	) |>
+	mutate(taxonID = coalesce(taxonID.x, taxonID.y)) |>
+	select(-taxonID.x, -taxonID.y) |>
+	assert(not_na, scientificName, taxonID) |>
+	assert(is_uniq, scientificName, taxonID)
+
+# Format names ----
+
+# Format names to add as accepted (all new names)
+names_add_as_accepted <-
+	fuzzy_updates |>
+	filter(use_query_as_accepted == 1 | use_query_as_new == 1) |>
+	select(scientificName = query, taxonomicStatus, namePublishedIn, nameAccordingTo) |>
+	unique() |>
+	bind_rows(
+		filter(other_names, taxonomicStatus == "accepted") |>
+			select(scientificName, taxonomicStatus, namePublishedIn, nameAccordingTo, taxonRemarks)
+	) |>
+	mutate(
+		taxonID = purrr::map_chr(scientificName, digest::digest),
+		modified = as.character(Sys.time())
+	) |>
+	assert(is_uniq, scientificName, taxonID)
+
+# Format names to add as synonyms (all new names)
+names_add_as_synonym <-
+	fuzzy_updates |>
+	# Only use those when a note has been entered
+	# that shows it has been checked
+	filter(use_query_as_synonym == 1, !is.na(notes)) |>
+	rename(scientificName = query, usage_name = matched_name) |>
+	bind_rows(
+		filter(other_names, taxonomicStatus == "synonym", sci_name_in_fow == 0)
+	) |>
+	select(scientificName, taxonomicStatus, namePublishedIn, nameAccordingTo, taxonRemarks, usage_name) |>
+	# Map acceptedNameUsageID from usage_name
+	left_join(
+		select(fow, acceptedNameUsageID = taxonID, usage_name = scientificName),
+		by = "usage_name"
+	) |>
+	left_join(
+		select(names_add_as_accepted, acceptedNameUsageID = taxonID, usage_name = scientificName),
+		by = "usage_name"
+	) |>
+	mutate(acceptedNameUsageID = coalesce(acceptedNameUsageID.x, acceptedNameUsageID.y)) |>
+	select(-acceptedNameUsageID.x, -acceptedNameUsageID.y) |>
+	# Create `taxonID` and `modified` columns
+	mutate(
+		taxonID = purrr::map_chr(scientificName, digest::digest),
+		modified = as.character(Sys.time())
+	) |>
+	select(-usage_name) |>
+	mutate(taxonomicStatus = "synonym") |>
+	# Fix nested synonyms: those where the usage_name maps to a name that's
+	# already a synonym. Need to map back to the original acceptedNameUsageID
+	left_join(
+		select(fow, taxonID, acceptedNameUsageID_2 = acceptedNameUsageID),
+		by = c(acceptedNameUsageID = "taxonID")) |>
+	mutate(
+		acceptedNameUsageID = case_when(
+			is.na(acceptedNameUsageID_2) ~ acceptedNameUsageID,
+			!is.na(acceptedNameUsageID_2) ~ acceptedNameUsageID_2
+		)
+	) |>
+	select(-acceptedNameUsageID_2) |>
+	# Check everything is OK
+	assert(not_na, scientificName, taxonID) |>
+	assert(is_uniq, scientificName, taxonID)
+
+# Format names to change status to synonym
+names_change_to_synonym <-
+	# Format existing names to change matched names to synonym of query
+	fuzzy_updates |>
+	filter(use_query_as_accepted == 1) |>
+	transmute(usage_name = query, sci_name = matched_name) |>
+	mutate(new_status = "synonym") |>
+	select(sci_name, usage_name, new_status) |>
+	bind_rows(
+		filter(other_names, taxonomicStatus == "synonym", sci_name_in_fow == 1) |>
+			select(sci_name = scientificName, usage_name, new_status = taxonomicStatus)
+	) |>
+	assert(is_uniq, sci_name) |>
+	assert(not_na, everything())
+
+# Modify Ferns of the World to produce pteridocat database ----
 pteridocat <-
 	fow |>
-	# Add 'modified' column
-	dplyr::mutate(modified = NA) |>
+	bind_rows(names_add_as_accepted) |>
+	bind_rows(names_add_as_synonym) |>
+	dct_change_status(args_tbl = names_change_to_synonym) |>
 	# not synonym
 	dct_change_status(
 		sci_name = "Deparia petersenii var. yakusimensis",
@@ -91,7 +195,7 @@ pteridocat <-
 		tax_status = "synonym", usage_id = "34BS9"
 	) |>
 	# Run final check
-	dct_validate_tax_dat()
+	dct_validate()
 
 # Set encoding of columns with non-ascii characters to UTF-8
 Encoding(pteridocat$scientificName) <- "UTF-8"
