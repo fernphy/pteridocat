@@ -11,12 +11,14 @@ library(pteridocat)
 fow <- pcg_load_col(here::here("data-raw/2021-10-18_dwca.zip")) |>
 	pcg_extract_fow()
 
-# Load fuzzily matched names from Fern Tree of Life project
-fuzzy_updates <- readr::read_csv(here::here("data-raw/matched_fuzzy_inspected.csv"))
+# Load fuzzily matched names from Fern Tree of Life project,
+fuzzy_updates <- readr::read_csv(here::here("data-raw/matched_fuzzy_inspected.csv")) |>
+	# filter to only those inspected (notes should be "ok" or something else non-NA)
+	filter(!is.na(notes))
 
 # Load other data of new names to add
 other_names <- readr::read_csv(here::here("data-raw/new_names.csv")) |>
-	# Add new taxonID for new names
+	# Add new taxonID for new names, lookup for already existing names
 	mutate(
 		taxonID = case_when(
 			!scientificName %in% fow$scientificName ~ purrr::map_chr(scientificName, digest::digest),
@@ -49,17 +51,23 @@ names_add_as_accepted <-
 	) |>
 	assert(is_uniq, scientificName, taxonID)
 
+# Make tibble of all existing names after addition
+fow_plus_new <-
+	fow |>
+	bind_rows(names_add_as_accepted) |>
+	dct_validate()
+
 # Format names to add as synonyms (all new names)
 names_add_as_synonym <-
 	fuzzy_updates |>
-	# Only use those when a note has been entered
-	# that shows it has been checked
-	filter(use_query_as_synonym == 1, !is.na(notes)) |>
+	filter(use_query_as_synonym == 1) |>
 	rename(scientificName = query, usage_name = matched_name) |>
 	bind_rows(
-		filter(other_names, taxonomicStatus == "synonym", sci_name_in_fow == 0)
+		filter(other_names, taxonomicStatus == "synonym")
 	) |>
 	select(scientificName, taxonomicStatus, namePublishedIn, nameAccordingTo, taxonRemarks, usage_name) |>
+	# Filter to only new synonyms
+	anti_join(fow, by = "scientificName") |>
 	# Map acceptedNameUsageID from usage_name
 	left_join(
 		select(fow, acceptedNameUsageID = taxonID, usage_name = scientificName),
@@ -77,7 +85,7 @@ names_add_as_synonym <-
 		modified = as.character(Sys.time())
 	) |>
 	select(-usage_name) |>
-	mutate(taxonomicStatus = "synonym") |>
+	verify(taxonomicStatus == "synonym") |>
 	# Fix nested synonyms: those where the usage_name maps to a name that's
 	# already a synonym. Need to map back to the original acceptedNameUsageID
 	left_join(
@@ -94,7 +102,7 @@ names_add_as_synonym <-
 	assert(not_na, scientificName, taxonID) |>
 	assert(is_uniq, scientificName, taxonID)
 
-# Format names to change status to synonym
+# Format names already in FOW to change status to synonym
 names_change_to_synonym <-
 	# Format existing names to change matched names to synonym of query
 	fuzzy_updates |>
@@ -103,9 +111,10 @@ names_change_to_synonym <-
 	mutate(new_status = "synonym") |>
 	select(sci_name, usage_name, new_status) |>
 	bind_rows(
-		filter(other_names, taxonomicStatus == "synonym", sci_name_in_fow == 1) |>
+		filter(other_names, taxonomicStatus == "synonym", scientificName %in% fow$scientificName) |>
 			select(sci_name = scientificName, usage_name, new_status = taxonomicStatus)
 	) |>
+	verify(sci_name %in% fow$scientificName) |>
 	assert(is_uniq, sci_name) |>
 	assert(not_na, everything())
 
@@ -115,6 +124,7 @@ pteridocat <-
 	bind_rows(names_add_as_accepted) |>
 	bind_rows(names_add_as_synonym) |>
 	dct_change_status(args_tbl = names_change_to_synonym) |>
+	dct_validate() |>
 	# not synonym
 	dct_change_status(
 		sci_name = "Deparia petersenii var. yakusimensis",
