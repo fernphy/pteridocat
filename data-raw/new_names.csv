@@ -1,13 +1,9 @@
-﻿scientificName,usage_name,taxonomicStatus,namePublishedIn,nameAccordingTo,taxonRemarks,notes,sci_name_in_fow,usage_name_in_fow
-Adiantopsis tweediana (Hook.) Link-Pérez & Hickey,,accepted,Taxon 60(5): 1266,https://www.tropicos.org/name/100375261,,,0,
-Adiantopsis tweediana (Hook.) Link-Perez & Hickey,Adiantopsis tweediana (Hook.) Link-Pérez & Hickey,synonym,,https://www.tropicos.org/name/100375261,author variant,,0,0
-Adiantopsis tweedieana (Hook.) Link-Pérez & Hickey,Adiantopsis tweediana (Hook.) Link-Pérez & Hickey,synonym,,https://www.tropicos.org/name/100375261,spelling mistake in species name,,1,0
-Adiantum digitatum C. Presl,Adiantum digitatum Hook.,synonym,Tentamen Pteridographiae 159. 1836.,https://www.tropicos.org/name/50039003,,,1,0
-Adiantum palmatum T. Moore,Adiantum digitatum Hook.,synonym,"The Gardeners' Chronicle, new series 7: 40–42, f. 5. 1877. (13 Jan 1877)",https://www.tropicos.org/name/26600368,,,1,0
-Adiantum speciosum Hook.,Adiantum digitatum Hook.,synonym,"Species Filicum 2: 45, pl. 85C. 1851.",https://www.tropicos.org/name/26600368,,,1,0
-Cyathea parva Copel.,Alsophila micra R.M.Tryon,synonym,University of California Publications in Botany 18: 219. 1942,https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:17531310-1,,,0,0
-Anemia tweedieana Hook.,Anemia phyllitidis var. tweedieana Hassl.,synonym,Icones Plantarum 6: 906. 1854.,https://www.tropicos.org/name/26614804,,,1,0
-Anemidictyon tweedieanum (Hook.) Moore,Anemia phyllitidis var. tweedieana Hassl.,synonym,,https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:17021470-1,,,1,0
-Adiantum rhizophorum var. comoroense Tardieu,Adiantum comorense (Tardieu) Verdc.,synonym,"Flore de Madagascar et des Comores 5(1): 129, f. 18/9–14. 1958.",https://www.tropicos.org/name/26603280,,,1,0
-Hemionitis tweedieana (Hook.) Christenh.,Adiantopsis tweediana (Hook.) Link-Pérez & Hickey,synonym,Global Fl. 4: 22 (2018),FOW,,,1,0
-Cheilanthes tweedieana Hook.,Adiantopsis tweediana (Hook.) Link-Pérez & Hickey,synonym,Sp. Fil. 2: 84 (1852),https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:17068050-1,,,1,0
+﻿scientificName,usage_name,taxonomicStatus,namePublishedIn,nameAccordingTo,taxonRemarks,notes
+Adiantopsis tweediana (Hook.) Link-Pérez & Hickey,,accepted,Taxon 60(5): 1266,https://www.tropicos.org/name/100375261,,
+Adiantopsis tweediana (Hook.) Link-Perez & Hickey,Adiantopsis tweediana (Hook.) Link-Pérez & Hickey,synonym,,https://www.tropicos.org/name/100375261,author variant,
+Adiantopsis tweedieana (Hook.) Link-Pérez & Hickey,Adiantopsis tweediana (Hook.) Link-Pérez & Hickey,synonym,,https://www.tropicos.org/name/100375261,spelling mistake in species name,
+Adiantum digitatum C. Presl,Adiantum digitatum Hook.,synonym,Tentamen Pteridographiae 159. 1836.,https://www.tropicos.org/name/50039003,,
+Cyathea parva Copel.,Alsophila micra R.M.Tryon,synonym,University of California Publications in Botany 18: 219. 1942,https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:17531310-1,,
+Diplazium myriomerum (Christ) Lellinger,,accepted,Proceedings of the Biological Society of Washington 98(2): 376. 1985.,https://www.tropicos.org/name/26614989,,
+Athyrium myriomerum Christ,Diplazium myriomerum (Christ) Lellinger,synonym,"Bulletin de l'Herbier Boissier, sér. 2, 6(2): 169. 1906.",https://www.tropicos.org/name/26614989,,
+Athyrium myriopterum Christ,Diplazium myriomerum (Christ) Lellinger,synonym,,,"can't find valid publication for this name, seems to be spelling error",

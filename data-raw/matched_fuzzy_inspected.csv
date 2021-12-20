@@ -15,16 +15,16 @@ Asplenium actinopteroides Peter,Asplenium actiniopteroides Peter,accepted,FALSE,
 Asplenium annobonense Viane,Asplenium morogorense Viane,synonym,FALSE,5,0,0,1,accepted,Biologisch Jaarboek 59: 158. 1991. (25 June 1991),https://www.tropicos.org/name/100386029,,ok
 Asplenium carnarvonense Brownsey,Asplenium carnavonense Brownsey,accepted,FALSE,1,0,1,0,accepted,Flora of Australia 48: 709. 1998.,https://www.tropicos.org/name/100503474,spelling mistake in species name,ok
 Asplenium fissum Kit. ex Willd.,Asplenium obtusum Kit. ex Willd.,ambiguous synonym,FALSE,4,0,0,1,accepted,Species Plantarum. Editio quarta 5: 348. 1805.,https://www.tropicos.org/name/26611120,,ok
-Asplenium foresiense Legrand,Asplenium forisiense Grand,synonym,FALSE,4,0,0,0,NA,NA,NCBI,spelling mistake in species name,NA
-Asplenium neolaserpitiifolium Tardieu & Ching,Asplenium neolaserpitifolium Tardieu & Ching,accepted,FALSE,1,0,0,0,NA,NA,NCBI,spelling mistake in species name,NA
-Asplenium oldhami Hance,Asplenium oldhamii Hance,accepted,FALSE,1,0,0,0,NA,NA,NCBI,spelling mistake in species name,NA
-Asplenium pseudoerectum Hieron.,Asplenium pseuderectum Hieron.,accepted,FALSE,1,0,0,0,NA,NA,NCBI,spelling mistake in species name,NA
-Asplenium scleropium Homb. & Jacq.,Asplenium scleroprium Hombr. & Jacq.,accepted,FALSE,2,0,0,0,NA,NA,NCBI,spelling mistake in species name,NA
-Asplenium trichomanes subsp. inexpectans Lovis,Asplenium trichomanes subsp. inexpectatum Lovis,accepted,FALSE,3,0,0,0,NA,NA,NCBI,spelling mistake in species name,NA
-Asplenium vittaeforme Cav.,Asplenium vittiforme Cav.,accepted,FALSE,2,0,0,0,NA,NA,NCBI,spelling mistake in species name,NA
-Athyrium bourgaei E. Fourn.,Athyrium bourgeaui E. Fourn.,accepted,FALSE,2,0,0,0,NA,NA,NCBI,spelling mistake in species name,NA
-Athyrium iseanum var. iseanum,Athyrium iseanum Rosenst.,accepted,FALSE,10,0,0,0,NA,NA,NCBI,spelling mistake in species name,NA
-Athyrium myriomerum Christ,Athyrium myriopterum Christ,synonym,FALSE,2,0,0,0,NA,NA,NCBI,spelling mistake in species name,NA
+Asplenium foresiense Legrand,Asplenium forisiense Grand,synonym,FALSE,4,0,1,0,accepted,Statistique du Forez 252. 1873.,https://www.tropicos.org/name/26609727,spelling mistake in species name,ok
+Asplenium neolaserpitiifolium Tardieu & Ching,Asplenium neolaserpitifolium Tardieu & Ching,accepted,FALSE,1,0,1,0,accepted,"Notulae Systematicae. Herbier du Museum de Paris 5(2): 153–154, pl. 6, f. 1–2. 1936.",https://www.tropicos.org/name/26618269,spelling mistake in species name,ok
+Asplenium oldhami Hance,Asplenium oldhamii Hance,accepted,FALSE,1,0,1,0,accepted,"Annales des Sciences Naturelles; Botanique, sér. 5, 5: 256–257. 1866.",https://www.tropicos.org/name/50051285,spelling mistake in species name,ok
+Asplenium pseudoerectum Hieron.,Asplenium pseuderectum Hieron.,accepted,FALSE,1,0,1,0,accepted,Hedwigia 60: 239. 1918.,https://www.tropicos.org/name/26607628,"Published as ""pseuderectum"", assumed typographical error, correctly spelled pseudoerectum on page 241, and correctable ICBN 61.3. Pre-print published 1918, journal article in 1919.",ok
+Asplenium scleropium Homb. & Jacq.,Asplenium scleroprium Hombr. & Jacq.,accepted,FALSE,2,1,0,0,synonym,"Voyage au Pôle sud et dans l'Océanie sur les corvettes l'Astrolabe et la Zelée , t1, f D. 1853.",https://www.tropicos.org/name/100485709,spelling mistake in species name,ok
+Asplenium trichomanes subsp. inexpectans Lovis,Asplenium trichomanes subsp. inexpectatum Lovis,accepted,FALSE,3,0,1,0,accepted,British Fern Gazette 9(5): 155. 1964.,https://www.tropicos.org/name/26610417,spelling mistake in species name,ok
+Asplenium vittaeforme Cav.,Asplenium vittiforme Cav.,accepted,FALSE,2,0,1,0,accepted,Descripción de las Plantas 255. 1802.,https://www.tropicos.org/name/100484642,spelling mistake in species name,ok
+Athyrium bourgaei E. Fourn.,Athyrium bourgeaui E. Fourn.,accepted,FALSE,2,0,1,0,accepted,Mexicanas Plantas 1: 102. 1872.,https://www.tropicos.org/name/26617249,spelling mistake in species name,ok
+Athyrium iseanum var. iseanum,Athyrium iseanum Rosenst.,accepted,FALSE,10,1,0,0,synonym,NA,https://www.tropicos.org/name/26611386,autonym,ok
+Athyrium myriomerum Christ,Athyrium myriopterum Christ,synonym,FALSE,2,0,0,0,NA,NA,NCBI,spelling mistake in species name,"Add Diplazium myriomerum (Christ) Lellinger as accepted name, make both query and match synonyms of that"
 Cephalomanes javanicum (Blume) Bosch,Cephalomanes javanica (Blume) Bosch,synonym,FALSE,2,0,0,0,NA,NA,NCBI,spelling mistake in species name,NA
 Ceratopteris pteridoides (Hook.) Hieron.,Ceratopteris pteridioides (Hook.) Hieron.,accepted,FALSE,1,0,0,0,NA,NA,NCBI,spelling mistake in species name,NA
 Cornopteris banahaoensis (C.Chr.) K.Iwats. & M.G.Price,Cornopteris banajaoensis (C. Chr.) K. Iwats. & M. G. Price,accepted,FALSE,5,0,0,0,NA,NA,NCBI,spelling mistake in species name,NA
