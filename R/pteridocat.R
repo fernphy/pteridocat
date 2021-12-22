@@ -51,27 +51,29 @@ mult_hits <-
 	names_check_tp %>%
 	add_count(set) %>%
 	verify(n >= 2) %>%
-	filter(n > 2)
+	filter(n > 2) %>%
+	select(-n)
 
-# - duplets have two hits per query/match pair
+# - duplets have one or two hits per query/match pair
 duplets <-
 	names_check_tp %>%
 	add_count(set) %>%
-	filter(n == 2) %>%
+	filter(n == 2) %>% # still includes NA nameid
 	select(-n) %>%
+	# add column 'reject' for names to exclude in next step if no nameid or invalid name
 	mutate(reject = case_when(
 		is.na(nameid) ~ TRUE,
 		nomenclaturestatusname == "Invalid" ~ TRUE,
 		TRUE ~ FALSE
-	)) %>%
-	filter(reject == FALSE)
+	))
 
 # - duplets where only a single member of the pair is valid can be used as-is
 duplets_single_valid <-
 	duplets %>%
+	filter(reject == FALSE) %>%
 	add_count(set) %>%
 	filter(n == 1) %>%
-	select(-n) %>%
+	select(-n, -reject) %>%
 	# fetch additional information: source of name (tropicos webpage) and publication
 	mutate(
 		nameid = as.character(nameid),
@@ -111,7 +113,7 @@ duplets_single_valid_wide <-
 	) |>
 	select(-c(matched_name.x, matched_name.y)) |>
 	left_join(
-		select(fuzzy_to_inspect, query, matched_name), by = "matched_name", na_matches = "never"
+		select(fuzzy_to_inspect, query, matched_name, matched_status), by = "matched_name", na_matches = "never"
 	) |>
 	mutate(
 		query = coalesce(query.x, query.y)
@@ -119,9 +121,9 @@ duplets_single_valid_wide <-
 	select(-c(query.x, query.y)) |>
 	unique() |>
 	assert(not_na, matched_name, query) |>
-	assert_rows(col_concat, is_uniq, matched_name, query) |>
+	assert_rows(col_concat, is_uniq, matched_name, query, matched_status) |>
 	select(
-		query, matched_name, query_match_taxon_agree,
+		query, matched_name, matched_status, query_match_taxon_agree,
 		use_query_as_synonym, use_query_as_accepted, use_query_as_new,
 		taxonomicStatus, namePublishedIn, nameAccordingTo, taxonRemarks, notes)
 
