@@ -68,10 +68,10 @@ tar_plan(
 	),
 	# Read back in data after manual inspection ----
 	tar_file(
-	  matched_fuzzy_inspected_file,
-	  "data-raw/matched_fuzzy_inspected.csv"
+		pterido_names_taxized_inspected_file,
+	  "data-raw/pterido_names_taxized_inspected.csv"
 	),
-	matched_fuzzy_inspected = read_csv(matched_fuzzy_inspected_file) %>%
+	pterido_names_taxized_inspected = read_csv(pterido_names_taxized_inspected_file) %>%
 		filter(done == 1),
 	tar_file(
 		new_names_file,
