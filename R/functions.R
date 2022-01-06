@@ -455,7 +455,9 @@ pow_search_ids <- function(id) {
 pow_search_names <- function(query) {
 	tibble(query = query) %>%
 		mutate(get_pow_id(query)) %>%
-		mutate(pow_search_ids(id))
+		mutate(pow_search_ids(id)) %>%
+		# Convert all columns to character
+		mutate(across(everything(), as.character))
 }
 
 # Wrangling ----
@@ -474,7 +476,7 @@ pow_search_names <- function(query) {
 widen_valid_fuzzy_trop <- function(fuzzy_tropicos_cat, fuzzy_to_inspect) {
 
 	single_valid_wide <-
-	fuzzy_tropicos_cat %>%
+		fuzzy_tropicos_cat %>%
 		filter(trop_cat == "single_valid", !is.na(nameid)) %>%
 		select(type, sci_name, namePublishedIn = namepublishedcitation, nameAccordingTo = source) %>%
 		pivot_wider(names_from = type, values_from = sci_name) %>%
@@ -635,18 +637,16 @@ format_gbif_query <- function(search_res) {
 		select(query, gbif_query = canonicalsimple)
 }
 
-# Format a query for Plants of the World
+# Format a query for Plants of the World:
+# POW queries must be formatted without author.
+# For infraspecific taxa, need to include infra rank.
+# E.g., "Athyrium yokoscense var. kirisimaense" OK
+#       "Athyrium yokoscense kirisimaense" not OK
+#       "Athyrium yokoscense var. kirisimaense (Tagawa) Li & J.Z.Wang" not OK
 format_pow_query <- function(search_res) {
 	search_res %>%
 		filter(is.na(matched_name)) %>%
-		select(query) %>%
-		mutate(gn_parse_tidy(query) %>% select(canonicalsimple)) %>%
-		separate(
-			canonicalsimple,
-			c("genus", "species", "infraspecies"),
-			sep = " ",
-			fill = "right") %>%
-		unite("pow_query", c(genus, species), na.rm = TRUE, sep = " ") %>%
+		mutate(gn_parse_tidy(query) %>% select(pow_query = canonicalfull)) %>%
 		select(query, pow_query)
 }
 
@@ -670,25 +670,40 @@ tidy_ftol_no_match <- function(
 	gbif_res, gbif_query,
 	pow_res, pow_query) {
 
-	# Combine results of querying IPNI, GBIF, and POW for FTOL "no-match" names
-	ipni_gbif_pow <- bind_rows(
+	# Format results of querying IPNI, GBIF, and POW for FTOL "no-match" names
+	ipni_res <-
 		ipni_res %>%
-			filter(!is.na(matched_name)) %>%
+		filter(!is.na(matched_name))
+	if (nrow(ipni_res) > 0) {
+		ipni_res <-
+			ipni_res %>%
 			transmute(
 				query, matched_name,
 				namePublishedIn = reference,
-				nameAccordingTo = glue::glue("IPNI|id:{id}|version:{version}")),
+				nameAccordingTo = glue::glue("IPNI|id:{id}|version:{version}"))
+	}
+
+	gbif_res <-
 		gbif_res %>%
-			filter(!is.na(matched_name)) %>%
+		filter(!is.na(matched_name))
+	if (nrow(gbif_res) > 0) {
+		gbif_res <-
+			gbif_res %>%
 			rename(gbif_query = query) %>%
 			left_join(gbif_query, by = "gbif_query") %>%
 			transmute(
 				query = gbif_query, matched_name,
 				matched_status,
 				namePublishedIn = publishedIn,
-				nameAccordingTo),
+				nameAccordingTo)
+	}
+
+	pow_res <-
 		pow_res %>%
-			filter(!is.na(matched_name)) %>%
+		filter(!is.na(matched_name))
+	if (nrow(pow_res > 0)) {
+		pow_res <-
+			pow_res %>%
 			rename(pow_query = query) %>%
 			left_join(pow_query, by = "pow_query") %>%
 			transmute(
@@ -697,8 +712,16 @@ tidy_ftol_no_match <- function(
 				namePublishedIn = reference,
 				nameAccordingTo = url
 			)
-	) %>%
+	}
+
+	# Combine results of querying IPNI, GBIF, and POW for FTOL "no-match" names
+	ipni_gbif_pow <- bind_rows(ipni_res, gbif_res, pow_res) %>%
 		mutate(name_res_status = "no_match")
+
+	assertthat::assert_that(
+		nrow(ipni_gbif_pow) > 0,
+		msg = "No results for IPNI, GBIF, or POW searches"
+	)
 
 	# Populate "no-match" dataframe in long format
 	pterido_long %>%
