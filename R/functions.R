@@ -87,6 +87,66 @@ pcg_extract_fow <- function(col_data) {
 		dwctaxon::dct_validate()
 }
 
+#' Get version for Ferns of the World taxonomic data in the Catalog of Life
+#'
+#' Catalog of Life data can be downloaded from here:
+#' https://download.catalogueoflife.org/col/monthly/. The "_dwca" format should
+#' be selected when downloading (files ending in "_dwca.zip").
+#'
+#' If `col_data_path` ends in "zip", the function will try to automatically
+#' extract the taxonomic names data, which is typically named "Taxon.tsv".
+#'
+#' @param col_data_path Path to data downloaded from the Catalog of Life; either
+#' the original zip file, or the tsv file containing the taxonomic data extracted
+#' from the zip file (usually named "Taxon.tsv").
+#'
+#' @return String with version of Ferns of the World data in Catalog of Life
+#'
+get_fow_version <- function(col_data_path) {
+
+	assertthat::assert_that(fs::file_exists(col_data_path))
+	file_ending <- fs::path_ext(col_data_path)
+
+	# Try to unzip dataset/1140.xml (XML data matching Ferns of the World)
+	temp_dir <- tempdir()
+	temp_xml <- ""
+	if (file_ending == "zip") {
+		tryCatch(
+			expr = utils::unzip(
+				col_data_path,
+				files = "dataset/1140.xml",
+				overwrite = TRUE, exdir = temp_dir, junkpaths  = TRUE),
+			finally = "Could not find '1140.xml' in zip file. Try manually unzipping."
+		)
+		temp_xml <- fs::path(temp_dir, "1140.xml")
+		col_data_path <- temp_xml
+	}
+
+	# Extract FOW title and version
+	title <-
+		col_data_path %>%
+		xml2::read_xml() %>%
+		xml2::as_list() %>%
+		purrr::pluck("eml", "dataset", "title", 1)
+
+	assertthat::assert_that(
+		title == "Checklist of Ferns and Lycophytes of the World",
+		msg = "Dataset title is not 'Checklist of Ferns and Lycophytes of the World'"
+	)
+
+	version <-
+		col_data_path %>%
+		xml2::read_xml() %>%
+		xml2::as_list() %>%
+		purrr::pluck("eml", "additionalMetadata", "metadata", "col", "version", 1)
+
+	# Clean up
+	if (file_ending == "zip" && fs::file_exists(temp_xml)) fs::file_delete(temp_xml)
+
+	version
+
+}
+
 # tropicos ----
 
 #' Search tropicos and return results with query appended
@@ -560,6 +620,7 @@ lookup_taxon_id <- function(new_names, fow) {
 tidy_fuzzy_tropicos <- function(pterido_names_to_inspect, pterido_tropicos) {
 
 	# add taxastand categories: 'fuzzy', 'mult_match', 'no_match'
+	# in `name_res_status` column
 	pterido_names_to_inspect_categorized <-
 		categorize_fuzzy_taxastand(pterido_names_to_inspect)
 
@@ -671,43 +732,47 @@ tidy_ftol_no_match <- function(
 	pow_res, pow_query) {
 
 	# Format results of querying IPNI, GBIF, and POW for FTOL "no-match" names
-	ipni_res <-
+	ipni_res_matched <-
 		ipni_res %>%
 		filter(!is.na(matched_name))
-	if (nrow(ipni_res) > 0) {
-		ipni_res <-
-			ipni_res %>%
+	if (nrow(ipni_res_matched) > 0) {
+		ipni_res_matched <-
+			ipni_res_matched %>%
 			transmute(
 				query, matched_name,
 				namePublishedIn = reference,
 				nameAccordingTo = glue::glue("IPNI|id:{id}|version:{version}"))
 	}
 
-	gbif_res <-
+	gbif_res_matched <-
 		gbif_res %>%
 		filter(!is.na(matched_name))
-	if (nrow(gbif_res) > 0) {
-		gbif_res <-
-			gbif_res %>%
+	if (nrow(gbif_res_matched) > 0) {
+		gbif_res_matched <-
+			gbif_res_matched %>%
+			# Recover original FTOL query
+			# since a modified query was used to search GBIF
 			rename(gbif_query = query) %>%
 			left_join(gbif_query, by = "gbif_query") %>%
 			transmute(
-				query = gbif_query, matched_name,
+				query, matched_name,
 				matched_status,
 				namePublishedIn = publishedIn,
 				nameAccordingTo)
 	}
 
-	pow_res <-
+	pow_res_matched <-
 		pow_res %>%
 		filter(!is.na(matched_name))
-	if (nrow(pow_res > 0)) {
-		pow_res <-
-			pow_res %>%
+	if (nrow(pow_res_matched > 0)) {
+		pow_res_matched <-
+			pow_res_matched %>%
+			# Recover original FTOL query
+			# since a modified query was used to search POW
 			rename(pow_query = query) %>%
 			left_join(pow_query, by = "pow_query") %>%
 			transmute(
-				query = pow_query, matched_name,
+				query, matched_name,
 				matched_status = taxonomicStatus,
 				namePublishedIn = reference,
 				nameAccordingTo = url
@@ -715,20 +780,22 @@ tidy_ftol_no_match <- function(
 	}
 
 	# Combine results of querying IPNI, GBIF, and POW for FTOL "no-match" names
-	ipni_gbif_pow <- bind_rows(ipni_res, gbif_res, pow_res) %>%
+	ipni_gbif_pow_matched <- bind_rows(ipni_res_matched, gbif_res_matched, pow_res_matched) %>%
+		# name_res_status refers to original FTOL search with ts_resolve_names()
+		# these were all "no_match"
 		mutate(name_res_status = "no_match")
 
 	assertthat::assert_that(
-		nrow(ipni_gbif_pow) > 0,
-		msg = "No results for IPNI, GBIF, or POW searches"
+		nrow(ipni_gbif_pow_matched) > 0,
+		msg = "No queries matched any names for IPNI, GBIF, or POW searches"
 	)
 
 	# Populate "no-match" dataframe in long format
 	pterido_long %>%
 		select(-query_match_taxon_agree) %>%
 		filter(name_res_status == "no_match") %>%
-		anti_join(ipni_gbif_pow, by = "query") %>%
-		bind_rows(ipni_gbif_pow) %>%
+		anti_join(ipni_gbif_pow_matched, by = "query") %>%
+		bind_rows(ipni_gbif_pow_matched) %>%
 		mutate(
 			query_match_taxon_agree = check_taxon_match(query, matched_name),
 			use_query_as_new = case_when(
@@ -737,6 +804,175 @@ tidy_ftol_no_match <- function(
 		) %>%
 		arrange(name_res_status, query, desc(query_match_taxon_agree), matched_name)
 
+}
+
+#' Update taxonomic names in Ferns of the World to generate Pteridocat
+#'
+#' @param pterido_names_taxized_inspected Dataframe (tibble); Inspected taxonomic names of
+#' pteridophytes output from FTOL workflow after automatically adding
+#' taxonomic data with taxize
+#' @param new_names Dataframe (tibble); Manually curated new names to add to taxonomic database
+#' @param fow Dataframe (tibble); Ferns of the World taxonomic database
+#'
+#' @return Dataframe (tibble); updated taxonomic database ("pteridocat")
+#'
+update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
+
+	pterido_names_taxized_inspected <-
+		pterido_names_taxized_inspected %>%
+		filter(name_res_status != "no_match")
+
+	# Format names to add as accepted
+	names_add_as_accepted <-
+		pterido_names_taxized_inspected %>%
+		filter(
+			(use_query_as_accepted == 1 & matched_status == "accepted") |
+				use_query_as_new == 1) %>%
+		mutate(taxonomicStatus = "accepted") %>%
+		select(scientificName = query, namePublishedIn, nameAccordingTo, taxonomicStatus) %>%
+		bind_rows(
+			filter(new_names, taxonomicStatus == "accepted") %>%
+				select(scientificName, taxonomicStatus, namePublishedIn, nameAccordingTo, taxonRemarks)
+		) %>%
+		mutate(
+			taxonID = purrr::map_chr(scientificName, digest::digest),
+			modified = as.character(Sys.time())
+		) %>%
+		assert(is_uniq, scientificName, taxonID)
+
+	# Make tibble of all existing names after addition
+	fow_plus_new <-
+		fow %>%
+		bind_rows(names_add_as_accepted) %>%
+		dct_validate()
+
+	# Format names to add as synonyms
+	names_add_as_synonym <-
+		pterido_names_taxized_inspected %>%
+		filter(
+			(use_query_as_accepted == 1 & matched_status != "accepted")
+			| use_query_as_synonym == 1) %>%
+		rename(scientificName = query, usage_name = matched_name) %>%
+		mutate(taxonomicStatus = "synonym") %>%
+		bind_rows(
+			filter(new_names, taxonomicStatus == "synonym")
+		) %>%
+		select(scientificName, taxonomicStatus, namePublishedIn, nameAccordingTo, taxonRemarks, usage_name) %>%
+		# Filter to only new synonyms
+		anti_join(fow_plus_new, by = "scientificName") %>%
+		# Map acceptedNameUsageID from usage_name
+		left_join(
+			select(fow_plus_new, acceptedNameUsageID = taxonID, usage_name = scientificName),
+			by = "usage_name"
+		) %>%
+		left_join(
+			select(names_add_as_accepted, acceptedNameUsageID = taxonID, usage_name = scientificName),
+			by = "usage_name"
+		) %>%
+		mutate(acceptedNameUsageID = coalesce(acceptedNameUsageID.x, acceptedNameUsageID.y)) %>%
+		select(-acceptedNameUsageID.x, -acceptedNameUsageID.y) %>%
+		select(-usage_name) %>%
+		# Create `taxonID` and `modified` columns
+		mutate(
+			taxonID = purrr::map_chr(scientificName, digest::digest),
+			modified = as.character(Sys.time())
+		) %>%
+		verify(taxonomicStatus == "synonym") %>%
+		# Fix nested synonyms: those where the usage_name maps to a name that's
+		# already a synonym. Need to map back to the original acceptedNameUsageID
+		left_join(
+			select(fow_plus_new, taxonID, acceptedNameUsageID_2 = acceptedNameUsageID),
+			by = c(acceptedNameUsageID = "taxonID")) %>%
+		mutate(
+			acceptedNameUsageID = case_when(
+				is.na(acceptedNameUsageID_2) ~ acceptedNameUsageID,
+				!is.na(acceptedNameUsageID_2) ~ acceptedNameUsageID_2
+			)
+		) %>%
+		select(-acceptedNameUsageID_2) %>%
+		# Check everything is OK
+		assert(not_na, scientificName, taxonID, acceptedNameUsageID) %>%
+		assert(is_uniq, scientificName, taxonID)
+
+	assertthat::assert_that(
+		length(
+			setdiff(
+				c(pterido_names_taxized_inspected$query, new_names$scientificName),
+				bind_rows(names_add_as_accepted, names_add_as_synonym, fow) %>% pull(scientificName)
+			)) == 0,
+		msg = "Not all fuzzy matched inspected results accounted for"
+	)
+
+	# Format names already in FOW to change status to synonym.
+	# Three categories:
+	# - FOW match is a synonym
+	# - FOW match is accepted with no synonyms
+	# - FOW match is accepted with mult synonyms
+	names_to_change_status_raw <-
+		# Format existing names to change matched names to synonym of query
+		pterido_names_taxized_inspected %>%
+		filter(use_query_as_accepted == 1) %>%
+		select(query, matched_name) %>%
+		# Add FOW taxon ID
+		left_join(
+			select(fow, matched_name = scientificName, fow_taxonID = taxonID),
+			by = "matched_name"
+		) %>%
+		assert(not_na, fow_taxonID) %>%
+		left_join(
+			select(fow, fow_acceptedNameUsageID = acceptedNameUsageID, fow_taxonID = taxonID),
+			by = "fow_taxonID"
+		) %>%
+		left_join(
+			select(fow, fow_taxonID = acceptedNameUsageID, sci_name_synonym = scientificName),
+			by = "fow_taxonID"
+		)
+
+	# - FOW match is a synonym
+	names_to_change_status_fow_is_syn <-
+		names_to_change_status_raw %>%
+		filter(!is.na(fow_acceptedNameUsageID)) %>%
+		left_join(
+			select(fow, usage_name = scientificName, fow_acceptedNameUsageID = taxonID),
+			by = "fow_acceptedNameUsageID"
+		) %>%
+		transmute(sci_name = query, usage_name, new_status = "synonym")
+
+	# - FOW match is accepted with no synonyms
+	names_to_change_status_fow_with_no_syn <-
+		names_to_change_status_raw %>%
+		filter(is.na(fow_acceptedNameUsageID), is.na(sci_name_synonym)) %>%
+		transmute(sci_name = matched_name, usage_name = query, new_status = "synonym")
+
+
+	# - FOW match is accepted with multipe synonyms
+	names_to_change_status_fow_with_mult_syn <-
+		bind_rows(
+			names_to_change_status_raw %>%
+				filter(is.na(fow_acceptedNameUsageID), !is.na(sci_name_synonym)) %>%
+				transmute(sci_name = matched_name, usage_name = query, new_status = "synonym"),
+			names_to_change_status_raw %>%
+				filter(is.na(fow_acceptedNameUsageID), !is.na(sci_name_synonym)) %>%
+				transmute(sci_name = sci_name_synonym, usage_name = query, new_status = "synonym")
+		)
+
+	names_to_change_status <-
+		bind_rows(
+			names_to_change_status_fow_is_syn,
+			names_to_change_status_fow_with_no_syn,
+			names_to_change_status_fow_with_mult_syn,
+			filter(new_names, taxonomicStatus == "synonym", scientificName %in% fow$scientificName) %>%
+				select(sci_name = scientificName, usage_name, new_status = taxonomicStatus)
+		) %>%
+		anti_join(names_add_as_synonym, by = c(sci_name = "scientificName")) %>%
+		unique()
+
+	fow %>%
+		filter(taxonID != "4LGR5") %>% # remove duplicate Polypodium rhaeticum L.
+		bind_rows(names_add_as_accepted) %>%
+		bind_rows(names_add_as_synonym) %>%
+		dct_change_status(args_tbl = names_to_change_status) %>%
+		dct_validate()
 }
 
 # utils ----

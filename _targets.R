@@ -16,6 +16,7 @@ tar_plan(
 		col_dwca_zip,
 		download_file(col_dwca_url, "data-raw/2021-12-18_dwca.zip")
 	),
+	fow_version = get_fow_version(col_dwca_zip),
 	fow = pcg_load_col(col_dwca_zip) %>% pcg_extract_fow(),
 	# Write out FOW for FTOL
 	tar_file(
@@ -66,6 +67,7 @@ tar_plan(
 			pterido_names_taxized,
 			"data-raw/pterido_names_taxized_to_inspect.csv")
 	),
+
 	# Read back in data after manual inspection ----
 	tar_file(
 		pterido_names_taxized_inspected_file,
@@ -77,5 +79,17 @@ tar_plan(
 		new_names_file,
 		"data-raw/new_names.csv"
 	),
-	new_names = read_csv(new_names_file) %>% lookup_taxon_id(fow)
+	new_names = read_csv(new_names_file) %>% lookup_taxon_id(fow),
+
+	# Generate new pteridocat database ----
+	# Update names after manual inspection
+	pteridocat = update_fow_names(
+		pterido_names_taxized_inspected, new_names, fow),
+	# Write out new database
+	tar_file(
+		pteridocat_out,
+		write_tar_csv(
+			pteridocat,
+			"results/pteridocat.csv")
+	)
 )
