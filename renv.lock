@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.1.1",
+    "Version": "4.1.2",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -120,6 +120,18 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "50c838a310445e954bc13f26f26a6ecf"
+    },
+    "atcursor": {
+      "Package": "atcursor",
+      "Version": "0.0.1",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "milesmcbain",
+      "RemoteRepo": "atcursor",
+      "RemoteRef": "main",
+      "RemoteSha": "b9860f12a31d25cf823bf1f374088a99fc9f219c",
+      "Hash": "da50c59527bd71bffef561d0088c42ce"
     },
     "backports": {
       "Package": "backports",
@@ -333,9 +345,9 @@
       "RemoteUsername": "joelnitta",
       "RemoteRepo": "dwctaxon",
       "RemoteRef": "main",
-      "RemoteSha": "9c1acf8792d00439af81437035406b9fb4a7a4f0",
+      "RemoteSha": "94b32890350b3b753af3da96c9a1d47897d8c268",
       "Remotes": "anthonynorth/roxyglobals",
-      "Hash": "e03e9c5194431caa38f772066311b3e5"
+      "Hash": "3831cad4174cb21bf38bcac1e95a50a9"
     },
     "ellipsis": {
       "Package": "ellipsis",
@@ -378,6 +390,18 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "dabc225759a2c2b241e60e42bf0e8e54"
+    },
+    "fnmate": {
+      "Package": "fnmate",
+      "Version": "0.0.5",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "milesmcbain",
+      "RemoteRepo": "fnmate",
+      "RemoteRef": "master",
+      "RemoteSha": "8fc70bc1af795423dfc2dbd74b26e6bbef4a07e8",
+      "Hash": "eeeba514370df617a43573e229ec65c3"
     },
     "forcats": {
       "Package": "forcats",
@@ -995,6 +1019,13 @@
       "Repository": "CRAN",
       "Hash": "800aa9821db0c0742a691146aaf6c042"
     },
+    "sourcetools": {
+      "Package": "sourcetools",
+      "Version": "0.1.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "947e4e02a79effa5d512473e10f41797"
+    },
     "stringi": {
       "Package": "stringi",
       "Version": "1.7.6",
@@ -1023,6 +1054,20 @@
       "Repository": "CRAN",
       "Hash": "b227d13e29222b4574486cfcbde077fa"
     },
+    "tarchetypes": {
+      "Package": "tarchetypes",
+      "Version": "0.4.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "94271341eb2d132cdb7d8bd86a340416"
+    },
+    "targets": {
+      "Package": "targets",
+      "Version": "0.9.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "e4868558d1403b84942e30c92434e128"
+    },
     "taxize": {
       "Package": "taxize",
       "Version": "0.9.99.947",
@@ -1034,6 +1079,19 @@
       "RemoteRef": "HEAD",
       "RemoteSha": "a4db9a790e48c93235cac6145826c097ec687408",
       "Hash": "21a0680e0a82f65fb34768ffb0f3cf01"
+    },
+    "tflow": {
+      "Package": "tflow",
+      "Version": "0.3.6",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "milesmcbain",
+      "RemoteRepo": "tflow",
+      "RemoteRef": "master",
+      "RemoteSha": "73ff0dc7a1601325132069618227110121ba7121",
+      "Remotes": "milesmcbain/fnmate, milesmcbain/capsule, milesmcbain/atcursor",
+      "Hash": "4f2fb7645203f8e179b835695187a5de"
     },
     "tibble": {
       "Package": "tibble",
