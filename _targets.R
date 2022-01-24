@@ -14,7 +14,7 @@ tar_plan(
 	# Load Ferns of the World (FOW) database from COL
 	tar_file(
 		col_dwca_zip,
-		download_file(col_dwca_url, "data-raw/2021-12-18_dwca.zip")
+		download_file(col_dwca_url, "_targets/user/data-raw/2021-12-18_dwca.zip")
 	),
 	fow_version = get_fow_version(col_dwca_zip),
 	fow = pcg_load_col(col_dwca_zip) %>% pcg_extract_fow(),
@@ -25,7 +25,7 @@ tar_plan(
 	),
 	# Load output of initial name matching from FTOL.
 	# Includes one row per query/match pair
-	tar_file(pterido_names_to_inspect_file, "data-raw/pterido_names_to_inspect.csv"),
+	tar_file(pterido_names_to_inspect_file, "_targets/user/data-raw/pterido_names_to_inspect.csv"),
 	pterido_names_to_inspect = readr::read_csv(pterido_names_to_inspect_file),
 
 	# Fetch taxonomic data (taxize) ----
@@ -65,19 +65,19 @@ tar_plan(
 		pterido_names_taxized_out,
 		write_tar_csv(
 			pterido_names_taxized,
-			"data-raw/pterido_names_taxized_to_inspect.csv")
+			"_targets/user/data-raw/pterido_names_taxized_to_inspect.csv")
 	),
 
 	# Read back in data after manual inspection ----
 	tar_file(
 		pterido_names_taxized_inspected_file,
-	  "data-raw/pterido_names_taxized_inspected.csv"
+	  "_targets/user/data-raw/pterido_names_taxized_inspected.csv"
 	),
 	pterido_names_taxized_inspected = read_csv(pterido_names_taxized_inspected_file) %>%
 		filter(done == 1),
 	tar_file(
 		new_names_file,
-		"data-raw/new_names.csv"
+		"_targets/user/data-raw/new_names.csv"
 	),
 	new_names = read_csv(new_names_file) %>% lookup_taxon_id(fow),
 
