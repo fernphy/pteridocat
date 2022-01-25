@@ -819,6 +819,48 @@ tidy_ftol_no_match <- function(
 #'
 update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 
+	# Up-front editing directly to FOW before making further edits
+	fow <-
+		fow %>%
+		filter(taxonID != "4LGR5") %>% # remove duplicate Polypodium rhaeticum L.
+		# remove Asplenium obovatum subsp. obovatum, redundant with Asplenium obovatum Viv.
+		dct_change_status(sci_name = "Athyrium obovatum (Viv.) Fée", new_status = "accepted") %>%
+		dct_change_status(
+			sci_name = "Asplenium obovatum subsp. obovatum",
+			usage_name = "Athyrium obovatum (Viv.) Fée",
+			new_status = "synonym") %>%
+		filter(scientificName != "Asplenium obovatum subsp. obovatum") %>%
+		# remove Botrychium lanceolatum subsp. lanceolatum, redundant with Botrychium lanceolatum Rupr.
+		dct_change_status(
+			sci_name = "Botrychium lanceolatum subsp. lanceolatum",
+			usage_name = "Botrychium matricariifolium (Döll) A. Braun ex Koch",
+			new_status = "synonym") %>%
+		filter(scientificName != "Botrychium lanceolatum subsp. lanceolatum") %>%
+		# remove Davallia tasmanii subsp. tasmanii, redundant with  Davallia tasmanii Field
+		filter(scientificName != "Davallia tasmanii subsp. tasmanii") %>%
+		# remove Dicksonia lanata subsp. lanata, same type of problem
+		dct_change_status(
+			sci_name = "Dicksonia lanata subsp. lanata",
+			usage_name = "Dicksonia lanata Colenso",
+			new_status = "synonym"
+		) %>%
+		# remove Pellaea mucronata subsp. mucronata, same type of problem
+		filter(scientificName != "Dicksonia lanata subsp. lanata") %>%
+		dct_change_status(
+			sci_name = "Pellaea mucronata subsp. mucronata",
+			usage_name = "Pellaea mucronata (D. C. Eaton) D. C. Eaton", # as per tropicos https://www.tropicos.org/name/26608707
+			new_status = "synonym"
+		) %>%
+		filter(scientificName != "Pellaea mucronata subsp. mucronata") %>%
+		# Fix author of Asplenium richardii (Hook. fil.) Hook. fil.
+		mutate(
+			scientificName = case_when(
+				scientificName == "Asplenium richardii (Hook. fil.) Hook. fil." ~ "Asplenium richardii Hook. fil.",
+				TRUE ~ scientificName
+			)
+		) %>%
+		dct_validate()
+
 	pterido_names_taxized_inspected <-
 		pterido_names_taxized_inspected %>%
 		filter(name_res_status != "no_match")
@@ -895,15 +937,6 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 		assert(not_na, scientificName, taxonID, acceptedNameUsageID) %>%
 		assert(is_uniq, scientificName, taxonID)
 
-	assertthat::assert_that(
-		length(
-			setdiff(
-				c(pterido_names_taxized_inspected$query, new_names$scientificName),
-				bind_rows(names_add_as_accepted, names_add_as_synonym, fow) %>% pull(scientificName)
-			)) == 0,
-		msg = "Not all fuzzy matched inspected results accounted for"
-	)
-
 	# Format names already in FOW to change status to synonym.
 	# Three categories:
 	# - FOW match is a synonym
@@ -945,7 +978,6 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 		filter(is.na(fow_acceptedNameUsageID), is.na(sci_name_synonym)) %>%
 		transmute(sci_name = matched_name, usage_name = query, new_status = "synonym")
 
-
 	# - FOW match is accepted with multipe synonyms
 	names_to_change_status_fow_with_mult_syn <-
 		bind_rows(
@@ -969,10 +1001,9 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 		unique()
 
 	fow %>%
-		filter(taxonID != "4LGR5") %>% # remove duplicate Polypodium rhaeticum L.
 		bind_rows(names_add_as_accepted) %>%
 		bind_rows(names_add_as_synonym) %>%
-		dct_change_status(args_tbl = names_to_change_status) %>%
+		dct_change_status(args_tbl = names_to_change_status, strict = FALSE) %>%
 		dct_validate()
 }
 
