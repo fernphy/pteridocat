@@ -448,7 +448,7 @@ gbif_search_taxon <- function(query) {
 		query = query,
 		matched_status = gbif_data$results[[gbif_name_data_id]]$taxonomicStatus,
 		matched_name = gbif_data$results[[gbif_name_data_id]]$scientificName,
-		publishedIn = gbif_data$results[[gbif_name_data_id]]$publishedIn,
+		namePublishedIn = gbif_data$results[[gbif_name_data_id]]$publishedIn,
 		nameAccordingTo = gbif_data$results[[gbif_name_data_id]]$taxonID,
 	)
 
@@ -754,11 +754,12 @@ tidy_ftol_no_match <- function(
 			# since a modified query was used to search GBIF
 			rename(gbif_query = query) %>%
 			left_join(gbif_query, by = "gbif_query") %>%
-			transmute(
-				query, matched_name,
-				matched_status,
-				namePublishedIn = publishedIn,
-				nameAccordingTo)
+			select(-gbif_query) %>%
+			select(any_of(c(
+				"query", "matched_name",
+				"matched_status", "namePublishedIn",
+				"nameAccordingTo"
+			)))
 	}
 
 	pow_res_matched <-
