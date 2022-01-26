@@ -147,6 +147,27 @@ get_fow_version <- function(col_data_path) {
 
 }
 
+#' Load inspected taxonomic names data
+#'
+#' @param pterido_names_taxized_inspected_file Path to inspected taxonomic
+#' names data
+#'
+#' @return Tibble
+#'
+load_pterido_names_taxized_inspected <- function(
+	pterido_names_taxized_inspected_file) {
+	read_csv(pterido_names_taxized_inspected_file) %>%
+		# Filter to only names marked as inspected
+		assert(within_bounds(0,1), done) %>%
+		filter(done == 1) %>%
+		# Make sure the "use_query_" columns don't sum to > 1 across each row
+		mutate(across(contains("use_query_"), ~replace_na(., 0))) %>%
+		assert_rows(rowSums, within_bounds(0,1), contains("use_query_")) %>%
+		# Make sure the "use_match_" columns don't sum to > 1 across each row
+		mutate(across(contains("use_match_"), ~replace_na(., 0))) %>%
+		assert_rows(rowSums, within_bounds(0,1), contains("use_match_"))
+}
+
 # tropicos ----
 
 #' Search tropicos and return results with query appended
@@ -844,14 +865,20 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 			usage_name = "Dicksonia lanata Colenso",
 			new_status = "synonym"
 		) %>%
-		# remove Pellaea mucronata subsp. mucronata, same type of problem
 		filter(scientificName != "Dicksonia lanata subsp. lanata") %>%
+		# remove Pellaea mucronata subsp. mucronata, same type of problem
 		dct_change_status(
 			sci_name = "Pellaea mucronata subsp. mucronata",
 			usage_name = "Pellaea mucronata (D. C. Eaton) D. C. Eaton", # as per tropicos https://www.tropicos.org/name/26608707
 			new_status = "synonym"
 		) %>%
 		filter(scientificName != "Pellaea mucronata subsp. mucronata") %>%
+		# Set Asplenium bulbiferum subsp. bulbiferum to synonym of Asplenium bulbiferum G. Forst.
+		dct_change_status(
+			sci_name = "Asplenium bulbiferum subsp. bulbiferum",
+			usage_name = "Asplenium bulbiferum G. Forst.", # as per tropicos https://www.tropicos.org/name/50155177
+			new_status = "synonym"
+		) %>%
 		# Fix author of Asplenium richardii (Hook. fil.) Hook. fil.
 		mutate(
 			scientificName = case_when(
@@ -861,16 +888,21 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 		) %>%
 		dct_validate()
 
-	pterido_names_taxized_inspected <-
-		pterido_names_taxized_inspected %>%
-		filter(name_res_status != "no_match")
-
 	# Format names to add as accepted
 	names_add_as_accepted <-
 		pterido_names_taxized_inspected %>%
-		filter(
-			(use_query_as_accepted == 1 & matched_status == "accepted") |
-				use_query_as_new == 1) %>%
+		mutate(
+			add_as_accepted = case_when(
+				use_query_as_accepted == 1 & matched_status == "accepted" ~ TRUE,
+				use_query_as_accepted == 1 & name_res_status == "no_match" ~ TRUE, # matched_status for "no_match" names varies #nolint
+				use_query_as_new == 1 ~ TRUE,
+				use_match_as_accepted == 1 ~ TRUE,
+				use_match_as_new == 1 ~ TRUE,
+				TRUE ~ FALSE
+			)
+		) %>%
+		filter(add_as_accepted) %>%
+		select(-add_as_accepted) %>%
 		mutate(taxonomicStatus = "accepted") %>%
 		select(scientificName = query, namePublishedIn, nameAccordingTo, taxonomicStatus) %>%
 		bind_rows(
@@ -892,9 +924,15 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 	# Format names to add as synonyms
 	names_add_as_synonym <-
 		pterido_names_taxized_inspected %>%
-		filter(
-			(use_query_as_accepted == 1 & matched_status != "accepted")
-			| use_query_as_synonym == 1) %>%
+		mutate(
+			add_as_synonym = case_when(
+				use_query_as_accepted == 1 & matched_status != "accepted" ~ TRUE,
+				use_query_as_synonym == 1 ~ TRUE,
+				TRUE ~ FALSE
+			)
+		) %>%
+		filter(add_as_synonym) %>%
+		select(-add_as_synonym) %>%
 		rename(scientificName = query, usage_name = matched_name) %>%
 		mutate(taxonomicStatus = "synonym") %>%
 		bind_rows(
@@ -978,7 +1016,7 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 		filter(is.na(fow_acceptedNameUsageID), is.na(sci_name_synonym)) %>%
 		transmute(sci_name = matched_name, usage_name = query, new_status = "synonym")
 
-	# - FOW match is accepted with multipe synonyms
+	# - FOW match is accepted with multiple synonyms
 	names_to_change_status_fow_with_mult_syn <-
 		bind_rows(
 			names_to_change_status_raw %>%
@@ -1003,8 +1041,46 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 	fow %>%
 		bind_rows(names_add_as_accepted) %>%
 		bind_rows(names_add_as_synonym) %>%
-		dct_change_status(args_tbl = names_to_change_status, strict = FALSE) %>%
+		dct_change_status(
+			args_tbl = names_to_change_status, strict = FALSE, quiet = TRUE) %>%
 		dct_validate()
+}
+
+#' Combine taxized data for writing out for inspection
+#'
+#' @param pterido_fuzzy_tropicos Tibble; output of tidy_fuzzy_tropicos()
+#' @param pterido_long Tibble; output of format_ipni_query()
+#' @param pterido_no_match_taxized Tibble; output of tidy_ftol_no_match()
+#'
+#' @return Tibble
+#'
+combine_taxized_names <- function(
+	pterido_fuzzy_tropicos,
+	pterido_long, pterido_no_match_taxized) {
+
+	bind_rows(
+		pterido_fuzzy_tropicos,
+		filter(pterido_long, name_res_status == "mult_match"),
+		pterido_no_match_taxized
+	) %>%
+		# Select final columns
+		transmute(
+			query,
+			matched_name,
+			matched_status,
+			query_match_taxon_agree,
+			use_query_as_synonym,
+			use_query_as_accepted,
+			use_query_as_new,
+			use_match_as_accepted = NA_character_,
+			use_match_as_new = NA_character_,
+			namePublishedIn,
+			nameAccordingTo,
+			taxonRemarks,
+			notes,
+			name_res_status,
+			done = 0
+		)
 }
 
 # utils ----

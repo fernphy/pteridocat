@@ -55,9 +55,9 @@ tar_plan(
 		gbif_res, gbif_query,
 		pow_res, pow_query),
 	# Combine all FTOL tidied and "taxized" names
-	pterido_names_taxized = bind_rows(
+	pterido_names_taxized = combine_taxized_names(
 		pterido_fuzzy_tropicos,
-		filter(pterido_long, name_res_status == "mult_match"),
+		pterido_long,
 		pterido_no_match_taxized
 	),
 	# Write out
@@ -73,8 +73,8 @@ tar_plan(
 		pterido_names_taxized_inspected_file,
 	  "_targets/user/data-raw/pterido_names_taxized_inspected.csv"
 	),
-	pterido_names_taxized_inspected = read_csv(pterido_names_taxized_inspected_file) %>%
-		filter(done == 1),
+	pterido_names_taxized_inspected = load_pterido_names_taxized_inspected(
+		pterido_names_taxized_inspected_file),
 	tar_file(
 		new_names_file,
 		"_targets/user/data-raw/new_names.csv"
