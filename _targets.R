@@ -30,9 +30,14 @@ tar_plan(
 		write_tar_rds(fow, "results/fow.RDS")
 	),
 	# Load output of initial name matching from FTOL.
+	# (matching against FOW)
 	# Includes one row per query/match pair
-	tar_file(pterido_names_to_inspect_file, "_targets/user/data-raw/pterido_names_to_inspect.csv"),
+	tar_file(pterido_names_to_inspect_file, "_targets/user/data-raw/pterido_names_to_inspect_all.csv"),
 	pterido_names_to_inspect = readr::read_csv(pterido_names_to_inspect_file),
+	# Load output of second round name matching from FTOL.
+	# (matching against pteridocat)
+	tar_file(pterido_names_to_inspect_new_file, "_targets/user/data-raw/pterido_names_to_inspect.csv"),
+	pterido_names_to_inspect_new = readr::read_csv(pterido_names_to_inspect_new_file),
 
 	# Fetch taxonomic data (taxize) ----
 	# Download data from tropicos for any FTOL fuzzily matched names or "no match" names
