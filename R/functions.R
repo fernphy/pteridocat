@@ -904,10 +904,12 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 		filter(add_as_accepted) %>%
 		select(-add_as_accepted) %>%
 		mutate(taxonomicStatus = "accepted") %>%
-		select(scientificName = query, namePublishedIn, nameAccordingTo, taxonomicStatus) %>%
+		select(scientificName = query, namePublishedIn,
+					 nameAccordingTo, taxonomicStatus) %>%
 		bind_rows(
 			filter(new_names, taxonomicStatus == "accepted") %>%
-				select(scientificName, taxonomicStatus, namePublishedIn, nameAccordingTo, taxonRemarks)
+				select(scientificName, taxonomicStatus, namePublishedIn,
+							 nameAccordingTo, taxonRemarks)
 		) %>%
 		mutate(
 			taxonID = purrr::map_chr(scientificName, digest::digest),
@@ -938,19 +940,24 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 		bind_rows(
 			filter(new_names, taxonomicStatus == "synonym")
 		) %>%
-		select(scientificName, taxonomicStatus, namePublishedIn, nameAccordingTo, taxonRemarks, usage_name) %>%
+		select(scientificName, taxonomicStatus, namePublishedIn,
+					 nameAccordingTo, taxonRemarks, usage_name) %>%
 		# Filter to only new synonyms
 		anti_join(fow_plus_new, by = "scientificName") %>%
 		# Map acceptedNameUsageID from usage_name
 		left_join(
-			select(fow_plus_new, acceptedNameUsageID = taxonID, usage_name = scientificName),
+			select(
+				fow_plus_new, acceptedNameUsageID = taxonID,
+				usage_name = scientificName),
 			by = "usage_name"
 		) %>%
 		left_join(
-			select(names_add_as_accepted, acceptedNameUsageID = taxonID, usage_name = scientificName),
+			select(names_add_as_accepted, acceptedNameUsageID = taxonID,
+						 usage_name = scientificName),
 			by = "usage_name"
 		) %>%
-		mutate(acceptedNameUsageID = coalesce(acceptedNameUsageID.x, acceptedNameUsageID.y)) %>%
+		mutate(acceptedNameUsageID = coalesce(
+			acceptedNameUsageID.x, acceptedNameUsageID.y)) %>%
 		select(-acceptedNameUsageID.x, -acceptedNameUsageID.y) %>%
 		select(-usage_name) %>%
 		# Create `taxonID` and `modified` columns
@@ -962,7 +969,9 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 		# Fix nested synonyms: those where the usage_name maps to a name that's
 		# already a synonym. Need to map back to the original acceptedNameUsageID
 		left_join(
-			select(fow_plus_new, taxonID, acceptedNameUsageID_2 = acceptedNameUsageID),
+			select(
+				fow_plus_new, taxonID,
+				acceptedNameUsageID_2 = acceptedNameUsageID),
 			by = c(acceptedNameUsageID = "taxonID")) %>%
 		mutate(
 			acceptedNameUsageID = case_when(
@@ -992,11 +1001,13 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 		) %>%
 		assert(not_na, fow_taxonID) %>%
 		left_join(
-			select(fow, fow_acceptedNameUsageID = acceptedNameUsageID, fow_taxonID = taxonID),
+			select(fow, fow_acceptedNameUsageID = acceptedNameUsageID,
+						 fow_taxonID = taxonID),
 			by = "fow_taxonID"
 		) %>%
 		left_join(
-			select(fow, fow_taxonID = acceptedNameUsageID, sci_name_synonym = scientificName),
+			select(fow, fow_taxonID = acceptedNameUsageID,
+						 sci_name_synonym = scientificName),
 			by = "fow_taxonID"
 		)
 
@@ -1005,7 +1016,8 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 		names_to_change_status_raw %>%
 		filter(!is.na(fow_acceptedNameUsageID)) %>%
 		left_join(
-			select(fow, usage_name = scientificName, fow_acceptedNameUsageID = taxonID),
+			select(fow, usage_name = scientificName,
+						 fow_acceptedNameUsageID = taxonID),
 			by = "fow_acceptedNameUsageID"
 		) %>%
 		transmute(sci_name = query, usage_name, new_status = "synonym")
@@ -1014,17 +1026,20 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 	names_to_change_status_fow_with_no_syn <-
 		names_to_change_status_raw %>%
 		filter(is.na(fow_acceptedNameUsageID), is.na(sci_name_synonym)) %>%
-		transmute(sci_name = matched_name, usage_name = query, new_status = "synonym")
+		transmute(sci_name = matched_name,
+							usage_name = query, new_status = "synonym")
 
 	# - FOW match is accepted with multiple synonyms
 	names_to_change_status_fow_with_mult_syn <-
 		bind_rows(
 			names_to_change_status_raw %>%
 				filter(is.na(fow_acceptedNameUsageID), !is.na(sci_name_synonym)) %>%
-				transmute(sci_name = matched_name, usage_name = query, new_status = "synonym"),
+				transmute(sci_name = matched_name,
+									usage_name = query, new_status = "synonym"),
 			names_to_change_status_raw %>%
 				filter(is.na(fow_acceptedNameUsageID), !is.na(sci_name_synonym)) %>%
-				transmute(sci_name = sci_name_synonym, usage_name = query, new_status = "synonym")
+				transmute(sci_name = sci_name_synonym,
+									usage_name = query, new_status = "synonym")
 		)
 
 	names_to_change_status <-
@@ -1032,8 +1047,10 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 			names_to_change_status_fow_is_syn,
 			names_to_change_status_fow_with_no_syn,
 			names_to_change_status_fow_with_mult_syn,
-			filter(new_names, taxonomicStatus == "synonym", scientificName %in% fow$scientificName) %>%
-				select(sci_name = scientificName, usage_name, new_status = taxonomicStatus)
+			filter(new_names, taxonomicStatus == "synonym",
+						 scientificName %in% fow$scientificName) %>%
+				select(sci_name = scientificName,
+							 usage_name, new_status = taxonomicStatus)
 		) %>%
 		anti_join(names_add_as_synonym, by = c(sci_name = "scientificName")) %>%
 		unique()
