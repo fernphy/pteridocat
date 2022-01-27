@@ -843,48 +843,52 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 	# Up-front editing directly to FOW before making further edits
 	fow <-
 		fow %>%
-		filter(taxonID != "4LGR5") %>% # remove duplicate Polypodium rhaeticum L.
-		# remove Asplenium obovatum subsp. obovatum, redundant with Asplenium obovatum Viv.
-		dct_change_status(sci_name = "Athyrium obovatum (Viv.) Fée", new_status = "accepted") %>%
-		dct_change_status(
-			sci_name = "Asplenium obovatum subsp. obovatum",
-			usage_name = "Athyrium obovatum (Viv.) Fée",
-			new_status = "synonym") %>%
-		filter(scientificName != "Asplenium obovatum subsp. obovatum") %>%
-		# remove Botrychium lanceolatum subsp. lanceolatum, redundant with Botrychium lanceolatum Rupr.
-		dct_change_status(
-			sci_name = "Botrychium lanceolatum subsp. lanceolatum",
-			usage_name = "Botrychium matricariifolium (Döll) A. Braun ex Koch",
-			new_status = "synonym") %>%
-		filter(scientificName != "Botrychium lanceolatum subsp. lanceolatum") %>%
-		# remove Davallia tasmanii subsp. tasmanii, redundant with  Davallia tasmanii Field
-		filter(scientificName != "Davallia tasmanii subsp. tasmanii") %>%
-		# remove Dicksonia lanata subsp. lanata, same type of problem
-		dct_change_status(
-			sci_name = "Dicksonia lanata subsp. lanata",
-			usage_name = "Dicksonia lanata Colenso",
-			new_status = "synonym"
-		) %>%
-		filter(scientificName != "Dicksonia lanata subsp. lanata") %>%
-		# remove Pellaea mucronata subsp. mucronata, same type of problem
-		dct_change_status(
-			sci_name = "Pellaea mucronata subsp. mucronata",
-			usage_name = "Pellaea mucronata (D. C. Eaton) D. C. Eaton", # as per tropicos https://www.tropicos.org/name/26608707
-			new_status = "synonym"
-		) %>%
-		filter(scientificName != "Pellaea mucronata subsp. mucronata") %>%
-		# Set Asplenium bulbiferum subsp. bulbiferum to synonym of Asplenium bulbiferum G. Forst.
-		dct_change_status(
-			sci_name = "Asplenium bulbiferum subsp. bulbiferum",
-			usage_name = "Asplenium bulbiferum G. Forst.", # as per tropicos https://www.tropicos.org/name/50155177
-			new_status = "synonym"
-		) %>%
+		# remove duplicate Polypodium rhaeticum L.
+		filter(taxonID != "4LGR5") %>%
 		# Fix author of Asplenium richardii (Hook. fil.) Hook. fil.
 		mutate(
 			scientificName = case_when(
-				scientificName == "Asplenium richardii (Hook. fil.) Hook. fil." ~ "Asplenium richardii Hook. fil.",
+				scientificName == "Asplenium richardii (Hook. fil.) Hook. fil." ~ "Asplenium richardii Hook. fil.", #nolint
 				TRUE ~ scientificName
 			)
+		) %>%
+		# Add entry for Pleopeltis polypodioides var. polypodioides autonym
+		# https://www.ipni.org/n/77067053-1
+		dct_add_row(
+			sci_name = "Pleopeltis polypodioides var. polypodioides",
+			taxonomicStatus = "accepted",
+			taxonRank = "variety",
+			parentNameUsageID = "4K7WS", # Pleopeltis polypodioides (L.) E. G. Andrews & Windham #nolint
+		) %>%
+		# Add entry for Polystichum polyblepharum var. polyblepharum autonym
+		# https://www.tropicos.org/name/26611834
+		dct_add_row(
+			sci_name = "Polystichum polyblepharum var. polyblepharum",
+			taxonomicStatus = "accepted",
+			taxonRank = "variety",
+			parentNameUsageID = "4LN68", # Polystichum polyblepharum (Roem. ex Kunze) C. Presl #nolint
+		) %>%
+		# Add entry for Dryopteris simasakii var. simasakii autonym
+		dct_add_row(
+			sci_name = "Dryopteris simasakii var. simasakii",
+			taxonomicStatus = "accepted",
+			taxonRank = "variety",
+			parentNameUsageID = "37XPH", # Dryopteris simasakii (H. Itô) Kurata
+		) %>%
+		# Add entry for Elaphoglossum peltatum f. peltatum
+		dct_add_row(
+			sci_name = "Elaphoglossum peltatum f. peltatum",
+			taxonomicStatus = "accepted",
+			taxonRank = "form",
+			parentNameUsageID = "6F24P", # Elaphoglossum peltatum (Sw.) Urb.
+		) %>%
+		# Add entry for Dryopteris x ebinoensis Sa.Kurata
+		dct_add_row(
+			sci_name = "Dryopteris x ebinoensis Sa.Kurata",
+			taxonomicStatus = "nom. nud.",
+			taxonRank = "species",
+			namePublishedIn = "J. Nipp. Fern. Cl. 2(29): 7 (1977), n. n.; Sa.Kurata & Nakaike, Ill. Jap. Pterid. 8: 414 (1997).",
+			nameAccordingTo = "http://ylist.info/ylist_detail_display.php?pass=32320"
 		) %>%
 		dct_validate()
 
@@ -1105,6 +1109,12 @@ combine_taxized_names <- function(
 # Write CSV and return the output path
 write_tar_csv <- function(x, file, ...) {
 	readr::write_csv(x = x, file = file, ...)
+	file
+}
+
+# Write RDS and return the output path
+write_tar_rds <- function(object, file, ...) {
+	saveRDS(object = object, file = file, ...)
 	file
 }
 
