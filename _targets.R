@@ -27,7 +27,7 @@ tar_plan(
 	# Write out FOW for FTOL
 	tar_file(
 		fow_out,
-		write_tar_csv(fow, "results/2021-12-18-fow.csv")
+		write_tar_rds(fow, "results/fow.RDS")
 	),
 	# Load output of initial name matching from FTOL.
 	# Includes one row per query/match pair
@@ -94,8 +94,8 @@ tar_plan(
 	# Write out new database
 	tar_file(
 		pteridocat_out,
-		write_tar_csv(
+		write_tar_rds(
 			pteridocat,
-			"results/pteridocat.csv")
+			"results/pteridocat.RDS")
 	)
 )
