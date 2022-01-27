@@ -1,7 +1,13 @@
 source("R/packages.R")
 source("R/functions.R")
 
-# https://download.catalogueoflife.org/col/monthly/2021-12-18_dwca.zip
+# Set options:
+# - Use targets workspaces for debugging
+# - Track dependencies in some packages
+tar_option_set(
+	workspace_on_error = TRUE,
+	imports = c("dwctaxon")
+)
 
 tar_plan(
 
