@@ -890,6 +890,86 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 			namePublishedIn = "J. Nipp. Fern. Cl. 2(29): 7 (1977), n. n.; Sa.Kurata & Nakaike, Ill. Jap. Pterid. 8: 414 (1997).",
 			nameAccordingTo = "http://ylist.info/ylist_detail_display.php?pass=32320"
 		) %>%
+		# Change synonym status of Diplazium longisorum as indicated by plastome data
+		dct_change_status(
+			sci_name = "Diplazium longisorum (Baker) C. Chr.",
+			new_status = "accepted"
+		) %>%
+		dct_change_status(
+			sci_name = "Desmophlebium longisorum (Baker) Mynssen, A. Vasco, Sylvestre, R. C. Moran & Rouhan",
+			new_status = "synonym",
+			usage_name = "Diplazium longisorum (Baker) C. Chr."
+		) %>%
+		# Change status of Parahemionitis arifolia as indicated by plastome data
+		# supposed to be accepted by PPGI
+		# not a synonym of Acrostichum aureum
+		dct_change_status(
+			sci_name = "Parahemionitis arifolia (Burm. fil.) Panigrahi",
+			new_status = "accepted"
+		) %>%
+		dct_change_status(
+			sci_name = "Hemionitis arifolia (Burm. fil.) T. Moore",
+			new_status = "synonym",
+			usage_name = "Parahemionitis arifolia (Burm. fil.) Panigrahi"
+		) %>%
+		# Change status of Microsorum insigne as indicated by plastome data
+		dct_change_status(
+			sci_name = "Microsorum insigne (Blume) Copel.",
+			new_status = "accepted"
+		) %>%
+		dct_change_status(
+			sci_name = "Leptochilus insignis (Blume) Fraser-Jenk.",
+			new_status = "synonym",
+			usage_name = "Microsorum insigne (Blume) Copel."
+		) %>%
+		# Change status of Prosaptia khasyana as indicated by plastome data
+		dct_change_status(
+			sci_name = "Prosaptia khasyana (Hook.) C. Chr. & Tardieu",
+			new_status = "accepted"
+		) %>%
+		dct_change_status(
+			sci_name = "Polypodium khasyanum Hook.",
+			new_status = "synonym",
+			usage_name = "Prosaptia khasyana (Hook.) C. Chr. & Tardieu"
+		) %>%
+		# Change status of Alsophila brunoniana as indicated by plastome data
+		dct_change_status(
+			sci_name = "Alsophila brunoniana Wall.",
+			new_status = "accepted"
+		) %>%
+		dct_change_status(
+			sci_name = "Sphaeropteris brunoniana (Wall. ex Hook.) R. M. Tryon",
+			new_status = "synonym",
+			usage_name = "Alsophila brunoniana Wall."
+		) %>%
+		# Change status of Alsophila lepifera as indicated by plastome data
+		dct_change_status(
+			sci_name = "Sphaeropteris lepifera (J. Sm. ex Hook.) R. M. Tryon",
+			new_status = "accepted"
+		) %>%
+		dct_change_status(
+			sci_name = "Alsophila lepifera J. Sm. ex Hook.",
+			new_status = "synonym",
+			usage_name = "Sphaeropteris lepifera (J. Sm. ex Hook.) R. M. Tryon"
+		) %>%
+		# Change status of names that should be accepted as indicated by
+		# rogue family analysis
+		dct_change_status(
+			sci_name = "Deparia petersenii var. yakusimensis (H. Itô) M. Kato",
+			new_status = "accepted"
+		) %>%
+		dct_change_status(
+			sci_name = "Dryopteris schnellii Tardieu",
+			new_status = "accepted"
+		) %>%
+		dct_change_status(
+			sci_name = "Dryopteris spinosa Copel.",
+			new_status = "accepted"
+		) %>%
+		dct_change_status(
+			sci_name = "Dryopteris triangularis Herter",
+			new_status = "accepted"
+		) %>%
 		dct_validate()
 
 	# Format names to add as accepted
