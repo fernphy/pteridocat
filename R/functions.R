@@ -970,6 +970,14 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
 			sci_name = "Dryopteris triangularis Herter",
 			new_status = "accepted"
 		) %>%
+		dct_change_status(
+			sci_name = "Davallia polypodioides D. Don",
+			new_status = "accepted"
+		) %>%
+		dct_change_status(
+			sci_name = "Asplenium scandens Houlston & T. Moore",
+			new_status = "accepted"
+		) %>%
 		dct_validate()
 
 	# Format names to add as accepted
