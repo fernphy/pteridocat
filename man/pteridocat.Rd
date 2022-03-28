@@ -11,7 +11,7 @@ Dataframe (tibble), including the following columns:
 \item \code{parentNameUsageID}: Identifier for the name usage (documented meaning of
 the name according to a source) of the direct, most proximate higher-rank
 parent taxon (in a classification) of the most specific element of the
-\code{scientificName} (i.e., parent taxon); maps to `taxonID.
+\code{scientificName} (i.e., parent taxon); maps to \code{taxonID}.
 \item \code{acceptedNameUsageID }: Identifier for the name usage of the currently
 accepted taxon (i.e., accepted name of a synonym); maps to
 \code{taxonID}.
@@ -40,6 +40,8 @@ the name and its conformance to the relevant rules of nomenclature.
 pointed to by the described resource.
 \item \code{modified}: The most recent date-time on which the information was changed.
 (NA for data that were imported from Catalog of Life and not modified).
+\item \code{nameAccordingTo}: The reference to the source in which the specific taxon
+concept circumscription is defined or implied.
 }
 }
 \source{
@@ -60,8 +62,8 @@ Taxonomic database of pteridophytes following
 \details{
 Taxonomic data of pteridophytes compiled by Hassler (2021) were downloaded
 from the \href{https://www.catalogueoflife.org/}{Catalog of Life}
-and modified according to code in \code{data-raw/pteridocat.R} under the
-\href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons Attribution (CC BY) 4.0 license}
+and modified under the
+\href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons Attribution (CC BY) 4.0 license}.
 
 Description of data format modified from
 \href{https://www.tdwg.org/}{Biodiversity Information Standards (TDWG)} under the

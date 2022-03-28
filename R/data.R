@@ -5,8 +5,8 @@
 #'
 #' Taxonomic data of pteridophytes compiled by Hassler (2021) were downloaded
 #' from the [Catalog of Life](https://www.catalogueoflife.org/)
-#' and modified according to code in `data-raw/pteridocat.R` under the
-#' [Creative Commons Attribution (CC BY) 4.0 license](http://creativecommons.org/licenses/by/4.0/)
+#' and modified under the
+#' [Creative Commons Attribution (CC BY) 4.0 license](http://creativecommons.org/licenses/by/4.0/).
 #'
 #' Description of data format modified from
 #' [Biodiversity Information Standards (TDWG)](https://www.tdwg.org/) under the
@@ -17,7 +17,7 @@
 #' - `parentNameUsageID`: Identifier for the name usage (documented meaning of
 #' the name according to a source) of the direct, most proximate higher-rank
 #' parent taxon (in a classification) of the most specific element of the
-#' `scientificName` (i.e., parent taxon); maps to `taxonID.
+#' `scientificName` (i.e., parent taxon); maps to `taxonID`.
 #' - `acceptedNameUsageID `: Identifier for the name usage of the currently
 #' accepted taxon (i.e., accepted name of a synonym); maps to
 #' `taxonID`.
@@ -46,6 +46,8 @@
 #' pointed to by the described resource.
 #' - `modified`: The most recent date-time on which the information was changed.
 #' (NA for data that were imported from Catalog of Life and not modified).
+#' - `nameAccordingTo`: The reference to the source in which the specific taxon
+#' concept circumscription is defined or implied.
 #' @source Hassler, M. (2021). Checklist of Ferns and Lycophytes of the World.
 #'   In O. Bánki, Y. Roskov, L. Vandepitte, R. E. DeWalt, D. Remsen, P. Schalk,
 #'   T. Orrell, M. Keping, J. Miller, R. Aalbu, R. Adlard, E. Adriaenssens, C.
