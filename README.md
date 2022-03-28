@@ -69,4 +69,4 @@ Life](https://www.catalogueoflife.org/).
 [GPL v3.0](LICENSE.md)
 
 [CC BY-SA 4.0 is one-way compatible with GPL
-v3.0](https://www.gnu.org/licenses/license-list.en.html).
+v3.0](https://creativecommons.org/share-your-work/licensing-considerations/compatible-licenses/).
