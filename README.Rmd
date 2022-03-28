@@ -18,7 +18,8 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of pteridocat is to provide a taxonomic database of pteridophytes that adheres to [Darwin Core standards](https://dwc.tdwg.org/).
+The goal of pteridocat is to provide a taxonomic database of pteridophytes that 
+adheres to [Darwin Core standards](https://dwc.tdwg.org/).
 
 ## Installation
 
@@ -31,7 +32,10 @@ remotes::install_github("joelnitta/pteridocat")
 
 ## Usage
 
-The taxonomic database is provided as a tibble:
+This package consists of a single data object, a taxonomic database of 
+pteridophytes called `pteridocat`.
+
+The `tibble` package is recommended for pretty printing.
 
 ```{r example, eval = TRUE}
 library(pteridocat)
@@ -44,14 +48,16 @@ Run `help(pteridocat)` to see more details about the data.
 
 ## Where do these data come from?
 
-The data were downloaded from the [Catalog of Life](https://www.catalogueoflife.org/) and
-modified according to code in [data-raw/pteridocat.R](data-raw/pteridocat.R) under the 
-[Creative Commons Attribution (CC BY) 4.0](https://creativecommons.org/licenses/by/4.0/) license.
-They were originally compiled by Michael Hassler, who maintains the [World Ferns
-database](https://www.worldplants.de/world-ferns/ferns-and-lycophytes-list), and
-generously contributed them to Catalog of Life.
+The data were downloaded from the 
+[Catalog of Life](https://www.catalogueoflife.org/) and modified under the 
+[Creative Commons Attribution (CC BY) 4.0](https://creativecommons.org/licenses/by/4.0/) 
+license. They were originally compiled by Michael Hassler, who maintains the 
+[World Ferns database](https://www.worldplants.de/world-ferns/ferns-and-lycophytes-list),
+and generously contributed them to 
+[Catalog of Life](https://www.catalogueoflife.org/).
 
-## Licenses
+## License
 
-- Code: [MIT](LICENSE.md)
-- `pteridocat` dataset: [Creative Commons Attribution (CC BY) 4.0](https://creativecommons.org/licenses/by/4.0/)
+[GPL v3.0](LICENSE.md)
+
+[CC BY-SA 4.0 is one-way compatible with GPL v3.0](https://www.gnu.org/licenses/license-list.en.html).

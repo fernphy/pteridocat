@@ -21,31 +21,34 @@ remotes::install_github("joelnitta/pteridocat")
 
 ## Usage
 
-The taxonomic database is provided as a tibble:
+This package consists of a single data object, a taxonomic database of
+pteridophytes called `pteridocat`.
+
+The `tibble` package is recommended for pretty printing.
 
 ``` r
 library(pteridocat)
 library(tibble)
 
 pteridocat
-#> # A tibble: 63,743 × 16
+#> # A tibble: 64,602 × 17
 #>    taxonID parentNameUsageID acceptedNameUsageID taxonomicStatus taxonRank
 #>    <chr>   <chr>             <chr>               <chr>           <chr>    
-#>  1 6VC3M   6NPC              <NA>                accepted        species  
-#>  2 4GFPS   6NPC              <NA>                accepted        species  
-#>  3 4GFR7   6NPC              <NA>                accepted        species  
-#>  4 6VC3J   6NPC              <NA>                accepted        species  
-#>  5 4GFQC   6NPC              <NA>                accepted        species  
-#>  6 4GFPQ   6NPC              <NA>                accepted        species  
-#>  7 6VC3K   6NPC              <NA>                accepted        species  
-#>  8 4GFPG   6NPC              <NA>                accepted        species  
-#>  9 4GFPH   6NPC              <NA>                accepted        species  
-#> 10 4GFMR   6NPC              <NA>                accepted        species  
-#> # … with 63,733 more rows, and 11 more variables: scientificName <chr>,
+#>  1 392BH   632BH             <NA>                accepted        species  
+#>  2 6F23D   632BH             <NA>                accepted        species  
+#>  3 6F226   632BH             <NA>                accepted        species  
+#>  4 392L6   632BH             <NA>                accepted        species  
+#>  5 392KN   632BH             <NA>                accepted        species  
+#>  6 392KT   632BH             <NA>                accepted        species  
+#>  7 392KF   632BH             <NA>                accepted        species  
+#>  8 6F25L   632BH             <NA>                accepted        species  
+#>  9 392KM   632BH             <NA>                accepted        species  
+#> 10 392KK   632BH             <NA>                accepted        species  
+#> # … with 64,592 more rows, and 12 more variables: scientificName <chr>,
 #> #   genericName <chr>, infragenericEpithet <chr>, specificEpithet <chr>,
 #> #   infraspecificEpithet <chr>, namePublishedIn <chr>, nomenclaturalCode <chr>,
 #> #   nomenclaturalStatus <chr>, taxonRemarks <chr>, references <chr>,
-#> #   modified <dttm>
+#> #   modified <chr>, nameAccordingTo <chr>
 ```
 
 Run `help(pteridocat)` to see more details about the data.
@@ -53,16 +56,17 @@ Run `help(pteridocat)` to see more details about the data.
 ## Where do these data come from?
 
 The data were downloaded from the [Catalog of
-Life](https://www.catalogueoflife.org/) and modified according to code
-in [data-raw/pteridocat.R](data-raw/pteridocat.R) under the [Creative
+Life](https://www.catalogueoflife.org/) and modified under the [Creative
 Commons Attribution (CC BY)
 4.0](https://creativecommons.org/licenses/by/4.0/) license. They were
 originally compiled by Michael Hassler, who maintains the [World Ferns
 database](https://www.worldplants.de/world-ferns/ferns-and-lycophytes-list),
-and generously contributed them to Catalog of Life.
+and generously contributed them to [Catalog of
+Life](https://www.catalogueoflife.org/).
 
-## Licenses
+## License
 
--   Code: [MIT](LICENSE.md)
--   `pteridocat` dataset: [Creative Commons Attribution (CC BY)
-    4.0](https://creativecommons.org/licenses/by/4.0/)
+[GPL v3.0](LICENSE.md)
+
+[CC BY-SA 4.0 is one-way compatible with GPL
+v3.0](https://www.gnu.org/licenses/license-list.en.html).
