@@ -28,7 +28,7 @@ You can install pteridocat from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("joelnitta/pteridocat")
+remotes::install_github("fernphy/pteridocat")
 ```
 
 ## Usage
@@ -61,7 +61,7 @@ and generously contributed them to
 
 If you use this package, please cite it! Here is an example:
 
-    Nitta, JH (2022) pteridocat: A taxonomic database of pteridophytes. https://doi.org/10.5281/zenodo.6388786
+    FTOL working group. (2022). pteridocat: A taxonomic database of pteridophytes. https://doi.org/10.5281/zenodo.6388786
 
 The example DOI above is for the overall package.
 
