@@ -66,7 +66,7 @@ database](https://www.worldplants.de/world-ferns/ferns-and-lycophytes-list),
 and generously contributed them to [Catalog of
 Life](https://www.catalogueoflife.org/).
 
-## Citing the data
+## Citing
 
 If you use this package, please cite it! Here is an example:
 
@@ -74,8 +74,8 @@ If you use this package, please cite it! Here is an example:
 
 The example DOI above is for the overall package.
 
-Here is the latest DOI, which you should use if you are using the latest
-version of the package:
+Here is the latest DOI, which you should cite if you are using the
+latest version of the package:
 
 [![DOI](https://zenodo.org/badge/474876749.svg)](https://zenodo.org/badge/latestdoi/474876749)
 
