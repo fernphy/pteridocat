@@ -69,7 +69,7 @@ pcg_extract_fow <- function(col_data) {
     dplyr::mutate(dplyr::across(dplyr::everything(), ~dplyr::na_if(., ""))) %>%
     # Drop empty columns, unused columns
     janitor::remove_empty("cols") %>%
-    dplyr::select(-datasetID, -scientificNameID) %>%
+    dplyr::select(-datasetID, -scientificNameID, -`col:notho`) %>%
     # Keep only species level and below
     # FIXME: eventually add higher ranks back making sure they conform to PPGI
     dplyr::filter(
