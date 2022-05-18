@@ -10,8 +10,8 @@
 #' extract the taxonomic names data, which is typically named "Taxon.tsv".
 #'
 #' @param col_data_path Path to data downloaded from the Catalog of Life; either
-#' the original zip file, or the tsv file containing the taxonomic data extracted
-#' from the zip file (usually named "Taxon.tsv").
+#' the original zip file, or the tsv file containing the taxonomic data
+#' extracted from the zip file (usually named "Taxon.tsv").
 #'
 #' @return Dataframe (tibble)
 #' @autoglobal
@@ -25,19 +25,27 @@ pcg_load_col <- function(col_data_path) {
   temp_tsv <- ""
   if (file_ending == "zip") {
     tryCatch(
-      expr = utils::unzip(col_data_path, files = "Taxon.tsv", overwrite = TRUE, exdir = temp_dir),
-      finally = "Could not find 'Taxon.tsv' in zip file. Try manually unzipping."
+      expr = utils::unzip(
+        col_data_path,
+        files = "Taxon.tsv",
+        overwrite = TRUE,
+        exdir = temp_dir),
+        finally = "Could not find 'Taxon.tsv' in zip file. Try manually unzipping." # nolint
     )
     temp_tsv <- fs::path(temp_dir, "Taxon.tsv")
     col_data_path <- temp_tsv
   }
 
-  # Use data.table as it handles quotation marks in data better than read_*() functions
-  res <- data.table::fread(file = col_data_path, sep = "\t", stringsAsFactors = FALSE) %>%
+  # Use data.table as it handles quotation marks in data better than read_*()
+  # functions
+  res <- data.table::fread(
+           file = col_data_path, sep = "\t", stringsAsFactors = FALSE) %>%
     tibble::as_tibble()
 
   # Clean up
-  if (file_ending == "zip" && fs::file_exists(temp_tsv)) fs::file_delete(temp_tsv)
+  if (file_ending == "zip" && fs::file_exists(temp_tsv)) {
+    fs::file_delete(temp_tsv)
+  }
 
   res
 
@@ -64,10 +72,17 @@ pcg_extract_fow <- function(col_data) {
     dplyr::select(-datasetID, -scientificNameID) %>%
     # Keep only species level and below
     # FIXME: eventually add higher ranks back making sure they conform to PPGI
-    dplyr::filter(taxonRank %in% c("form", "infraspecific name", "species", "subform", "subspecies", "subvariety", "variety")) %>%
+    dplyr::filter(
+      taxonRank %in% c(
+        "form", "infraspecific name", "species",
+        "subform", "subspecies", "subvariety", "variety")
+    ) %>%
     # Filter some names that were incorrectly labeled species level
-    dplyr::filter(stringr::str_detect(scientificName, "Polypodiaceae tribe Thelypterideae|Asplenium grex Triblemma|Pteridaceae tribus Platyzomateae|Filicaceae tribus Taenitideae", negate = TRUE)) %>%
-    # Note: taxonID is unique, but scientificName may not be (esp in case of ambiguous synonyms)
+    dplyr::filter(stringr::str_detect(scientificName,
+      "Polypodiaceae tribe Thelypterideae|Asplenium grex Triblemma|Pteridaceae tribus Platyzomateae|Filicaceae tribus Taenitideae", # nolint
+      negate = TRUE)) %>%
+    # Note: taxonID is unique, but scientificName may not be
+    # (esp in case of ambiguous synonyms)
     assertr::assert(assertr::not_na, taxonID, scientificName) %>%
     assertr::assert(assertr::is_uniq, taxonID) %>%
     # Fix scientific names that are both synonyms and accepted names
@@ -75,10 +90,10 @@ pcg_extract_fow <- function(col_data) {
       !taxonID %in% c(
         "36HP3", # Diplazium lonchophyllum Kunze -> exclude ambiguous synonym
         "36J4J", # Diplazium wangii Ching -> exclude ambiguous synonym
-        "3926G", # Elaphoglossum killipii Mickel -> exclude ambiguous synonym (per Tropicos)
-        "392HM", # Elaphoglossum rigidum (Aubl.) Urb. -> exclude ambiguous synonym
-        "392HN", # Elaphoglossum rigidum (Aubl.) Urb. -> exclude ambiguous synonym
-        "392K8", # Elaphoglossum serpentinum A. Rojas & W. D. Rodr. -> exclude ambiguous synonym
+        "3926G", # Elaphoglossum killipii Mickel -> exclude ambiguous synonym (per Tropicos) # nolint
+        "392HM", # Elaphoglossum rigidum (Aubl.) Urb. -> exclude ambiguous synonym # nolint
+        "392HN", # Elaphoglossum rigidum (Aubl.) Urb. -> exclude ambiguous synonym # nolint
+        "392K8", # Elaphoglossum serpentinum A. Rojas & W. D. Rodr. -> exclude ambiguous synonym # nolint
         "8S7SM", # Goniopteris hastata Fée -> exclude ambiguous synonym
         "HK2Q" # Asplenium centrifugale Baker -> exclude ambiguous synonym
       )
