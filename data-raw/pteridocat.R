@@ -3,7 +3,8 @@
 
 fs::file_copy(
 	"../pteridocat_maker/results/pteridocat.RDS", # path to pteridocat_maker
-	"data-raw/pteridocat.RDS")
+	"data-raw/pteridocat.RDS",
+	overwrite = TRUE)
 
 pteridocat <- readRDS("data-raw/pteridocat.RDS")
 
