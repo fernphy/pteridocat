@@ -59,7 +59,7 @@ tar_plan(
   # Tidy results ----
   # FTOL Fuzzily matched names
   pterido_fuzzy_tropicos = tidy_fuzzy_tropicos(
-		pterido_names_to_inspect, pterido_tropicos),
+    pterido_names_to_inspect, pterido_tropicos),
   # FTOL no-match names
   pterido_no_match_taxized = tidy_ftol_no_match(
     pterido_long, ipni_res,

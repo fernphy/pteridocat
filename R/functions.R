@@ -53,9 +53,11 @@ pcg_load_col <- function(col_data_path) {
 
 #' Extract Ferns of the World taxonomic data from Catalog of Life
 #'
-#' Also do some quality checks, and filter to only data at species level or below
+#' Also do some quality checks, and filter to only data at species level or
+#' below
 #'
-#' @param col_data Catalog of Life data. Output of of \code{\link{pcg_load_col}()}.
+#' @param col_data Catalog of Life data. Output of of
+#' \code{\link{pcg_load_col}()}.
 #'
 #' @return Dataframe (tibble)
 #' @autoglobal
@@ -112,8 +114,8 @@ pcg_extract_fow <- function(col_data) {
 #' extract the taxonomic names data, which is typically named "Taxon.tsv".
 #'
 #' @param col_data_path Path to data downloaded from the Catalog of Life; either
-#' the original zip file, or the tsv file containing the taxonomic data extracted
-#' from the zip file (usually named "Taxon.tsv").
+#' the original zip file, or the tsv file containing the taxonomic data
+#' extracted from the zip file (usually named "Taxon.tsv").
 #'
 #' @return String with version of Ferns of the World data in Catalog of Life
 #'
@@ -146,7 +148,7 @@ get_fow_version <- function(col_data_path) {
 
   assertthat::assert_that(
     title == "Checklist of Ferns and Lycophytes of the World",
-    msg = "Dataset title is not 'Checklist of Ferns and Lycophytes of the World'"
+    msg = "Dataset title is not 'Checklist of Ferns and Lycophytes of the World'" # nolint
   )
 
   version <-
@@ -156,7 +158,8 @@ get_fow_version <- function(col_data_path) {
     purrr::pluck("eml", "additionalMetadata", "metadata", "col", "version", 1)
 
   # Clean up
-  if (file_ending == "zip" && fs::file_exists(temp_xml)) fs::file_delete(temp_xml)
+  if (file_ending == "zip" && fs::file_exists(temp_xml))
+    fs::file_delete(temp_xml)
 
   version
 
@@ -169,18 +172,18 @@ get_fow_version <- function(col_data_path) {
 #'
 #' @return Tibble
 #'
-load_pterido_names_taxized_inspected <- function(
-  pterido_names_taxized_inspected_file) {
+load_pterido_names_taxized_inspected <- function( # nolint
+  pterido_names_taxized_inspected_file) { # nolint
   read_csv(pterido_names_taxized_inspected_file) %>%
     # Filter to only names marked as inspected
-    assert(within_bounds(0,1), done) %>%
+    assert(within_bounds(0, 1), done) %>%
     filter(done == 1) %>%
     # Make sure the "use_query_" columns don't sum to > 1 across each row
     mutate(across(contains("use_query_"), ~replace_na(., 0))) %>%
-    assert_rows(rowSums, within_bounds(0,1), contains("use_query_")) %>%
+    assert_rows(rowSums, within_bounds(0, 1), contains("use_query_")) %>%
     # Make sure the "use_match_" columns don't sum to > 1 across each row
     mutate(across(contains("use_match_"), ~replace_na(., 0))) %>%
-    assert_rows(rowSums, within_bounds(0,1), contains("use_match_"))
+    assert_rows(rowSums, within_bounds(0, 1), contains("use_match_"))
 }
 
 # tropicos ----
@@ -251,8 +254,12 @@ fetch_tropicos <- function(names_to_inspect) {
     names_to_inspect %>%
     select(query, matched_name, query_match_taxon_agree) %>%
     # add 'set' to group query/match pairs
-    mutate(set = 1:nrow(.)) %>%
-    pivot_longer(names_to = "type", values_to = "sci_name", -c(set, query_match_taxon_agree)) %>%
+    mutate(set = seq_len(nrow(.))) %>%
+    pivot_longer(
+      names_to = "type",
+      values_to = "sci_name",
+      -c(set, query_match_taxon_agree)
+    ) %>%
     filter(!is.na(sci_name)) %>%
     # parse canonical name from sci name for querying tropicos
     mutate(
@@ -260,7 +267,10 @@ fetch_tropicos <- function(names_to_inspect) {
         select(taxon = canonicalsimple) # drops "var." etc from names
     ) %>%
     # if variety and specific epithet are the same, drop the variety
-    separate(taxon, into = c("genus", "specific_epithet", "variety"), sep = " ", fill = "right", remove = FALSE) %>%
+    separate(
+      taxon,
+      into = c("genus", "specific_epithet", "variety"),
+      sep = " ", fill = "right", remove = FALSE) %>%
     mutate(taxon = case_when(
       is.na(variety) ~ taxon,
       variety == specific_epithet ~ paste(genus, specific_epithet),
@@ -366,8 +376,8 @@ categorize_fuzzy_taxastand <- function(ts_results) {
 #'
 #' @param query String; single scientific name to query
 #'
-#' @return Tibble with columns `query`, `id` (IPNI id), `version` (IPNI version),
-#' `matched_name`, `reference`.
+#' @return Tibble with columns `query`, `id` (IPNI id), `version` (IPNI
+#' version), `matched_name`, `reference`.
 #'
 #' @example
 #' ipni_search_taxon("Crepidomanes minutum")
@@ -389,7 +399,10 @@ ipni_search_taxon <- function(query) {
   # Parse name
   query_parsed <-
     tibble(query = query) %>%
-    mutate(gn_parse_tidy(query) %>% select(canonicalsimple)) %>%
+    mutate(
+      gn_parse_tidy(query) %>%
+      select(canonicalsimple)
+    ) %>%
     separate(
       canonicalsimple,
       c("genus", "species", "infraspecies"),
@@ -429,7 +442,8 @@ ipni_search_taxon <- function(query) {
 #'
 #' @param query Character vector; scientific name(s) to query
 #'
-#' @return Tibble with columns `query`, `id` (IPNI id), `version` (IPNI version),
+#' @return Tibble with columns `query`, `id` (IPNI id), `version` (IPNI
+#' version),
 #' `matched_name`, `reference`.
 #'
 #' @examples
@@ -501,14 +515,14 @@ gbif_search_taxon <- function(query) {
 #' gbif_search_names(c("Crepidomanes minutum", "Foo bar"))
 #'
 gbif_search_names <- function(query) {
-  map_df(query, gbif_search_taxon)
+  purrr::map_df(query, gbif_search_taxon)
 }
 
 # POW ----
 
 # Get a single Plants of the World ID from a query string, as a tibble
 get_pow_id <- function(query) {
-  pow_id <- get_pow(sci_com = query)
+  pow_id <- taxize::get_pow(sci_com = query)
   tibble(
     id = pow_id,
     url = attr(pow_id, "uri")
@@ -524,7 +538,7 @@ pow_search_single <- function(id) {
     reference = NA,
     taxonomicStatus = NA
   ))
-  pow_data <- pow_lookup(id)
+  pow_data <- taxize::pow_lookup(id)
   tibble(
     modified = pow_data$meta$modified,
     matched_name = paste(pow_data$meta$name, pow_data$meta$authors),
@@ -562,38 +576,45 @@ pow_search_names <- function(query) {
 #'
 #' Only converts results that have been categorized as "single_valid"
 #'
-#' @param fuzzy_tropicos_cat Dataframe; output of fuzzy name matching from FTOL with
-#'   tropicos data added and categorized by result type (in long format)
+#' @param fuzzy_tropicos_cat Dataframe; output of fuzzy name matching from FTOL
+#'   with tropicos data added and categorized by result type (in long format)
 #' @param fuzzy_to_inspect Dataframe; output of fuzzy name matching from FTOL
-#'   (in wide format)
-#' @return Dataframe (tibble) in wide format; output of fuzzy name matching from FTOL
-#'   (in wide format) with additional data filled in from tropicos
+#'   (in wide format) @return Dataframe (tibble) in wide format; output of fuzzy
+#' name matching from FTOL (in wide format) with additional data filled in from
+#'   tropicos
 #'
 widen_valid_fuzzy_trop <- function(fuzzy_tropicos_cat, fuzzy_to_inspect) {
 
   single_valid_wide <-
     fuzzy_tropicos_cat %>%
     filter(trop_cat == "single_valid", !is.na(nameid)) %>%
-    select(type, sci_name, namePublishedIn = namepublishedcitation, nameAccordingTo = source) %>%
+    select(
+      type,
+      sci_name,
+      namePublishedIn = namepublishedcitation,
+      nameAccordingTo = source) %>%
     pivot_wider(names_from = type, values_from = sci_name) %>%
     mutate(
       query_match_taxon_agree = FALSE,
       use_query_as_synonym = if_else(is.na(query), 1, 0),
       use_query_as_accepted = if_else(is.na(matched_name), 1, 0),
       use_query_as_new = 0,
-      taxonRemarks = "spelling mistake in species name; fix according to Tropicos",
+      taxonRemarks =
+        "spelling mistake in species name; fix according to Tropicos",
       notes = "automatically determined by pteridocat"
     ) %>%
     # Fill in missing query, matched_name
     left_join(
-      select(fuzzy_to_inspect, query, matched_name), by = "query", na_matches = "never"
+      select(fuzzy_to_inspect, query, matched_name),
+        by = "query", na_matches = "never"
     ) %>%
     mutate(
       matched_name = coalesce(matched_name.x, matched_name.y)
     ) %>%
     select(-c(matched_name.x, matched_name.y)) %>%
     left_join(
-      select(fuzzy_to_inspect, query, matched_name, matched_status), by = "matched_name", na_matches = "never"
+      select(fuzzy_to_inspect, query, matched_name, matched_status),
+      by = "matched_name", na_matches = "never"
     ) %>%
     mutate(
       query = coalesce(query.x, query.y)
@@ -607,7 +628,9 @@ widen_valid_fuzzy_trop <- function(fuzzy_tropicos_cat, fuzzy_to_inspect) {
       namePublishedIn, nameAccordingTo, taxonRemarks, notes)
 
   fuzzy_to_inspect %>%
-    anti_join(single_valid_wide, by = c("query", "matched_name"), na_matches = "never") %>%
+    anti_join(
+      single_valid_wide,
+      by = c("query", "matched_name"), na_matches = "never") %>%
     bind_rows(single_valid_wide) %>%
     arrange(query_match_taxon_agree, query, matched_name)
 
@@ -647,8 +670,8 @@ lookup_taxon_id <- function(new_names, fow) {
 #' pteridocat generation ()
 #'
 #' @param pterido_names_to_inspect Dataframe; output of name matching from FTOL
-#' @param pterido_tropicos Dataframe; output of fuzzy name matching from FTOL with
-#'   tropicos data added
+#' @param pterido_tropicos Dataframe; output of fuzzy name matching from FTOL
+#'   with tropicos data added
 #'
 #' @return Tibble with values for columns `use_query_as_synonym`,
 #' `use_query_as_accepted`, `use_query_as_new` assigned (0 or 1)
@@ -657,7 +680,7 @@ tidy_fuzzy_tropicos <- function(pterido_names_to_inspect, pterido_tropicos) {
 
   # add taxastand categories: 'fuzzy', 'mult_match', 'no_match'
   # in `name_res_status` column
-  pterido_names_to_inspect_categorized <-
+  pterido_names_to_inspect_categorized <- # nolint
     categorize_fuzzy_taxastand(pterido_names_to_inspect)
 
   pterido_names_to_inspect_categorized %>%
@@ -686,7 +709,8 @@ tidy_fuzzy_tropicos <- function(pterido_names_to_inspect, pterido_tropicos) {
 #' @param pterido_tropicos Dataframe; output of name matching from FTOL with
 #'   tropicos data added
 #'
-#' @return Tibble; names in long format with candidate matches from tropicos added
+#' @return Tibble; names in long format with candidate matches from tropicos
+#' added
 #'
 tidy_long_tropicos <- function(pterido_names_to_inspect, pterido_tropicos) {
 
@@ -730,7 +754,10 @@ format_gbif_query <- function(search_res) {
   search_res %>%
     filter(is.na(matched_name)) %>%
     select(query) %>%
-    mutate(gn_parse_tidy(query) %>% select(canonicalsimple)) %>%
+    mutate(
+      gn_parse_tidy(query) %>%
+      select(canonicalsimple)
+    ) %>%
     select(query, gbif_query = canonicalsimple)
 }
 
@@ -743,7 +770,10 @@ format_gbif_query <- function(search_res) {
 format_pow_query <- function(search_res) {
   search_res %>%
     filter(is.na(matched_name)) %>%
-    mutate(gn_parse_tidy(query) %>% select(pow_query = canonicalfull)) %>%
+    mutate(
+      gn_parse_tidy(query) %>%
+      select(pow_query = canonicalfull)
+    ) %>%
     select(query, pow_query)
 }
 
@@ -753,8 +783,10 @@ format_pow_query <- function(search_res) {
 #' @param pterido_long Dataframe; output of name matching from FTOL
 #'   in long format with candidate matches from tropicos added
 #' @param ipni_res Dataframe; results of querying IPNI for FTOL "no-match" names
-#' @param gbif_res  Dataframe; results of querying GBIF for FTOL "no-match" names
-#' @param gbif_query Dataframe; GBIF query terms. `query` column is original FTOL
+#' @param gbif_res  Dataframe; results of querying GBIF for FTOL "no-match"
+#' names
+#' @param gbif_query Dataframe; GBIF query terms. `query` column is original
+#' FTOL
 #' query; `gbif_query` is parsed version used to query GBIF.
 #' @param pow_res Dataframe; results of querying POW for FTOL "no-match" names
 #' @param pow_query Dataframe; POW query terms. `query` column is original FTOL
@@ -817,7 +849,8 @@ tidy_ftol_no_match <- function(
   }
 
   # Combine results of querying IPNI, GBIF, and POW for FTOL "no-match" names
-  ipni_gbif_pow_matched <- bind_rows(ipni_res_matched, gbif_res_matched, pow_res_matched) %>%
+  ipni_gbif_pow_matched <- bind_rows(
+    ipni_res_matched, gbif_res_matched, pow_res_matched) %>%
     # name_res_status refers to original FTOL search with ts_resolve_names()
     # these were all "no_match"
     mutate(name_res_status = "no_match")
@@ -898,16 +931,17 @@ modify_fow <- function(fow) {
       sci_name = "Dryopteris x ebinoensis Sa.Kurata",
       taxonomicStatus = "nom. nud.",
       taxonRank = "species",
-      namePublishedIn = "J. Nipp. Fern. Cl. 2(29): 7 (1977), n. n.; Sa.Kurata & Nakaike, Ill. Jap. Pterid. 8: 414 (1997).",
+      namePublishedIn = "J. Nipp. Fern. Cl. 2(29): 7 (1977), n. n.; Sa.Kurata & Nakaike, Ill. Jap. Pterid. 8: 414 (1997).", # nolint
       nameAccordingTo = "http://ylist.info/ylist_detail_display.php?pass=32320"
     ) %>%
-    # Change synonym status of Diplazium longisorum as indicated by plastome data
+    # Change synonym status of Diplazium longisorum as indicated by plastome
+    # data
     dct_change_status(
       sci_name = "Diplazium longisorum (Baker) C. Chr.",
       new_status = "accepted"
     ) %>%
     dct_change_status(
-      sci_name = "Desmophlebium longisorum (Baker) Mynssen, A. Vasco, Sylvestre, R. C. Moran & Rouhan",
+      sci_name = "Desmophlebium longisorum (Baker) Mynssen, A. Vasco, Sylvestre, R. C. Moran & Rouhan", # nolint
       new_status = "synonym",
       usage_name = "Diplazium longisorum (Baker) C. Chr."
     ) %>%
@@ -1034,7 +1068,7 @@ modify_fow <- function(fow) {
     dct_add_row(
       sci_name = "Lindsaea millefolia K.U.Kramer",
       taxonomicStatus = "accepted",
-      namePublishedIn = "Acta Botanica Neerlandica 6(2): 135. 1957. (Acta Bot. Neerl.)",
+      namePublishedIn = "Acta Botanica Neerlandica 6(2): 135. 1957. (Acta Bot. Neerl.)", # nolint
       nameAccordingTo = "http://www.tropicos.org/Name/26613614"
     ) %>%
     dct_change_status(
@@ -1206,15 +1240,18 @@ modify_fow <- function(fow) {
 
 #' Update taxonomic names in Ferns of the World to generate Pteridocat
 #'
-#' @param pterido_names_taxized_inspected Dataframe (tibble); Inspected taxonomic names of
-#' pteridophytes output from FTOL workflow after automatically adding
-#' taxonomic data with taxize
-#' @param new_names Dataframe (tibble); Manually curated new names to add to taxonomic database
+#' @param pterido_names_taxized_inspected Dataframe (tibble); Inspected
+#' taxonomic names of pteridophytes output from FTOL workflow after
+#' automatically adding taxonomic data with taxize
+#' @param new_names Dataframe (tibble); Manually curated new names to add to
+#' taxonomic database
 #' @param fow Dataframe (tibble); Ferns of the World taxonomic database
 #'
 #' @return Dataframe (tibble); updated taxonomic database ("pteridocat")
 #'
-update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
+update_fow_names <- function(
+  pterido_names_taxized_inspected, # nolint
+  new_names, fow) {
 
   # Format names to add as accepted
   names_add_as_accepted <-
@@ -1340,7 +1377,7 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
     )
 
   # - FOW match is a synonym
-  names_to_change_status_fow_is_syn <-
+  names_to_change_status_fow_is_syn <- # nolint
     names_to_change_status_raw %>%
     filter(!is.na(fow_acceptedNameUsageID)) %>%
     left_join(
@@ -1351,14 +1388,14 @@ update_fow_names <- function(pterido_names_taxized_inspected, new_names, fow) {
     transmute(sci_name = query, usage_name, new_status = "synonym")
 
   # - FOW match is accepted with no synonyms
-  names_to_change_status_fow_with_no_syn <-
+  names_to_change_status_fow_with_no_syn <- # nolint
     names_to_change_status_raw %>%
     filter(is.na(fow_acceptedNameUsageID), is.na(sci_name_synonym)) %>%
     transmute(sci_name = matched_name,
               usage_name = query, new_status = "synonym")
 
   # - FOW match is accepted with multiple synonyms
-  names_to_change_status_fow_with_mult_syn <-
+  names_to_change_status_fow_with_mult_syn <- # nolint
     bind_rows(
       names_to_change_status_raw %>%
         filter(is.na(fow_acceptedNameUsageID), !is.na(sci_name_synonym)) %>%
@@ -1460,7 +1497,9 @@ gn_parse_tidy <- function(...) {
 }
 
 # Helper function: convert NA to NULL
-null_if_na <- function(x) {ifelse(is.na(x), return(NULL), return(x))}
+null_if_na <- function(x) {
+  ifelse(is.na(x), return(NULL), return(x))
+}
 
 #' Check that the canonical form of two scientific names is the same
 #'
