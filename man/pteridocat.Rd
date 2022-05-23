@@ -46,11 +46,11 @@ concept circumscription is defined or implied.
 }
 \source{
 Hassler, M. (2021). Checklist of Ferns and Lycophytes of the World.
-In O. Bánki, Y. Roskov, L. Vandepitte, R. E. DeWalt, D. Remsen, P. Schalk,
-T. Orrell, M. Keping, J. Miller, R. Aalbu, R. Adlard, E. Adriaenssens, C.
-Aedo, E. Aescht, N. Akkari, M. A. Alonso-Zarazaga, B. Alvarez, F. Alvarez,
-G. Anderson, et al., Catalogue of Life Checklist (Version 2021-08-06).
-\url{https://doi.org/10.48580/d4sd-3dc}
+In O. Bánki, Y. Roskov, M. Döring, G. Ower, L. Vandepitte, D. Hobern, D.
+Remsen, P. Schalk, R. E. DeWalt, M. Keping, J. Miller, T. Orrell, R. Aalbu,
+R. Adlard, E. Adriaenssens, C. Aedo, E. Aescht, N. Akkari, M. A.
+Alonso-Zarazaga, et al., Catalogue of Life Checklist (12.8, Dec 2021).
+\url{https://doi.org/10.48580/d4tm-3dc}
 }
 \usage{
 pteridocat
