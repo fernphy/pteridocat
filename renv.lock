@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.1.2",
+    "Version": "4.2.0",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -212,10 +212,10 @@
     },
     "cli": {
       "Package": "cli",
-      "Version": "3.1.0",
+      "Version": "3.3.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "66a3834e54593c89d8beefb312347e58"
+      "Hash": "23abf173c2b783dcc43379ab9bba00ee"
     },
     "clipr": {
       "Package": "clipr",
@@ -930,10 +930,10 @@
     },
     "rlang": {
       "Package": "rlang",
-      "Version": "0.4.12",
+      "Version": "1.0.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "0879f5388fe6e4d56d7ef0b7ccb031e5"
+      "Hash": "04884d9a75d778aca22c7154b8333ec9"
     },
     "rmarkdown": {
       "Package": "rmarkdown",
