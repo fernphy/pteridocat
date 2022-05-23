@@ -32,11 +32,14 @@ tar_plan(
   # Load output of initial name matching from FTOL.
   # (matching against FOW)
   # Includes one row per query/match pair
-  tar_file(pterido_names_to_inspect_file, "_targets/user/data-raw/pterido_names_to_inspect_all.csv"),
+  tar_file(
+    pterido_names_to_inspect_file,
+    "_targets/user/data-raw/pterido_names_to_inspect_all.csv"),
   pterido_names_to_inspect = readr::read_csv(pterido_names_to_inspect_file),
 
   # Fetch taxonomic data (taxize) ----
-  # Download data from tropicos for any FTOL fuzzily matched names or "no match" names
+  # Download data from tropicos for any FTOL fuzzily matched names or
+  # "no match" names
   pterido_tropicos = fetch_tropicos(pterido_names_to_inspect),
   # Convert to long format
   pterido_long = tidy_long_tropicos(pterido_names_to_inspect, pterido_tropicos),
@@ -55,7 +58,8 @@ tar_plan(
 
   # Tidy results ----
   # FTOL Fuzzily matched names
-  pterido_fuzzy_tropicos = tidy_fuzzy_tropicos(pterido_names_to_inspect, pterido_tropicos),
+  pterido_fuzzy_tropicos = tidy_fuzzy_tropicos(
+		pterido_names_to_inspect, pterido_tropicos),
   # FTOL no-match names
   pterido_no_match_taxized = tidy_ftol_no_match(
     pterido_long, ipni_res,
