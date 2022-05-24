@@ -96,12 +96,5 @@ tar_plan(
   # Update names after manual inspection
   fow_modified = modify_fow(fow),
   pteridocat = update_fow_names(
-    pterido_names_taxized_inspected, new_names, fow_modified),
-  # Write out new database
-  tar_file(
-    pteridocat_out,
-    write_tar_rds(
-      pteridocat,
-      "results/pteridocat.RDS")
-  )
+    pterido_names_taxized_inspected, new_names, fow_modified)
 )
