@@ -27,7 +27,7 @@ tar_plan(
   # Write out FOW for FTOL
   tar_file(
     fow_out,
-    write_tar_rds(fow, "results/fow.RDS")
+    write_tar_rds(fow, "_targets/user/data-raw/fow.RDS")
   ),
   # Load output of initial name matching from FTOL.
   # (matching against FOW)
