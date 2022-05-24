@@ -1,0 +1,15 @@
+^renv$
+^renv\.lock$
+^_R$
+^_targets$
+^\.Rproj\.user$
+^results$
+^working$
+^_targets\.R$
+^\.gitignore$
+^\.Rhistory$
+^\.Rprofile$
+^CITATION\.cff$
+^.*\.Rproj$
+^data-raw$
+^LICENSE\.md$
