@@ -77,6 +77,24 @@ You should also cite the [World Ferns database](https://www.worldplants.de/world
 
     Hassler, M. (2021). Checklist of Ferns and Lycophytes of the World. In O. Bánki, Y. Roskov, M. Döring, G. Ower, L. Vandepitte, D. Hobern, D. Remsen, P. Schalk, R. E. DeWalt, M. Keping, J. Miller, T. Orrell, R. Aalbu, R. Adlard, E. Adriaenssens, C. Aedo, E. Aescht, N. Akkari, M. A. Alonso-Zarazaga, et al., Catalogue of Life Checklist (12.8, Dec 2021). https://doi.org/10.48580/d4tm-3dc
 
+## For developers
+
+### Workflow and dependencies
+
+`pteridocat` is generated with a [targets](https://github.com/ropensci/targets) pipeline.
+
+Package dependencies are managed with [renv](https://rstudio.github.io/renv/).
+
+To run the pipeline, first install packages with `renv::restore()`, then run `targets::tar_make()`.
+
+To update the data, run `data-raw/data.R`.
+
+R scripts needed for the package are in `R/`. Other R scripts, including those needed for the pipeline, are in `_R/`.
+
+### Checking the package
+
+Running `devtools::check()` will take much too long because of the large directories `_targets` and `renv`. Instead, use `R/check.R`.
+
 ## License
 
 - [GPL v3.0](LICENSE.md)
