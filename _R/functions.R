@@ -1246,6 +1246,47 @@ modify_fow <- function(fow) {
     ) %>%
     # Remove multiple entries for "Christella acuminata"
     filter(scientificName != "Christella acuminata") %>%
+    # Add entries for Mineirella
+    dct_add_row(
+      sci_name = "Mineirella eriophora (Fée) Ponce and Scataglini",
+      taxonomicStatus = "accepted",
+      taxonRank = "species"
+    ) %>%
+    dct_change_status(
+      sci_name = "Notholaena eriophora Fée",
+      new_status = "synonym",
+      usage_name = "Mineirella eriophora (Fée) Ponce and Scataglini"
+    ) %>%
+    dct_add_row(
+      sci_name = "Mineirella geraniifolia (Weath.) Ponce and Scataglini",
+      taxonomicStatus = "accepted",
+      taxonRank = "species"
+    ) %>%
+    dct_change_status(
+      sci_name = "Notholaena geraniifolia St.-Hil. ex Weath.",
+      new_status = "synonym",
+      usage_name = "Mineirella geraniifolia (Weath.) Ponce and Scataglini"
+    ) %>%
+    dct_add_row(
+      sci_name = "Mineirella goyazensis (Taub.) Ponce and Scataglini",
+      taxonomicStatus = "accepted",
+      taxonRank = "species"
+    ) %>%
+    dct_change_status(
+      sci_name = "Notholaena goyazensis Taub.",
+      new_status = "synonym",
+      usage_name = "Mineirella goyazensis (Taub.) Ponce and Scataglini"
+    ) %>%
+    dct_add_row(
+      sci_name = "Mineirella venusta (Brade) Ponce and Scataglini",
+      taxonomicStatus = "accepted",
+      taxonRank = "species"
+    ) %>%
+    dct_change_status(
+      sci_name = "Notholaena venusta Brade",
+      new_status = "synonym",
+      usage_name = "Mineirella venusta (Brade) Ponce and Scataglini"
+    ) %>%
     dwctaxon::dct_validate(check_taxonomic_status = FALSE)
 }
 
