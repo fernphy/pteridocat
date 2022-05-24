@@ -32,11 +32,11 @@ tar_plan(
   # Load output of initial name matching from FTOL.
   # (matching against FOW)
   # Includes one row per query/match pair
-  tar_file(
-    pterido_names_to_inspect_file,
-    "_targets/user/data-raw/pterido_names_to_inspect_all.csv"),
-  pterido_names_to_inspect = readr::read_csv(pterido_names_to_inspect_file),
-
+  tar_file_read(
+    pterido_names_to_inspect,
+    "_targets/user/data-raw/pterido_names_to_inspect_all.csv",
+    readr::read_csv(file = !!.x)
+  ),
   # Fetch taxonomic data (taxize) ----
   # Download data from tropicos for any FTOL fuzzily matched names or
   # "no match" names
@@ -80,12 +80,11 @@ tar_plan(
   ),
 
   # Read back in data after manual inspection ----
-  tar_file(
-    pterido_names_taxized_inspected_file,
-    "_targets/user/data-raw/pterido_names_taxized_inspected.csv"
+  tar_file_read(
+    pterido_names_taxized_inspected,
+    "_targets/user/data-raw/pterido_names_taxized_inspected.csv",
+    load_pterido_names_taxized_inspected(!!.x)
   ),
-  pterido_names_taxized_inspected = load_pterido_names_taxized_inspected(
-    pterido_names_taxized_inspected_file),
   tar_file(
     new_names_file,
     "_targets/user/data-raw/new_names.csv"
