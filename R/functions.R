@@ -1235,7 +1235,18 @@ modify_fow <- function(fow) {
       new_status = "synonym",
       usage_name = "Vandenboschia liukiuensis (Y. Yabe) Tagawa"
     ) %>%
-    dct_validate(check_taxonomic_status = FALSE)
+    # Change Pronephrium × pseudoliukiuense (Seriz.) Nakaike to
+    # synonym of Grypothrix parishii
+    # note FoW has two spaces after hybrid symbol
+    # (fixed in update_fow_names())
+    dct_change_status(
+      sci_name = "Pronephrium ×  pseudoliukiuense (Seriz.) Nakaike",
+      new_status = "synonym",
+      usage_name = "Grypothrix parishii (Bedd.) S. E. Fawc. & A. R. Sm."
+    ) %>%
+    # Remove multiple entries for "Christella acuminata"
+    filter(scientificName != "Christella acuminata") %>%
+    dwctaxon::dct_validate(check_taxonomic_status = FALSE)
 }
 
 #' Update taxonomic names in Ferns of the World to generate Pteridocat
@@ -1428,6 +1439,14 @@ update_fow_names <- function(
       args_tbl = names_to_change_status, strict = FALSE, quiet = TRUE)
 
   res %>%
+    # Use multiplication '×' for hybrids instead of letter 'x'
+    # in FoW, this is inconsistent
+    mutate(
+      scientificName = str_replace_all(scientificName, " x ", " × ") %>%
+        # Also remove extra whitespace
+        # in FoW many hybrid names have an extra space
+        stringr::str_squish()
+    ) %>%
     dct_validate(check_taxonomic_status = FALSE)
 }
 
