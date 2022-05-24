@@ -1,5 +1,5 @@
-source("R/packages.R")
-source("R/functions.R")
+source("_R/packages.R")
+source("_R/functions.R")
 
 # Set options:
 # - Use targets workspaces for debugging
