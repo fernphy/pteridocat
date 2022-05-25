@@ -1287,6 +1287,32 @@ modify_fow <- function(fow) {
       new_status = "synonym",
       usage_name = "Mineirella venusta (Brade) Ponce and Scataglini"
     ) %>%
+    # Change status of Pronephrium_liukiuense
+    # SF: Pronephrium_liukiuense = Grypothrix, treated in a broadly defined
+    # G. cuspidatum by Holttum (1972) and later in G. ramosii (Holttum 1982)
+    dct_change_status(
+      sci_name = "Pronephrium ×  liukiuense (Christ) Nakaike",
+      new_status = "synonym",
+      usage_name = "Grypothrix ramosii (Christ) S. E. Fawc. & A. R. Sm."
+    ) %>%
+    # Change status of Tectaria sodiroi (Baker) Maxon to accepted
+    # based on BLAST results (not synonym of Mickelia)
+    dct_change_status(
+      sci_name = "Tectaria sodiroi (Baker) Maxon",
+      new_status = "accepted"
+    ) %>%
+    # Change status of Lomariopsis leptocarpa Fée to accepted
+    # based on BLAST results and specimen
+    # https://www.pteridoportal.org/portal/taxa/index.php?tid=52674
+    dct_change_status(
+      sci_name = "Lomariopsis leptocarpa Fée",
+      new_status = "accepted"
+    ) %>%
+    dct_change_status(
+      sci_name = "Teratophyllum leptocarpum (Fée) Holttum",
+      new_status = "synonym",
+      usage_name = "Lomariopsis leptocarpa Fée"
+    ) %>%
     dwctaxon::dct_validate(check_taxonomic_status = FALSE)
 }
 
