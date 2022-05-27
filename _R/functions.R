@@ -1225,6 +1225,15 @@ modify_fow <- function(fow) {
       new_status = "synonym",
       usage_name = "Crepidomanes pyxidiferum (L.) Dubuisson & Ebihara"
     ) %>%
+    dct_change_status(
+      sci_name = "Crepidomanes pyxidiferum var. australe Ponce & Dubuisson",
+      new_status = "accepted"
+    ) %>%
+    dct_change_status(
+      sci_name = "Polyphlebium pyxidiferum var. australe (Ponce & Dubuisson) comb. ined.", # nolint
+      new_status = "synonym",
+      usage_name = "Crepidomanes pyxidiferum var. australe Ponce & Dubuisson"
+    ) %>%
     # Change Crepidomanes liukiuense to Vandenboschia
     dct_change_status(
       sci_name = "Vandenboschia liukiuensis (Y. Yabe) Tagawa",
@@ -1312,6 +1321,48 @@ modify_fow <- function(fow) {
       sci_name = "Teratophyllum leptocarpum (Fée) Holttum",
       new_status = "synonym",
       usage_name = "Lomariopsis leptocarpa Fée"
+    ) %>%
+    # Change status of Dryopteris subcrenulata based on BLAST results
+    # (not synonym of Ctenopteris)
+    # also see
+    # Duan Y-F, Hennequin S, Rouhan G, et al (2017) Taxonomic Revision of the
+    # Fern Genus Ctenitis (Dryopteridaceae) from Africa and the Western Indian
+    # Ocean. Annals of the Missouri Botanical Garden 102:3–86.
+    # https://doi.org/10.3417/2016024
+    dct_change_status(
+      sci_name = "Dryopteris subcrenulata (Baker) C. Chr.",
+      new_status = "accepted"
+    ) %>%
+    dct_change_status(
+      sci_name = "Ctenitis subcrenulata (Baker) Li Bing Zhang, Rouhan & Yi F. Duan", # nolint
+      new_status = "synonym",
+      usage_name = "Dryopteris subcrenulata (Baker) C. Chr."
+    ) %>%
+    # Change status of Christella molliuscula based on BLAST results
+    # and Fawcett and Smith 2021
+    dct_change_status(
+      sci_name = "Christella molliuscula (Wall. ex Kuhn) Holttum",
+      new_status = "accepted"
+    ) %>%
+    dct_change_status(
+      sci_name = "Pseudocyclosorus canus (J. Sm.) Holttum & Grimes",
+      new_status = "synonym",
+      usage_name = "Christella molliuscula (Wall. ex Kuhn) Holttum"
+    ) %>%
+    # Change status of Abrodictyum cellulosum based on BLAST results and
+    # Dubuisson J-Y, Péchon TL, Hennequin S, et al (2022) New insights into the
+    # diversity, taxonomy and history of the fern genus Trichomanes
+    # (Hymenophyllaceae, Polypodiidae), with a focus on Africa and the western
+    # Indian Ocean. Botanical Journal of the Linnean Society 198:215–239.
+    # https://doi.org/10/gpgd3z
+    dct_change_status(
+      sci_name = "Trichomanes cellulosum Klotzsch",
+      new_status = "accepted"
+    ) %>%
+    dct_change_status(
+      sci_name = "Abrodictyum cellulosum (Klotzsch) Ebihara & Dubuisson",
+      new_status = "synonym",
+      usage_name = "Trichomanes cellulosum Klotzsch"
     ) %>%
     dwctaxon::dct_validate(check_taxonomic_status = FALSE)
 }
