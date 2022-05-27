@@ -87,8 +87,6 @@ Package dependencies are managed with [renv](https://rstudio.github.io/renv/).
 
 To run the pipeline, first install packages with `renv::restore()`, then run `targets::tar_make()`.
 
-To update the data, run `data-raw/data.R`.
-
 R scripts needed for the package are in `R/`. Other R scripts, including those needed for the pipeline, are in `_R/`.
 
 ### Checking the package

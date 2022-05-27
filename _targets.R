@@ -95,5 +95,10 @@ tar_plan(
   # Update names after manual inspection
   fow_modified = modify_fow(fow),
   pteridocat = update_fow_names(
-    pterido_names_taxized_inspected, new_names, fow_modified)
+    pterido_names_taxized_inspected, new_names, fow_modified),
+  # Write out pteridocat database for use in pteridocat package
+  tar_file(
+    pteridocat_in_pkg,
+    use_pteridocat_data(pteridocat)
+  )
 )

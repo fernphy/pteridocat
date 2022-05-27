@@ -1664,3 +1664,10 @@ check_taxon_match <- function(name1, name2) {
     gn_parse_tidy(name2) %>% pull(canonicalsimple)
   )
 }
+
+# Wrapper for usethis::use_data() for pteridocat that
+# returns path to pteridocat data
+use_pteridocat_data <- function(pteridocat) {
+  usethis::use_data(pteridocat, overwrite = TRUE)
+  fs::path("data/pteridocat.rda")
+}

@@ -33,7 +33,7 @@ library(pteridocat)
 library(tibble)
 
 pteridocat
-#> # A tibble: 64,597 × 18
+#> # A tibble: 64,601 × 18
 #>    taxonID parentNameUsageID acceptedNameUsageID taxonomicStatus       taxonRank
 #>    <chr>   <chr>             <chr>               <chr>                 <chr>    
 #>  1 DWY5    <NA>              DX28                synonym               species  
@@ -46,7 +46,7 @@ pteridocat
 #>  8 3V2B8   62YQB             <NA>                accepted              species  
 #>  9 7WYVJ   62YQB             <NA>                accepted              species  
 #> 10 3V2B7   62YQB             <NA>                accepted              species  
-#> # … with 64,587 more rows, and 13 more variables: scientificName <chr>,
+#> # … with 64,591 more rows, and 13 more variables: scientificName <chr>,
 #> #   scientificNameAuthorship <chr>, genericName <chr>,
 #> #   infragenericEpithet <chr>, specificEpithet <chr>,
 #> #   infraspecificEpithet <chr>, nomenclaturalCode <chr>,
@@ -102,8 +102,6 @@ Package dependencies are managed with
 
 To run the pipeline, first install packages with `renv::restore()`, then
 run `targets::tar_make()`.
-
-To update the data, run `data-raw/data.R`.
 
 R scripts needed for the package are in `R/`. Other R scripts, including
 those needed for the pipeline, are in `_R/`.
