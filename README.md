@@ -109,7 +109,7 @@ those needed for the pipeline, are in `_R/`.
 ### Checking the package
 
 Running `devtools::check()` will take much too long because of the large
-directories `_targets` and `renv`. Instead, use `R/check.R`.
+directories `_targets` and `renv`. Instead, use `_R/check.R`.
 
 ## License
 

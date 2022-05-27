@@ -91,7 +91,7 @@ R scripts needed for the package are in `R/`. Other R scripts, including those n
 
 ### Checking the package
 
-Running `devtools::check()` will take much too long because of the large directories `_targets` and `renv`. Instead, use `R/check.R`.
+Running `devtools::check()` will take much too long because of the large directories `_targets` and `renv`. Instead, use `_R/check.R`.
 
 ## License
 
