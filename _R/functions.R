@@ -1364,6 +1364,20 @@ modify_fow <- function(fow) {
       new_status = "synonym",
       usage_name = "Trichomanes cellulosum Klotzsch"
     ) %>%
+    # Fix "Ophioderma pendula": should be Ophioderma pendulum, seems to be
+    # a typo? Keep Ophioderma pendula as synonym
+    dct_add_row(
+      sci_name = "Ophioderma pendulum (L.) C. Presl",
+      scientificNameAuthorship = "(L.) C. Presl",
+      genericName = "Ophioderma",
+      specificEpithet = "pendulum",
+      taxonomicStatus = "accepted"
+    ) %>%
+    dct_change_status(
+      sci_name = "Ophioderma pendula (L.) C. Presl", # nolint
+        new_status = "synonym",
+        usage_name = "Ophioderma pendulum (L.) C. Presl"
+    ) %>%
     dwctaxon::dct_validate(check_taxonomic_status = FALSE)
 }
 
