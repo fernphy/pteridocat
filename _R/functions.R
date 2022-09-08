@@ -1180,17 +1180,6 @@ modify_fow <- function(fow) {
       new_status = "synonym",
       usage_name = "Alsophila costularis Baker"
     ) %>%
-    # Change status of Sphaeropteris brunoniana (Wall. ex Hook.) R. M. Tryon
-    # to accepted. GenBank indicate Sphaeropteris, not Alsophila
-    dct_change_status(
-      sci_name = "Alsophila brunoniana Wall.",
-      new_status = "accepted"
-    ) %>%
-    dct_change_status(
-      sci_name = "Sphaeropteris brunoniana (Wall. ex Hook.) R. M. Tryon",
-      new_status = "synonym",
-      usage_name = "Alsophila brunoniana Wall."
-    ) %>%
     # Change status of Sphaeropteris australis (C. Presl) R. M. Tryon
     # to accepted. GenBank indicate Sphaeropteris, not Alsophila leichhardtiana
     # AM410215
