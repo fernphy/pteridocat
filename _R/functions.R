@@ -20,19 +20,19 @@ pcg_load_col <- function(col_data_path) {
   assertthat::assert_that(fs::file_exists(col_data_path))
   file_ending <- fs::path_ext(col_data_path)
 
-  # Try to unzip Taxon.tsv
+  # Try to unzip NameUsage.tsv
   temp_dir <- tempdir()
   temp_tsv <- ""
   if (file_ending == "zip") {
     tryCatch(
       expr = utils::unzip(
         col_data_path,
-        files = "Taxon.tsv",
+        files = "NameUsage.tsv",
         overwrite = TRUE,
         exdir = temp_dir),
-        finally = "Could not find 'Taxon.tsv' in zip file. Try manually unzipping." # nolint
+        finally = "Could not find 'NameUsage.tsv' in zip file. Try manually unzipping." # nolint
     )
-    temp_tsv <- fs::path(temp_dir, "Taxon.tsv")
+    temp_tsv <- fs::path(temp_dir, "NameUsage.tsv")
     col_data_path <- temp_tsv
   }
 
@@ -65,24 +65,14 @@ pcg_load_col <- function(col_data_path) {
 pcg_extract_fow <- function(col_data) {
   # Filter Catalog of Life data to only Ferns of the World
   col_data %>%
-    dplyr::filter(`dwc:datasetID` == "1140") %>%
-    dplyr::rename_with(~stringr::str_remove_all(., "dwc:|dcterms:")) %>%
+    dplyr::filter(`col:sourceID` == "1140") %>%
+    dplyr::rename_with(~stringr::str_remove_all(., "col:|dcterms:")) %>%
     # Replace empty strings with NA
     dplyr::mutate(dplyr::across(dplyr::everything(), ~dplyr::na_if(., ""))) %>%
     # Drop empty columns, unused columns
     janitor::remove_empty("cols") %>%
-    dplyr::select(-datasetID, -scientificNameID, -`col:notho`) %>%
-    # Keep only species level and below
-    # FIXME: eventually add higher ranks back making sure they conform to PPGI
-    dplyr::filter(
-      taxonRank %in% c(
-        "form", "infraspecific name", "species",
-        "subform", "subspecies", "subvariety", "variety")
-    ) %>%
-    # Filter some names that were incorrectly labeled species level
-    dplyr::filter(stringr::str_detect(scientificName,
-      "Polypodiaceae tribe Thelypterideae|Asplenium grex Triblemma|Pteridaceae tribus Platyzomateae|Filicaceae tribus Taenitideae", # nolint
-      negate = TRUE)) %>%
+    dplyr::select(-sourceID, -referenceID, -nameReferenceID, -code) %>%
+    dplyr::rename(taxonID = ID) %>%
     # Note: taxonID is unique, but scientificName may not be
     # (esp in case of ambiguous synonyms)
     assertr::assert(assertr::not_na, taxonID, scientificName) %>%

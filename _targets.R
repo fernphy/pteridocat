@@ -15,12 +15,12 @@ tar_plan(
   # Download Catalog of Life (COL)
   tar_url(
     col_dwca_url,
-    "https://download.catalogueoflife.org/col/monthly/2021-12-18_dwca.zip"
+    "https://download.checklistbank.org/col/monthly/2022-08-30_dwca.zip"
   ),
   # Load Ferns of the World (FOW) database from COL
   tar_file(
     col_dwca_zip,
-    download_file(col_dwca_url, "_targets/user/data-raw/2021-12-18_dwca.zip")
+    download_file(col_dwca_url, "_targets/user/data-raw/2022-08-30_dwca.zip")
   ),
   fow_version = get_fow_version(col_dwca_zip),
   fow = pcg_load_col(col_dwca_zip) %>% pcg_extract_fow(),
