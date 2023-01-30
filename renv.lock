@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.2.0",
+    "Version": "4.2.1",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -391,10 +391,10 @@
     },
     "cluster": {
       "Package": "cluster",
-      "Version": "2.1.3",
+      "Version": "2.1.4",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "c5f8447373ec2a0f593c694024e5b7ee",
+      "Hash": "5edbbabab6ce0bf7900a74fd4358628e",
       "Requirements": []
     },
     "codetools": {
@@ -627,16 +627,16 @@
     },
     "dwctaxon": {
       "Package": "dwctaxon",
-      "Version": "1.0.0",
+      "Version": "1.0.0.9000",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "joelnitta",
       "RemoteRepo": "dwctaxon",
       "RemoteRef": "main",
-      "RemoteSha": "6866a3279f3cbf3f6ab3d09c7ef47bd680a8e230",
+      "RemoteSha": "1ed4c8b241ca5696ff0a54a77a4ef3c89d9db9ed",
       "Remotes": "anthonynorth/roxyglobals",
-      "Hash": "6a52ad4e3fd98c5cd94f3b193d142f6a",
+      "Hash": "ad2a32004ee75a67628b8d9abe80239b",
       "Requirements": [
         "assertr",
         "assertthat",
@@ -644,6 +644,8 @@
         "dplyr",
         "glue",
         "purrr",
+        "rlang",
+        "settings",
         "stringr",
         "tibble",
         "tidyr"
@@ -746,10 +748,10 @@
     },
     "foreign": {
       "Package": "foreign",
-      "Version": "0.8-82",
+      "Version": "0.8-83",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "32b25c97ce306a760c4d9f787991b5d9",
+      "Hash": "4e43a8846712a6d5991b19b9bd5f9199",
       "Requirements": []
     },
     "fs": {
@@ -1291,10 +1293,10 @@
     },
     "nnet": {
       "Package": "nnet",
-      "Version": "7.3-17",
+      "Version": "7.3-18",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "cb1d8d9f300a7e536b89c8a88c53f610",
+      "Hash": "170da2130d5332bea7d6ede01875ba1d",
       "Requirements": []
     },
     "openssl": {
@@ -1588,6 +1590,8 @@
       "Package": "renv",
       "Version": "0.16.0",
       "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "c9e8442ab69bc21c9697ecf856c1e6c7",
       "Requirements": []
     },
     "reprex": {
@@ -1847,6 +1851,14 @@
         "cli"
       ]
     },
+    "settings": {
+      "Package": "settings",
+      "Version": "0.2.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "044078dfd387c9a6e160103978d23be4",
+      "Requirements": []
+    },
     "snakecase": {
       "Package": "snakecase",
       "Version": "0.11.0",
@@ -1904,10 +1916,10 @@
     },
     "survival": {
       "Package": "survival",
-      "Version": "3.3-1",
+      "Version": "3.4-0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "f6189c70451d3d68e0d571235576e833",
+      "Hash": "04411ae66ab4659230c067c32966fc20",
       "Requirements": [
         "Matrix"
       ]

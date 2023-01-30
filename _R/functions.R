@@ -97,11 +97,19 @@ pcg_extract_fow <- function(col_data) {
         "392HN", # Elaphoglossum rigidum (Aubl.) Urb. -> exclude ambiguous synonym # nolint
         "392K8", # Elaphoglossum serpentinum A. Rojas & W. D. Rodr. -> exclude ambiguous synonym # nolint
         "8S7SM", # Goniopteris hastata Fée -> exclude ambiguous synonym
-        "HK2Q" # Asplenium centrifugale Baker -> exclude ambiguous synonym
+        "HK2Q", # Asplenium centrifugale Baker -> exclude ambiguous synonym
+        "9QJB", # Acrostichum schizolepis Baker -> exclude ambiguous synonym
+        "46ZBQ", # Nephrodium gracilescens (Blume) Hook. -> exclude ambiguous synonym # nolint
+        "7YBSR", # Pleopeltis longissima (Blume) T. Moore -> exclude ambiguous synonym # nolint
+        "4LFYB" # Polypodium lobbianum Hook.  -> exclude ambiguous synonym # nolint
       )
     ) %>%
     # Run taxonomic database checks
-    dwctaxon::dct_validate()
+    dwctaxon::dct_validate(
+      # allow duplicate sci names, as long as status is different
+      check_sci_name = FALSE,
+      valid_tax_status = "accepted, ambiguous synonym, provisionally accepted, synonym, variant" # nolint
+    )
 }
 
 #' Get version for Ferns of the World taxonomic data in the Catalog of Life
@@ -929,138 +937,139 @@ modify_fow <- function(fow) {
     # Add entry for Dryopteris x ebinoensis Sa.Kurata
     dct_add_row(
       sci_name = "Dryopteris x ebinoensis Sa.Kurata",
-      taxonomicStatus = "nom. nud.",
+      taxonRemarks = "nom. nud.",
+      taxonomicStatus = "accepted",
       taxonRank = "species",
       namePublishedIn = "J. Nipp. Fern. Cl. 2(29): 7 (1977), n. n.; Sa.Kurata & Nakaike, Ill. Jap. Pterid. 8: 414 (1997).", # nolint
       nameAccordingTo = "http://ylist.info/ylist_detail_display.php?pass=32320"
     ) %>%
     # Change synonym status of Diplazium longisorum as indicated by plastome
     # data
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Diplazium longisorum (Baker) C. Chr.",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Desmophlebium longisorum (Baker) Mynssen, A. Vasco, Sylvestre, R. C. Moran & Rouhan", # nolint
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Diplazium longisorum (Baker) C. Chr."
     ) %>%
     # Change status of Parahemionitis arifolia as indicated by plastome data
     # supposed to be accepted by PPGI
     # not a synonym of Acrostichum aureum
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Parahemionitis arifolia (Burm. fil.) Panigrahi",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Hemionitis arifolia (Burm. fil.) T. Moore",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Parahemionitis arifolia (Burm. fil.) Panigrahi"
     ) %>%
     # Change status of Microsorum insigne as indicated by plastome data
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Microsorum insigne (Blume) Copel.",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Leptochilus insignis (Blume) Fraser-Jenk.",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Microsorum insigne (Blume) Copel."
     ) %>%
     # Change status of Prosaptia khasyana as indicated by plastome data
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Prosaptia khasyana (Hook.) C. Chr. & Tardieu",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Polypodium khasyanum Hook.",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Prosaptia khasyana (Hook.) C. Chr. & Tardieu"
     ) %>%
     # Change status of Alsophila lepifera as indicated by plastome data
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Sphaeropteris lepifera (J. Sm. ex Hook.) R. M. Tryon",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Alsophila lepifera J. Sm. ex Hook.",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Sphaeropteris lepifera (J. Sm. ex Hook.) R. M. Tryon"
     ) %>%
     # Change status of names that should be accepted as indicated by
     # rogue family analysis
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Deparia petersenii var. yakusimensis (H. Itô) M. Kato",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Dryopteris schnellii Tardieu",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Dryopteris spinosa Copel.",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Dryopteris triangularis Herter",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Davallia polypodioides D. Don",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Asplenium scandens Houlston & T. Moore",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
     # Change status of Stenochlaena tenuifolia: GenBank data
     # indicate is Stenochlaena, not Lomariopsis
     # https://www.ncbi.nlm.nih.gov/nuccore/?term=Schuettpelz+504+(DUKE)
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Stenochlaena tenuifolia (Desv.) T. Moore",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Lomariopsis tenuifolia (Desv.) Christ",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Stenochlaena tenuifolia (Desv.) T. Moore"
     ) %>%
     # GenBank MF318024 MF318119 MF318366 indicate Campyloneurum
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Campyloneurum fallax Fée",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Polypodium longipetiolatum Brade",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Campyloneurum fallax Fée"
     ) %>%
     # Lonchitis mannii is Lonchitis,
     # not a synonym of Blotiella currorii (Hook.) R. M. Tryon according to
     # genbank data
     # https://www.ncbi.nlm.nih.gov/nuccore/U18641
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Lonchitis mannii (Baker) Alston",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
     # Selliguea lanceolata (Sw.) Fée is its own species, separate from
     # Loxogramme lanceolata (Sw.) C. Presl
     # https://www.ncbi.nlm.nih.gov/nuccore/?term=txid449879[Organism:noexp]
     # https://www.ncbi.nlm.nih.gov/nuccore/665985880
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Selliguea lanceolata (Sw.) Fée",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
     # Change status of Dryopteris salvinii: GenBank data
     # indicate is Dryopteris, not Ctenitis
     # https://www.ncbi.nlm.nih.gov/nuccore/JN189526
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Dryopteris salvinii (Baker) Kuntze",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Ctenitis salvinii (Baker) Stolze",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Dryopteris salvinii (Baker) Kuntze"
     ) %>%
     # Change status of Lindsaea millefolia K.U.Kramer to
@@ -1071,175 +1080,175 @@ modify_fow <- function(fow) {
       namePublishedIn = "Acta Botanica Neerlandica 6(2): 135. 1957. (Acta Bot. Neerl.)", # nolint
       nameAccordingTo = "http://www.tropicos.org/Name/26613614"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Lindsaea millefolium K. U. Kramer",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Lindsaea millefolia K.U.Kramer"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Odontosoria decomposita (Baker) C. Chr.",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Lindsaea millefolia K.U.Kramer"
     ) %>%
     # Change status of Lindsaea goudotiana (Kunze) Mett.: GenBank data indicate
     # is Lindsaea, not Odontosoria
     # GU478818
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Lindsaea goudotiana (Kunze) Mett.",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Odontosoria goudotiana (Kunze) Christenh.",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Lindsaea goudotiana (Kunze) Mett."
     ) %>%
     # Change status of Lindsaea madagascariensis Baker: GenBank data
     # indicate is Lindsaea, not Odontosoria rbcL EF463231
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Lindsaea madagascariensis Baker",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Lindsaea madagascariensis var. davallioides Baker",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Lindsaea madagascariensis var. intermedia Baker",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Odontosoria madagascariensis (Baker) Christenh.",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Lindsaea madagascariensis Baker"
     ) %>%
     # Change status of Lindsaea parasitica to accepted: GenBank data
     # indicate is Lindsaea, not Odontosoria HQ157277
     # leave Nesolindsaea caudata (Hook.) Lehtonen & Christenh.
     # as accepted for now
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Lindsaea parasitica (Roxb. ex Griff.) Hieron.",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Lindsaea parasitica Wall.",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Lindsaea parasitica (Roxb. ex Griff.) Hieron."
     ) %>%
     # Change status of Lindsaea viridis Colenso to accepted: GenBank data
     # indicate is Lindsaea, not Odontosoria GU478769
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Lindsaea viridis Colenso",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Odontosoria viridis Kuhn",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Lindsaea viridis Colenso"
     ) %>%
     # Change status of Cyathea senilis to accepted. GenBank indicate
     # Cyathea, not Sphaeropteris AM410203
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Cyathea senilis (Klotzsch) Domin",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Sphaeropteris senilis (Klotzsch) R. M. Tryon",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Cyathea senilis (Klotzsch) Domin"
     ) %>%
     # Change status of Cyathea myosuroides to accepted. GenBank indicate
     # Cyathea, not Sphaeropteris KY684763
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Cyathea myosuroides (Liebm.) Domin",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Sphaeropteris myosuroides (Liebm.) R. M. Tryon",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Cyathea myosuroides (Liebm.) Domin"
     ) %>%
     # Change status of Alsophila paucifolia Baker to accepted. GenBank indicate
     # Alsophila, not Cyathea MN155436
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Alsophila paucifolia Baker",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Cyathea paucifolia (Baker) Domin",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Alsophila paucifolia Baker"
     ) %>%
     # Change status of Alsophila costularis Baker to accepted. GenBank indicate
     # Alsophila, not Cyathea KY858715
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Alsophila costularis Baker",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Sphaeropteris chinensis (Copel.) comb. ined.",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Alsophila costularis Baker"
     ) %>%
     # Change status of Sphaeropteris australis (C. Presl) R. M. Tryon
     # to accepted. GenBank indicate Sphaeropteris, not Alsophila leichhardtiana
     # AM410215
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Sphaeropteris australis (C. Presl) R. M. Tryon",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Alsophila leichhardtiana F. Muell.",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Sphaeropteris australis (C. Presl) R. M. Tryon"
     ) %>%
     # Change status of Trichomanes guineense Afzel. ex Sw.
     # to accepted. GenBank indicate Trichomanes, not Abrodictyum
     # KP153243
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Trichomanes guineense Afzel. ex Sw.",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Abrodictyum guineense (Afzel. ex Sw.) J. P. Roux",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Trichomanes guineense Afzel. ex Sw."
     ) %>%
     # Change Polyphlebium pyxidiferum to Crepidomanes
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Crepidomanes pyxidiferum (L.) Dubuisson & Ebihara",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Polyphlebium pyxidiferum (L.) Ebihara & Dubuisson",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Crepidomanes pyxidiferum (L.) Dubuisson & Ebihara"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Crepidomanes pyxidiferum var. australe Ponce & Dubuisson",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Polyphlebium pyxidiferum var. australe (Ponce & Dubuisson) comb. ined.", # nolint
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Crepidomanes pyxidiferum var. australe Ponce & Dubuisson"
     ) %>%
     # Change Crepidomanes liukiuense to Vandenboschia
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Vandenboschia liukiuensis (Y. Yabe) Tagawa",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Crepidomanes liukiuense (Y. Yabe) K. Iwats.",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Vandenboschia liukiuensis (Y. Yabe) Tagawa"
     ) %>%
     # Change Pronephrium × pseudoliukiuense (Seriz.) Nakaike to
     # synonym of Grypothrix parishii
     # note FoW has two spaces after hybrid symbol
     # (fixed in update_fow_names())
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Pronephrium ×  pseudoliukiuense (Seriz.) Nakaike",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Grypothrix parishii (Bedd.) S. E. Fawc. & A. R. Sm."
     ) %>%
     # Remove multiple entries for "Christella acuminata"
@@ -1250,9 +1259,9 @@ modify_fow <- function(fow) {
       taxonomicStatus = "accepted",
       taxonRank = "species"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Notholaena eriophora Fée",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Mineirella eriophora (Fée) Ponce and Scataglini"
     ) %>%
     dct_add_row(
@@ -1260,9 +1269,9 @@ modify_fow <- function(fow) {
       taxonomicStatus = "accepted",
       taxonRank = "species"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Notholaena geraniifolia St.-Hil. ex Weath.",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Mineirella geraniifolia (Weath.) Ponce and Scataglini"
     ) %>%
     dct_add_row(
@@ -1270,9 +1279,9 @@ modify_fow <- function(fow) {
       taxonomicStatus = "accepted",
       taxonRank = "species"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Notholaena goyazensis Taub.",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Mineirella goyazensis (Taub.) Ponce and Scataglini"
     ) %>%
     dct_add_row(
@@ -1280,35 +1289,35 @@ modify_fow <- function(fow) {
       taxonomicStatus = "accepted",
       taxonRank = "species"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Notholaena venusta Brade",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Mineirella venusta (Brade) Ponce and Scataglini"
     ) %>%
     # Change status of Pronephrium_liukiuense
     # SF: Pronephrium_liukiuense = Grypothrix, treated in a broadly defined
     # G. cuspidatum by Holttum (1972) and later in G. ramosii (Holttum 1982)
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Pronephrium ×  liukiuense (Christ) Nakaike",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Grypothrix ramosii (Christ) S. E. Fawc. & A. R. Sm."
     ) %>%
     # Change status of Tectaria sodiroi (Baker) Maxon to accepted
     # based on BLAST results (not synonym of Mickelia)
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Tectaria sodiroi (Baker) Maxon",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
     # Change status of Lomariopsis leptocarpa Fée to accepted
     # based on BLAST results and specimen
     # https://www.pteridoportal.org/portal/taxa/index.php?tid=52674
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Lomariopsis leptocarpa Fée",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Teratophyllum leptocarpum (Fée) Holttum",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Lomariopsis leptocarpa Fée"
     ) %>%
     # Change status of Dryopteris subcrenulata based on BLAST results
@@ -1318,24 +1327,24 @@ modify_fow <- function(fow) {
     # Fern Genus Ctenitis (Dryopteridaceae) from Africa and the Western Indian
     # Ocean. Annals of the Missouri Botanical Garden 102:3–86.
     # https://doi.org/10.3417/2016024
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Dryopteris subcrenulata (Baker) C. Chr.",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Ctenitis subcrenulata (Baker) Li Bing Zhang, Rouhan & Yi F. Duan", # nolint
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Dryopteris subcrenulata (Baker) C. Chr."
     ) %>%
     # Change status of Christella molliuscula based on BLAST results
     # and Fawcett and Smith 2021
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Christella molliuscula (Wall. ex Kuhn) Holttum",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Pseudocyclosorus canus (J. Sm.) Holttum & Grimes",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Christella molliuscula (Wall. ex Kuhn) Holttum"
     ) %>%
     # Change status of Abrodictyum cellulosum based on BLAST results and
@@ -1344,13 +1353,13 @@ modify_fow <- function(fow) {
     # (Hymenophyllaceae, Polypodiidae), with a focus on Africa and the western
     # Indian Ocean. Botanical Journal of the Linnean Society 198:215–239.
     # https://doi.org/10/gpgd3z
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Trichomanes cellulosum Klotzsch",
-      new_status = "accepted"
+      tax_status = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Abrodictyum cellulosum (Klotzsch) Ebihara & Dubuisson",
-      new_status = "synonym",
+      tax_status = "synonym",
       usage_name = "Trichomanes cellulosum Klotzsch"
     ) %>%
     # Fix "Ophioderma pendula": should be Ophioderma pendulum, seems to be
@@ -1362,12 +1371,16 @@ modify_fow <- function(fow) {
       specificEpithet = "pendulum",
       taxonomicStatus = "accepted"
     ) %>%
-    dct_change_status(
+    dct_modify_row(
       sci_name = "Ophioderma pendula (L.) C. Presl", # nolint
-        new_status = "synonym",
+        tax_status = "synonym",
         usage_name = "Ophioderma pendulum (L.) C. Presl"
     ) %>%
-    dwctaxon::dct_validate(check_taxonomic_status = FALSE)
+  dwctaxon::dct_validate(
+    check_mapping_parent = FALSE,
+    check_sci_name = FALSE,
+    valid_tax_status = "accepted, ambiguous synonym, provisionally accepted, synonym, variant" # nolint
+    )
 }
 
 #' Update taxonomic names in Ferns of the World to generate Pteridocat
@@ -1418,7 +1431,11 @@ update_fow_names <- function(
   fow_plus_new <-
     fow %>%
     bind_rows(names_add_as_accepted) %>%
-    dct_validate(check_taxonomic_status = FALSE)
+  dwctaxon::dct_validate(
+    check_mapping_parent = FALSE,
+    check_sci_name = FALSE,
+    valid_tax_status = "accepted, ambiguous synonym, provisionally accepted, synonym, variant" # nolint
+    )
 
   # Format names to add as synonyms
   names_add_as_synonym <-
@@ -1517,14 +1534,14 @@ update_fow_names <- function(
              fow_acceptedNameUsageID = taxonID),
       by = "fow_acceptedNameUsageID"
     ) %>%
-    transmute(sci_name = query, usage_name, new_status = "synonym")
+    transmute(sci_name = query, usage_name, tax_status = "synonym")
 
   # - FOW match is accepted with no synonyms
   names_to_change_status_fow_with_no_syn <- # nolint
     names_to_change_status_raw %>%
     filter(is.na(fow_acceptedNameUsageID), is.na(sci_name_synonym)) %>%
     transmute(sci_name = matched_name,
-              usage_name = query, new_status = "synonym")
+              usage_name = query, tax_status = "synonym")
 
   # - FOW match is accepted with multiple synonyms
   names_to_change_status_fow_with_mult_syn <- # nolint
@@ -1532,11 +1549,11 @@ update_fow_names <- function(
       names_to_change_status_raw %>%
         filter(is.na(fow_acceptedNameUsageID), !is.na(sci_name_synonym)) %>%
         transmute(sci_name = matched_name,
-                  usage_name = query, new_status = "synonym"),
+                  usage_name = query, tax_status = "synonym"),
       names_to_change_status_raw %>%
         filter(is.na(fow_acceptedNameUsageID), !is.na(sci_name_synonym)) %>%
         transmute(sci_name = sci_name_synonym,
-                  usage_name = query, new_status = "synonym")
+                  usage_name = query, tax_status = "synonym")
     )
 
   names_to_change_status <-
@@ -1547,7 +1564,7 @@ update_fow_names <- function(
       filter(new_names, taxonomicStatus == "synonym",
              scientificName %in% fow$scientificName) %>%
         select(sci_name = scientificName,
-               usage_name, new_status = taxonomicStatus)
+               usage_name, tax_status = taxonomicStatus)
     ) %>%
     anti_join(names_add_as_synonym, by = c(sci_name = "scientificName")) %>%
     unique()
@@ -1556,7 +1573,7 @@ update_fow_names <- function(
     fow %>%
     bind_rows(names_add_as_accepted) %>%
     bind_rows(names_add_as_synonym) %>%
-    dct_change_status(
+    dct_modify_row(
       args_tbl = names_to_change_status, strict = FALSE, quiet = TRUE)
 
   res %>%
@@ -1568,7 +1585,11 @@ update_fow_names <- function(
         # in FoW many hybrid names have an extra space
         stringr::str_squish()
     ) %>%
-    dct_validate(check_taxonomic_status = FALSE)
+  dwctaxon::dct_validate(
+    check_mapping_parent = FALSE,
+    check_sci_name = FALSE,
+    valid_tax_status = "accepted, ambiguous synonym, provisionally accepted, synonym, variant" # nolint
+    )
 }
 
 #' Combine taxized data for writing out for inspection
