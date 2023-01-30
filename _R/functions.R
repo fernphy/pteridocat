@@ -1376,11 +1376,276 @@ modify_fow <- function(fow) {
         tax_status = "synonym",
         usage_name = "Ophioderma pendulum (L.) C. Presl"
     ) %>%
-  dwctaxon::dct_validate(
-    check_mapping_parent = FALSE,
-    check_sci_name = FALSE,
-    valid_tax_status = "accepted, ambiguous synonym, provisionally accepted, synonym, variant" # nolint
-    )
+    #### Changes for FTOL v.1.4.0
+    dct_add_row(
+    sci_name = "Allantodia okudairai (Makino) Ching",
+    tax_status = "synonym",
+    usage_id = "36HST", # Diplazium okudairae Makino
+    taxonRemarks = "spelling mistake in species name, should be Allantodia okudairae" # nolint
+    ) %>%
+    dct_add_row(
+      sci_name = "Angiopteris caudata Ching",
+      tax_status = "synonym",
+      usage_id = "DZCM", # Angiopteris danaeoides Z. R. He & Christenh. nolint
+      taxonRemarks = "synonym of Archangiopteris caudata Ching"
+    ) %>%
+    dct_add_row(
+      sci_name = "Blechnum norfolkense Christenh.",
+      tax_status = "synonym",
+      usage_id = "6DG3Y", # Doodia kunthiana Gaudich.
+      taxonRemarks = "spelling mistake in species name, should be Blechnum norfolkiense" # nolint
+    ) %>%
+    dct_add_row(
+      sci_name = "Ceradenia ayapoyana M.Kessler & A.R.Sm.",
+      tax_status = "synonym",
+      usage_id = "SG6W", # Ceradenia ayopayana M. Kessler & A. R. Sm.
+      taxonRemarks = "spelling mistake in species name"
+    ) %>%
+    dct_add_row(
+      sci_name = "Ceradenia madidiense M.Kessler & A.R.Sm.",
+      tax_status = "synonym",
+      usage_id = "SG7Y", # Ceradenia madidiensis M. Kessler & A. R. Sm.
+      taxonRemarks = "spelling mistake in species name"
+    ) %>%
+    dct_add_row(
+      sci_name = "Christella jinhongensis (Ching ex K.H.Shing) A.R.Sm. & S.E.Fawc.", # nolint
+      tax_status = "synonym",
+      usage_id = "8RTZX", # Christella jinghongensis (Ching ex K. H. Shing) A. R. Sm. & S. E. Fawc. # nolint
+      taxonRemarks = "spelling mistake in species name"
+    ) %>%
+    dct_add_row(
+      sci_name = "Cyathea punctata",
+      tax_status = "synonym",
+      usage_id = "32Q7J", # Cyathea punctata R. C. Moran & B. Øllg.
+    ) %>%
+    dct_add_row(
+      sci_name = "Cystopteris chinensis Ching",
+      tax_status = "synonym",
+      usage_id = "33PYS", # Cystopteris chinensis (Ching) X. C. Zhang & R. Wei
+    ) %>%
+    dct_add_row(
+      sci_name = "Physematium montevidense (Spreng.) Shmakov",
+      tax_status = "synonym",
+      usage_id = "7Y7BN", # Physematium montevidensis (Spreng.) Shmakov
+    ) %>%
+    dct_add_row(
+      sci_name = "Tectaria danangensis S.Y.Dong", # new species
+      tax_status = "accepted",
+      namePublishedIn = "Pham VT, Li S-H, Dong S-Y (2022) PhytoKeys 194: 1-13. https://doi.org/10.3897/phytokeys.194.80129" # nolint
+    ) %>%
+    dct_add_row(
+      sci_name = "Tectaria fungii S.Y.Dong", # new species
+      tax_status = "accepted",
+      namePublishedIn = "Dong S-Y, Li S-H, Huang L, Tan S-S, Zuo Z-Y (2022) PhytoKeys 195: 75-92. https://doi.org/10.3897/phytokeys.195.80452" # nolint
+    ) %>%
+    dct_add_row(
+      sci_name = "Tmesipteris billardierei Endl.",
+      tax_status = "synonym",
+      usage_id = "7CDC6"
+    ) %>%
+    dct_add_row(
+      sci_name = "Asplenium x adulterinum Milde",
+      tax_status = "synonym",
+      usage_id = "HJR8" # Asplenium adulterinum Milde
+    ) %>%
+    dct_add_row(
+      sci_name = "Bolbitis hainanensis Ching & Chu H.Wang",
+      tax_status = "synonym",
+      usage_id = "5WMQR" # Bolbitis hainanensis Ching & C. H. Wang
+    ) %>%
+    dct_add_row(
+      sci_name = "Christella parasitica (L.) H.Lev.",
+      tax_status = "synonym",
+      usage_id = "5YH4D" # Christella parasitica (L.) Lév.
+    ) %>%
+    dct_add_row(
+      sci_name = "Danaea wendlandii Rchb.f.",
+      tax_status = "synonym",
+      usage_id = "343MD" # Danaea wendlandii Reichb
+    ) %>%
+    dct_add_row(
+      sci_name = "Dennstaedtia arborescens (Willd.) Ekman ex Maxon",
+      tax_status = "synonym",
+      usage_id = "34T2M" # Dennstaedtia arborescens (Willd.) E. Ekman ex Maxon
+    ) %>%
+    dct_add_row(
+      sci_name = "Dennstaedtia macrosora Navarr. & B.llg.",
+      tax_status = "synonym",
+      usage_id = "34T4G" # Dennstaedtia macrosora Navarr. & B. Øllg.
+    ) %>%
+    dct_add_row(
+      sci_name = "Dennstaedtia auriculata Navarr. & B.llg.",
+      tax_status = "synonym",
+      usage_id = "34T2R" # Dennstaedtia auriculata Navarr. & B. Øllg.
+    ) %>%
+    dct_add_row(
+      sci_name = "Deparia x kiyozumiana (Sa.Kurata) Y.Shimura",
+      tax_status = "synonym",
+      usage_id = "6CM7K" # Deparia × kiyozumiana (Sa. Kurata) Shimura
+    ) %>%
+    dct_add_row(
+      sci_name = "Dicranopteris linearis var. subspeciosa Holtt.",
+      tax_status = "synonym",
+      usage_id = "7LNXT" # Dicranopteris linearis var. subspeciosa Holttum
+    ) %>%
+    dct_add_row(
+      sci_name = "Haplopteris heterophylla C.W.Chen, Y.H.Chang & Y.C.Liu",
+      tax_status = "synonym",
+      usage_id = "6LCW8" # Haplopteris heterophylla C. W. Chen, Y. H. Chang & Yea C. Liu # nolint
+    ) %>%
+    dct_add_row(
+      sci_name = "Schizaea biroi V.A.Richt.",
+      tax_status = "synonym",
+      usage_id = "6XW2Z" # Schizaea dichotoma (L.) Sm.
+    ) %>%
+    dct_add_row(
+      sci_name = "Sticherus brackenridgei (Fourn.) St.John",
+      tax_status = "synonym",
+      usage_id = "6ZS62" # Sticherus brackenridgei (E. Fourn.) H. St. John
+    ) %>%
+    dct_add_row(
+      sci_name = "Syngramma alismifolia C.Presl",
+      tax_status = "synonym",
+      usage_id = "53X2Q" # Syngramma alismifolia (C. Presl) J. Sm.
+    ) %>%
+    dct_add_row(
+      sci_name = "Syngramma borneensis Hook.",
+      tax_status = "synonym",
+      usage_id = "7B8M8" # Syngramma borneensis (Hook.) J. Sm.
+    ) %>%
+    dct_add_row(
+      sci_name = "Syngramma cartilagidens Baker",
+      tax_status = "synonym",
+      usage_id = "53X2X" # Syngramma cartilagidens (Baker) Diels
+    ) %>%
+    dct_add_row(
+      sci_name = "Syngramma lobbiana Hook.",
+      tax_status = "synonym",
+      usage_id = "53X39" # Syngramma lobbiana (Hook.) J. Sm.
+    ) %>%
+    dct_add_row(
+      sci_name = "Syngramma valleculata Baker",
+      tax_status = "synonym",
+      usage_id = "53X3N" # Syngramma valleculata (Baker) C. Chr.
+    ) %>%
+    dct_add_row(
+      sci_name = "Syngramma wallichii Hook.",
+      tax_status = "synonym",
+      usage_id = "53X3S" # Syngramma wallichii (Hook.) Bedd.
+    ) %>%
+    dct_add_row(
+      sci_name = "Antrophyum hovenkampii C.W.Chen", # new species
+      tax_status = "accepted",
+      namePublishedIn = "Chen CW, Chao YS, Mustapeng AM, Sapawi NM, Huang YM. Systematic Botany. 2021 Oct 25;46(3):739-49. https://doi.org/10.1600/036364421X16312067913381" # nolint
+    ) %>%
+    dct_add_row(
+      sci_name = "Athyrium aberrans Liang Zhang & Li Bing Zhang", # new species
+      tax_status = "accepted",
+      namePublishedIn = "Qiu, Yong-Ling, Zhang, Lin, Zhang, Li-Bing, Zhou, Xin-Mao & Zhang, Liang, 2022, Athyrium aberrans (Athyriaceae), a new species of the lady ferns from southeastern Xizang, China, based on morphological and molecular evidence, pp. 165-172 in Phytotaxa 533 (3) on pages 167-168, DOI: 10.11646/phytotaxa.533.3.2" # nolint
+    ) %>%
+    dct_add_row(
+      sci_name = "Blechnum rivulorum V.A.O.Dittrich & Salino", # new species
+      tax_status = "accepted",
+      namePublishedIn = "Acta Bot. Bras. 36 • 2022 • https://doi.org/10.1590/1677-941X-ABB-2022-0147 " # nolint
+    ) %>%
+    dct_add_row(
+      sci_name = "Christella procurrens (Mett.) Copel.",
+      tax_status = "synonym",
+      nameAccordingTo = "https://plantsofhawaii.org/detail/%7B723DCCC8-8616-4F32-AC5D-445AB554247E%7D", # nolint
+      acceptedNameUsageID = "5YH4D" # Christella parasitica (L.) Lév.
+    ) %>%
+    dct_add_row(
+      sci_name = "Dicranopteris austrosinensis Y.H.Yan & Z.Y.Wei", # new species
+      tax_status = "accepted",
+      namePublishedIn = "Wei Z, Xia Z, Shu J, Shang H, Maxwell SJ, Chen L, Zhou X, Xi W, Adjie B, Yuan Q, Cao J, Yan Y. Phylogeny and Taxonomy on Cryptic Species of Forked Ferns of Asia. Front Plant Sci. 2021 Dec 17;12:748562. doi: 10.3389/fpls.2021.748562. Erratum in: Front Plant Sci. 2022 Apr 12;13:888725. PMID: 34975938; PMCID: PMC8718997." # nolint
+    ) %>%
+    dct_add_row(
+      sci_name = "Dicranopteris baliensis Y.H.Yan & Z.Y.Wei", # new species
+      tax_status = "accepted",
+      namePublishedIn = "Wei Z, Xia Z, Shu J, Shang H, Maxwell SJ, Chen L, Zhou X, Xi W, Adjie B, Yuan Q, Cao J, Yan Y. Phylogeny and Taxonomy on Cryptic Species of Forked Ferns of Asia. Front Plant Sci. 2021 Dec 17;12:748562. doi: 10.3389/fpls.2021.748562. Erratum in: Front Plant Sci. 2022 Apr 12;13:888725. PMID: 34975938; PMCID: PMC8718997." # nolint
+    ) %>%
+    dct_add_row(
+      sci_name = "Dicranopteris inaequalis (Rosenst.) Y.H.Yan & Z.Y.Wei", # new combination # nolint
+      tax_status = "accepted",
+      namePublishedIn = "Wei Z, Xia Z, Shu J, Shang H, Maxwell SJ, Chen L, Zhou X, Xi W, Adjie B, Yuan Q, Cao J, Yan Y. Phylogeny and Taxonomy on Cryptic Species of Forked Ferns of Asia. Front Plant Sci. 2021 Dec 17;12:748562. doi: 10.3389/fpls.2021.748562. Erratum in: Front Plant Sci. 2022 Apr 12;13:888725. PMID: 34975938; PMCID: PMC8718997." # nolint
+    ) %>%
+    dct_modify_row(
+      # now a synonym of Dicranopteris inaequalis
+      sci_name = "Dicranopteris linearis var. inaequalis (Rosenst.) Holttum",
+      usage_name = "Dicranopteris inaequalis (Rosenst.) Y.H.Yan & Z.Y.Wei",
+      tax_status = "synonym",
+      nameAccordingTo = "10.3389/fpls.2021.748562"
+    ) %>%
+    dct_add_row(
+      sci_name = "Dicranopteris subspeciosa (Holtt.) Y.H.Yan & Z.Y.Wei", # new combination # nolint
+      tax_status = "accepted",
+      namePublishedIn = "Wei Z, Xia Z, Shu J, Shang H, Maxwell SJ, Chen L, Zhou X, Xi W, Adjie B, Yuan Q, Cao J, Yan Y. Phylogeny and Taxonomy on Cryptic Species of Forked Ferns of Asia. Front Plant Sci. 2021 Dec 17;12:748562. doi: 10.3389/fpls.2021.748562. Erratum in: Front Plant Sci. 2022 Apr 12;13:888725. PMID: 34975938; PMCID: PMC8718997." # nolint
+    ) %>%
+    dct_modify_row(
+      # now a synonym of Dicranopteris subspeciosa
+      sci_name = "Dicranopteris linearis var. subspeciosa Holttum",
+      tax_status = "synonym",
+      usage_name = "Dicranopteris subspeciosa (Holtt.) Y.H.Yan & Z.Y.Wei",
+      nameAccordingTo = "10.3389/fpls.2021.748562"
+    ) %>%
+    dct_add_row(
+      sci_name = "Dipteris shenzhenensis Y.H.Yan & Z.Y.Wei", # new species
+      tax_status = "accepted",
+      namePublishedIn = "Wei, Z. Y., Gu, Y. F., Xia, Z. Q., Chen, L. J., Wang, T., Zhang, S. Z., ... & Yan, Y. H. (2021) Dipteris shenzhenensis, a new endangered species of Dipteridaceae from Shenzhen, southern China. PhytoKeys, 186, 111." # nolint
+    ) %>%
+    dct_add_row(
+      sci_name = "Dryopteris yenpingensis C.Chr. & Ching",
+      tax_status = "accepted",
+      namePublishedIn = "Bulletin of the Fan Memorial Institute of Biology: Botany 8(6): 450–451. 1938.", # nolint
+      nameAccordingTo = "http://legacy.tropicos.org/Name/26618596"
+    ) %>%
+    dct_add_row(
+      # new species
+      sci_name = "Hymenophyllum bryoides C.W.Chen, Ebihara & K.Y.Cheng",
+      tax_status = "accepted",
+      namePublishedIn = "Chen, C.W., Ebihara, A., Cheng, K.Y., Hsu, T.C., Huang, Y.M., Dang, V.D., Luu, H.T., Le, V.S. and Li, C.W., 2021. Studies of Vietnamese pteridophyte flora 1. Systematic Botany, 46(3), pp.573-581." # nolint
+    ) %>%
+    dct_add_row(
+      # new species
+      sci_name = "Lepisorus medioximus T.Fujiw., K.Hori & Khine",
+      tax_status = "accepted",
+      namePublishedIn = "Fujiwara, T., Khine, P.K., Hori, K., Shin, T., Murakami, N. and Schneider, H., 2022. ﻿ Lepisorus medioximus (Polypodiales, Polypodiaceae), a new species from Shan State of Myanmar. PhytoKeys, 201, pp.23-34." # nolint
+    ) %>%
+    dct_add_row(
+      sci_name = "Microlepia smithii (Hook.) Y.H.Yan",
+      tax_status = "accepted",
+      namePublishedIn = "Wang, T.; Liu, L.; Luo, J.-J.; Gu, Y.-F.; Chen, S.-S.; Liu, B.; Shang, H.; Yan, Y.-H. Finding Hidden Outliers to Promote the Consistency of Key Morphological Traits and Phylogeny in Dennstaedtiaceae. Taxonomy 2021, 1, 256-265. https://doi.org/10.3390/taxonomy1030019" # nolint
+    ) %>%
+    dct_modify_row(
+      # now a synonym of Microlepia smithii
+      sci_name = "Dennstaedtia smithii (Hook.) T. Moore",
+      tax_status = "synonym",
+      usage_name = "Microlepia smithii (Hook.) Y.H.Yan",
+      nameAccordingTo = "https://doi.org/10.3390/taxonomy1030019"
+    ) %>%
+    dct_add_row(
+      # new species
+      sci_name = "Pteris hovenkampii Y.S.Chao",
+      tax_status = "accepted",
+      namePublishedIn = "Chen, C. W., Chao, Y. S., Mustapeng, A. M. A., Sapawi, N. M., & Huang, Y. M. (2021). Two New Fern Species from Gunung Mulu National Park, Sarawak, Malaysian Borneo. Systematic Botany, 46(3), 739-749." # nolint
+    ) %>%
+    dct_add_row(
+      # new species
+      sci_name = "Thylacopteris minuta K.Hori & Khine",
+      tax_status = "accepted",
+      namePublishedIn = "Hori, K., Khine, P. K., Fujiwara, T., Shin, T., & Schneider, H. (2022). ﻿ Thylacopteris minuta (Polypodiaceae), a new fern species from Myanmar. PhytoKeys, 199, 141-153." # nolint
+    ) %>%
+    dct_add_row(
+      # new species
+      sci_name = "Vandenboschia confusa Dubuisson, Deblauwe & Boucheron-Dubuisson", # nolint
+      tax_status = "accepted",
+      namePublishedIn = "Dubuisson, J. Y., Boucheron-Dubuisson, E., Le Péchon, T., Bausero, P., Droissart, V., Deblauwe, V., ... & Rouhan, G. (2022). Diversity and taxonomy of the fern genus Vandenboschia Copel.(Hymenophyllaceae, Polypodiidae) in the Afro-Malagasy region and description of a new species. Botany Letters, 169(2), 268-283." # nolint
+    ) %>%
+    dwctaxon::dct_validate(
+      check_mapping_parent = FALSE,
+      check_sci_name = FALSE,
+      valid_tax_status = "accepted, ambiguous synonym, provisionally accepted, synonym, variant" # nolint
+      )
 }
 
 #' Update taxonomic names in Ferns of the World to generate Pteridocat
