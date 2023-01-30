@@ -524,7 +524,7 @@ Arachniodes amabilis var. yakusimensis Ohwi,Arachniodes amabilis var. yakusimens
 Arachniodes simplicior var. simplicior,Arachniodes simplicior (Makino) Ching,Illegitimate,FALSE,NA,NA,0,NA,NA,Acta Botanica Sinica 10(3): 259. 1962. (Acta Bot. Sin.) ,http://www.tropicos.org/Name/50069085,NA,NA,no_match,0
 Arachniodes simplicior var. simplicior,Arachniodes simplicior (Makino) Ohwi,Legitimate,FALSE,NA,NA,0,NA,NA,Journal of Japanese Botany 37(3): 76. 1962. (J. Jap. Bot.) ,http://www.tropicos.org/Name/26604232,NA,NA,no_match,0
 Arachniodes simplicior var. simplicior,Arachniodes simplicior var. major (Tagawa) Ohwi,No opinion,FALSE,NA,NA,0,NA,NA,Journal of Japanese Botany 37: 76. 1962. (J. Jap. Bot.) ,http://www.tropicos.org/Name/26609192,NA,NA,no_match,0
-Arachniodes yasu-inouei var. angustipinnula Seriz.,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,NA,no_match,0
+Arachniodes yasu-inouei var. angustipinnula Seriz.,Arachniodes yasu-inouei var. angustipinnula Seriz.,NA,TRUE,NA,NA,1,NA,NA,Shidekobushi 1(2): 87. 2009 [25 Dec 2009] ,IPNI|id:77310604-1|version:1.2,NA,NA,no_match,0
 Asplenium attenuatum var. attenuatum,Asplenium attenuatum var. attenuatum ,No opinion,TRUE,NA,NA,1,NA,NA,,http://www.tropicos.org/Name/100503445,NA,NA,no_match,0
 Asplenium attenuatum var. attenuatum,Asplenium attenuatum C. Presl,No opinion,FALSE,NA,NA,0,NA,NA,Reliquiae Haenkeanae 1(1): 42. 1825. (Reliq. Haenk.) ,http://www.tropicos.org/Name/26614597,NA,NA,no_match,0
 Asplenium attenuatum var. attenuatum,Asplenium attenuatum var. indivisum F. Muell.,No opinion,FALSE,NA,NA,0,NA,NA,Fragmenta Phytographiæ Australiæ 5(36): 131. 1866. (Fragm.) ,http://www.tropicos.org/Name/100503447,NA,NA,no_match,0
@@ -542,7 +542,7 @@ Asplenium x chasmophilum Van den Heede & Viane,Asplenium × chasmophilum Van den
 Athyrium mackinnonii C.Chr.,Athyrium mackinnonii (C. Hope) C. Chr.,No opinion,TRUE,NA,NA,1,NA,NA,Index Filicum 143. 1905. (Index Filic.) ,http://www.tropicos.org/Name/100486210,NA,NA,no_match,0
 Athyrium yokoscense var. dilatatum Tagawa,Athyrium yokoscense fo. dilatatum (Tagawa) Sa. Kurata,No opinion,TRUE,NA,NA,1,NA,NA,Hokuriku Journal of Botany 4: 64. 1955. (Hokuriko J. Bot.) ,http://www.tropicos.org/Name/26611433,NA,NA,no_match,0
 Athyrium yokoscense var. dilatatum Tagawa,Athyrium yokoscense var. dilatatum Tagawa,No opinion,TRUE,NA,NA,1,NA,NA,Acta Phytotaxonomica et Geobotanica 2: 21. 1933. (Acta Phytotax. Geobot.) ,http://www.tropicos.org/Name/26611434,NA,NA,no_match,0
-Blechnum fraseri var. philippense,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,NA,no_match,0
+Blechnum fraseri var. philippense,Blechnum fraseri var. philippense (Christ) Copel.,Heterotypic_Synonym,TRUE,NA,NA,1,NA,NA,Polypod. Phil. Isl.: 149 (1905),http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:3287459-4,NA,NA,no_match,0
 Bosmania membranacea subsp. carinata (W.M.Chu & Z.R.He) R.Wei & X.C.Zhang,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,NA,no_match,0
 Ceradenia ayapoyana,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,NA,no_match,0
 Ceradenia madidiense,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,NA,no_match,0
@@ -607,11 +607,11 @@ Grammitis pseudaustralis Fourn.,Grammitis pseudaustralis Fourn.,NA,TRUE,NA,NA,1,
 Grammitis pygmaea (Mett. ex Kuhn) Copel.,Grammitis pygmaea (Mett. ex Kuhn) Copel.,No opinion,TRUE,NA,NA,1,NA,NA,Philippine Journal of Science 80(2): 138. 1952. (Philipp. J. Sci.) ,http://www.tropicos.org/Name/50288749,NA,NA,no_match,0
 Grammitis synsora (Baker) Copel.,Grammitis synsora (Baker) Copel.,No opinion,TRUE,NA,NA,1,NA,NA,Philippine Journal of Science 80(2): 137. 1952. (Philipp. J. Sci.) ,http://www.tropicos.org/Name/26601646,NA,NA,no_match,0
 Gymnocarpium dryopteris var. aokigarharaense Nakaike,Gymnocarpium dryopteris var. aokigarharaense Nakaike,No opinion,TRUE,NA,NA,1,NA,NA,Journal of Geobotany; or the Hokuriku Journal of Botany 17: 96. 1969. (J. Geobot.) ,http://www.tropicos.org/Name/26611866,NA,NA,no_match,0
-Gymnosphaera bachmaensis S.Y.Dong,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,NA,no_match,0
-Gymnosphaera bonii,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,NA,no_match,0
-Gymnosphaera saxicola S.Y.Dong & Z.Y.Zuo,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,NA,no_match,0
+Gymnosphaera bachmaensis S.Y.Dong,Gymnosphaera bachmaensis S.Y.Dong,NA,TRUE,NA,NA,1,NA,NA,J. Syst. Evol. 60(2): 441. 2020 [29 Aug 2020] [epublished],IPNI|id:77307909-1|version:1.2,NA,NA,no_match,0
+Gymnosphaera bonii,Gymnosphaera bonii (Christ) S.Y.Dong,NA,TRUE,NA,NA,1,NA,NA,J. Syst. Evol. 60(2): 442. 2020 [29 Aug 2020] [epublished],IPNI|id:77307910-1|version:1.2,NA,NA,no_match,0
+Gymnosphaera saxicola S.Y.Dong & Z.Y.Zuo,Gymnosphaera saxicola S.Y.Dong & Z.Y.Zuo,NA,TRUE,NA,NA,1,NA,NA,J. Syst. Evol. 60(2): 441. 2020 [29 Aug 2020] [epublished],IPNI|id:77307908-1|version:1.2,NA,NA,no_match,0
 "Hymenasplenium mitanii Nakaike, nom. nud.",NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,NA,no_match,0
-Hypodematium angustifolium C.S.Lee & K.Lee,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,NA,no_match,0
+Hypodematium angustifolium C.S.Lee & K.Lee,Hypodematium angustifolium C.S.Lee & K.H.Lee,NA,TRUE,NA,NA,1,NA,NA,Pterid. Korea 336-337. 2018 ,IPNI|id:77311048-1|version:1.1.1.2,NA,NA,no_match,0
 Hypodematium crenatum subsp. fauriei (Kodama) K.Iwats.,Hypodematium crenatum subsp. fauriei (Kodama) K. Iwats.,No opinion,TRUE,NA,NA,1,NA,NA,Acta Phytotaxonomica et Geobotanica 21(1–2): 52. 1964. (Acta Phytotax. Geobot.) ,http://www.tropicos.org/Name/26611870,NA,NA,no_match,0
 Japanobotrychium lanuginosum (Wall. ex Hook. & Grev.) M.Nishida ex Tagawa,Japanobotrychium lanuginosum (Wall. ex Grev. & Hook.) M.Nishida ex Tagawa,SYNONYM,TRUE,NA,NA,1,NA,NA,NA,gbif:10902420,NA,NA,no_match,0
 Lemmaphyllum microphyllum var. obovatum (Harr.) C.Chr.,Lemmaphyllum microphyllum var. obovatum (Harr.) C. Chr.,Legitimate,TRUE,NA,NA,1,NA,NA,"Dansk Botanisk Arkiv 6(3): 47, pl. 5, f. 3. 1929. (Dansk Bot. Ark.) ",http://www.tropicos.org/Name/26600177,NA,NA,no_match,0
@@ -622,7 +622,7 @@ Leucostegia amplissima (Christ) C.W.Chen,Leucostegia amplissima (Christ) C.W.Che
 Leucotrichum mitchellae (Baker ex Hemsl.) Labiak,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,NA,no_match,0
 Melpomene xiphopteridoides,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,NA,no_match,0
 Metathelypteris hattorii var. hattorii,Metathelypteris hattorii (H. Itô) Ching,Legitimate,FALSE,NA,NA,0,NA,NA,Acta Phytotaxonomica Sinica 8(4): 306. 1963. (Acta Phytotax. Sin.) ,http://www.tropicos.org/Name/26623101,NA,NA,no_match,0
-Microlepia obtusiloba var. angustata Seriz.,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,NA,no_match,0
+Microlepia obtusiloba var. angustata Seriz.,Microlepia obtusiloba var. angustata Seriz.,Heterotypic_Synonym,TRUE,NA,NA,1,NA,NA,J. Jap. Bot. 47: 51 (1972),http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:3270696-4,NA,NA,no_match,0
 Pellaea calidirupium,Pellaea calidirupium Brownsey & Lovis,No opinion,TRUE,NA,NA,1,NA,NA,New Zealand Journal of Botany 28(3): 197. 1990. (New Zealand J. Bot.) ,http://www.tropicos.org/Name/50338098,NA,NA,no_match,0
 Pleopeltis polypodioides var. polypodioides,Pleopeltis polypodioides var. polypodioides ,No opinion,TRUE,NA,NA,1,NA,NA,,http://www.tropicos.org/Name/26624461,NA,NA,no_match,0
 Pleopeltis polypodioides var. polypodioides,Pleopeltis polypodioides (L.) E.G. Andrews & Windham,No opinion,FALSE,NA,NA,0,NA,NA,Contributions from the University of Michigan Herbarium 19: 46. 1993. (Contr. Univ. Michigan Herb.) ,http://www.tropicos.org/Name/26615205,NA,NA,no_match,0
@@ -634,7 +634,7 @@ Pleopeltis polypodioides var. polypodioides,Pleopeltis polypodioides var. michau
 Pleopeltis polypodioides var. polypodioides,Pleopeltis polypodioides var. minus (Fée) Weath.,No opinion,FALSE,NA,NA,0,NA,NA,,http://www.tropicos.org/Name/100510931,NA,NA,no_match,0
 Polypodium mitchellae Baker ex Hemsl.,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,NA,no_match,0
 Polystichum macleae,Polystichum macleae Diels,No opinion,TRUE,NA,NA,1,NA,NA,,http://www.tropicos.org/Name/26604440,NA,NA,no_match,0
-Polystichum microchlamys var. azumiense Seriz.,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,NA,no_match,0
+Polystichum microchlamys var. azumiense Seriz.,Polystichum microchlamys var. azumiense Seriz.,NA,TRUE,NA,NA,1,NA,NA,J. Jap. Bot. 45(9): 262. 1970 ,IPNI|id:77056818-1|version:1.2,NA,NA,no_match,0
 Polystichum polyblepharum var. polyblepharum,Polystichum polyblepharum var. polyblepharum ,No opinion,TRUE,NA,NA,1,NA,NA,,http://www.tropicos.org/Name/26611834,NA,NA,no_match,0
 Polystichum polyblepharum var. polyblepharum,Polystichum polyblepharum (Roem. ex Kunze) C. Presl,Legitimate,FALSE,NA,NA,0,NA,NA,"Abhandlungen der Königlichen Böhmischen Gesellschaft der Wissenschaften, ser. 5 6: 416. 1851. (Abh. Königl. Böhm. Ges. Wiss., ser. 5,) ",http://www.tropicos.org/Name/26611833,NA,NA,no_match,0
 Polystichum polyblepharum var. polyblepharum,Polystichum polyblepharum var. scabiosum Sa. Kurata,No opinion,FALSE,NA,NA,0,NA,NA,Journal of Geobotany; or the Hokuriku Journal of Botany 11: 38. 1962. (J. Geobot.) ,http://www.tropicos.org/Name/26611835,NA,NA,no_match,0
