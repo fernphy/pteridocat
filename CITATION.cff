@@ -3,5 +3,5 @@ message: "If you use this software, please cite it as below."
 authors:
 - name: "FTOL working group"
 title: "pteridocat: A taxonomic database of pteridophytes"
-version: v1.0.0
+version: v1.1.0
 date-released: 2022-06-23
