@@ -33,7 +33,7 @@ library(pteridocat)
 library(tibble)
 
 pteridocat
-#> # A tibble: 64,653 × 18
+#> # A tibble: 64,657 × 18
 #>    taxonID parentNameUsageID acceptedNameUsageID taxonomicStatus       taxonRank
 #>    <chr>   <chr>             <chr>               <chr>                 <chr>    
 #>  1 DWY5    <NA>              DX28                synonym               species  
@@ -46,7 +46,7 @@ pteridocat
 #>  8 3V2B8   62YQB             <NA>                accepted              species  
 #>  9 7WYVJ   62YQB             <NA>                accepted              species  
 #> 10 3V2B7   62YQB             <NA>                accepted              species  
-#> # … with 64,643 more rows, and 13 more variables: scientificName <chr>,
+#> # … with 64,647 more rows, and 13 more variables: scientificName <chr>,
 #> #   scientificNameAuthorship <chr>, genericName <chr>,
 #> #   infragenericEpithet <chr>, specificEpithet <chr>,
 #> #   infraspecificEpithet <chr>, nomenclaturalCode <chr>,
@@ -71,7 +71,7 @@ Life](https://www.catalogueoflife.org/).
 
 If you use this package, please cite it! Here is an example:
 
-    FTOL working group. (2022). pteridocat: A taxonomic database of pteridophytes. https://doi.org/10.5281/zenodo.6388786
+    FTOL working group. (2023). pteridocat: A taxonomic database of pteridophytes. https://doi.org/10.5281/zenodo.6388786
 
 The example DOI above is for the overall package.
 
