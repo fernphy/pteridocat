@@ -1641,6 +1641,31 @@ modify_fow <- function(fow) {
       tax_status = "accepted",
       namePublishedIn = "Dubuisson, J. Y., Boucheron-Dubuisson, E., Le Péchon, T., Bausero, P., Droissart, V., Deblauwe, V., ... & Rouhan, G. (2022). Diversity and taxonomy of the fern genus Vandenboschia Copel.(Hymenophyllaceae, Polypodiidae) in the Afro-Malagasy region and description of a new species. Botany Letters, 169(2), 268-283." # nolint
     ) %>%
+    dct_add_row(
+      # new species
+      sci_name = "Asplenium danxiaense K.W.Xu", # nolint
+      tax_status = "accepted",
+      namePublishedIn = "Xu, K.-W., Lin, C.-X., Guo, J.-Q., Zhou, X.-X., Liao, W.-B., & Mao, L.-F. (2022). Asplenium danxiaense sp. nov. (Aspleniaceae, Aspleniineae), a new tetraploid fern species from Guangdong, China, based on morphological and molecular data. European Journal of Taxonomy, 798(1), 162-173. https://doi.org/10.5852/ejt.2022.798.1679" # nolint
+    ) %>%
+    dct_add_row(
+      # new species
+      sci_name = "Hymenasplenium obtusidentatum Y.Fen Chang & G.Cheng Zhang", # nolint
+      tax_status = "accepted",
+      namePublishedIn = "Chang Y, Zhang G, Wang Z, Cao L (2022) ﻿Molecular and morphological evidence reveals a new fern species of Hymenasplenium (Aspleniaceae) from south and southwestern China. PhytoKeys 211: 93-106. https://doi.org/10.3897/phytokeys.211.90363" # nolint
+    ) %>%
+    dct_add_row(
+      # new species
+      sci_name = "Schizaea medusa L.Y.Kuo, B.F.Ke, F.W.Li, & Rouhan", # nolint
+      tax_status = "accepted",
+      namePublishedIn = "Ke Bing-Feng, Wang Goang-Jiun, Labiak Paulo H., Rouhan Germinal, Chen Cheng-Wei, Shepherd Lara D., Ohlsen Daniel J., Renner Matthew A. M., Karol Kenneth G., Li Fay-Wei, Kuo Li-Yaung. Systematics and Plastome Evolution in Schizaeaceae. Frontiers in Plant Science 13 (2022) https://doi.org/10.3389/fpls.2022.885501 " # nolint
+    ) %>%
+    dct_add_row(
+      # orthographic variant
+      sci_name = "Nephrolepis x hippocrepicis Miyam.",
+      tax_status = "synonym",
+      usage_id = "47256", # Nephrolepis × hippocrepidis Miyam.
+      taxonRemarks = "spelling mistake in species name, should be Nephrolepis × hippocrepidis" # nolint
+    ) %>%
     dwctaxon::dct_validate(
       check_mapping_parent = FALSE,
       check_sci_name = FALSE,
