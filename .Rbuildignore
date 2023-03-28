@@ -9,7 +9,9 @@
 ^\.gitignore$
 ^\.Rhistory$
 ^\.Rprofile$
+^\.vscode$
 ^CITATION\.cff$
 ^.*\.Rproj$
 ^data-raw$
 ^LICENSE\.md$
+^README\.Rmd$
