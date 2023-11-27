@@ -111,28 +111,50 @@ load_all()
 #     valid_tax_status = "accepted, ambiguous synonym, provisionally accepted, synonym, variant" # nolint
 #   )
 
+# Changes Fri Sep 15 12:52:00 2023
+
+# pteridocat <-
+#   pteridocat |>
+#   dct_add_row(
+#     scientificName = "Tectaria acrophoroides S.Y.Dong & C.W.Chen",
+#     taxonomicStatus = "accepted",
+#     namePublishedIn = "https://doi.org/10.1600/036364422X16512572274981"
+#   ) |>
+#   dct_add_row(
+#     scientificName = "Tectaria glenniana S.Y.Dong & C.W.Chen",
+#     taxonomicStatus = "accepted",
+#     namePublishedIn = "https://doi.org/10.1600/036364422X16512572274981"
+#   ) |>
+#   dct_add_row(
+#     scientificName = "Tectaria pallescens S.Y.Dong & C.W.Chen",
+#     taxonomicStatus = "accepted",
+#     taxonRemarks = "Nom. Inval. due to multiple specimens cited as holotype",
+#     namePublishedIn = "https://doi.org/10.1600/036364422X16512572274981"
+#   ) |>
+#   dct_add_row(
+#     scientificName = "Tectaria vanikoroensis S.Y.Dong & C.W.Chen",
+#     taxonomicStatus = "accepted",
+#     namePublishedIn = "https://doi.org/10.1600/036364422X16512572274981"
+#   ) |>
+#   dct_validate(
+#     check_mapping_parent = FALSE,
+#     check_sci_name = FALSE,
+#     valid_tax_status = "accepted, ambiguous synonym, provisionally accepted, synonym, variant" # nolint
+#   )
+
+# Changes 2023-11-27
+
 pteridocat <-
   pteridocat |>
   dct_add_row(
-    scientificName = "Tectaria acrophoroides S.Y.Dong & C.W.Chen",
+    scientificName = "Cibotium sinoburmaense X.C.Zhang & S.Q.Liang",
     taxonomicStatus = "accepted",
-    namePublishedIn = "https://doi.org/10.1600/036364422X16512572274981"
+    namePublishedIn = "https://doi.org/10.3389/fpls.2023.1183653"
   ) |>
   dct_add_row(
-    scientificName = "Tectaria glenniana S.Y.Dong & C.W.Chen",
+    scientificName = "Grammitis marginella (Sw.) Sw.",
     taxonomicStatus = "accepted",
-    namePublishedIn = "https://doi.org/10.1600/036364422X16512572274981"
-  ) |>
-  dct_add_row(
-    scientificName = "Tectaria pallescens S.Y.Dong & C.W.Chen",
-    taxonomicStatus = "accepted",
-    taxonRemarks = "Nom. Inval. due to multiple specimens cited as holotype",
-    namePublishedIn = "https://doi.org/10.1600/036364422X16512572274981"
-  ) |>
-  dct_add_row(
-    scientificName = "Tectaria vanikoroensis S.Y.Dong & C.W.Chen",
-    taxonomicStatus = "accepted",
-    namePublishedIn = "https://doi.org/10.1600/036364422X16512572274981"
+    namePublishedIn = "J. Bot. (Schrader) 1800(2): 17 (1801)"
   ) |>
   dct_validate(
     check_mapping_parent = FALSE,
