@@ -144,17 +144,97 @@ load_all()
 
 # Changes 2023-11-27
 
+# pteridocat <-
+#   pteridocat |>
+#   dct_add_row(
+#     scientificName = "Cibotium sinoburmaense X.C.Zhang & S.Q.Liang",
+#     taxonomicStatus = "accepted",
+#     namePublishedIn = "https://doi.org/10.3389/fpls.2023.1183653"
+#   ) |>
+#   dct_add_row(
+#     scientificName = "Grammitis marginella (Sw.) Sw.",
+#     taxonomicStatus = "accepted",
+#     namePublishedIn = "J. Bot. (Schrader) 1800(2): 17 (1801)"
+#   ) |>
+#   dct_validate(
+#     check_mapping_parent = FALSE,
+#     check_sci_name = FALSE,
+#     valid_tax_status = "accepted, ambiguous synonym, provisionally accepted, synonym, variant" # nolint
+#   )
+
+# Changes 2023-12-05
+
+names_add <- readr::read_csv("data_raw/names_add_2023-12-05.csv")
+
 pteridocat <-
   pteridocat |>
   dct_add_row(
-    scientificName = "Cibotium sinoburmaense X.C.Zhang & S.Q.Liang",
-    taxonomicStatus = "accepted",
-    namePublishedIn = "https://doi.org/10.3389/fpls.2023.1183653"
+    scientificName = "Anemia millefolia Gardner",
+    taxonomicStatus = "synonym",
+    acceptedNameUsage = "Anemia millefolia (Gardner) C. Presl"
   ) |>
   dct_add_row(
-    scientificName = "Grammitis marginella (Sw.) Sw.",
+    scientificName = "Antrophyum kinabaluense C.W.Chen",
     taxonomicStatus = "accepted",
-    namePublishedIn = "J. Bot. (Schrader) 1800(2): 17 (1801)"
+    namePublishedIn = "Cladistics 39(4): 267 (2023)"
+  ) |>
+  dct_add_row(
+    scientificName = "Dryopteris huongii C.W.Chen",
+    taxonomicStatus = "accepted",
+    namePublishedIn = "Syst. Bot. 48(2): 170 (2023)"
+  ) |>
+  dct_add_row(
+    scientificName = "Hymenophyllum rugosum C.Chr.",
+    taxonomicStatus = "synonym",
+    acceptedNameUsage = "Hymenophyllum rugosum C. Chr. & Skottsb."
+  ) |>
+  dct_add_row(
+    scientificName = "Thalassogrammitis deplanchei (Baker) Parris, Sundue, Li Bing Zhang & X.M.Zhou", # nolint
+    taxonomicStatus = "accepted",
+    namePublishedIn = "Taxon 72(5): 997 (2023)"
+  ) |>
+  dct_add_row(
+    scientificName = "Polypodium deplanchei Baker",
+    taxonomicStatus = "synonym",
+    acceptedNameUsage = "Thalassogrammitis deplanchei (Baker) Parris, Sundue, Li Bing Zhang & X.M.Zhou" #  #nolint
+  ) |>
+  dct_add_row(
+    scientificName = "Howeogrammitis diminuta (Baker) Parris, Sundue, Li Bing Zhang & X.M.Zhou", # nolint
+    taxonomicStatus = "accepted",
+    namePublishedIn = "Taxon 72(5): 997 (2023)"
+  ) |>
+  dct_add_row(
+    scientificName = "Polypodium diminutum Baker",
+    taxonomicStatus = "synonym",
+    acceptedNameUsage = "Howeogrammitis diminuta (Baker) Parris, Sundue, Li Bing Zhang & X.M.Zhou" #  #nolint
+  ) |>
+  dct_add_row(
+    scientificName = "Nanogrammitis holophlebia (Baker) Parris, Li Bing Zhang, X.M.Zhou & Liang Zhang", # nolint
+    taxonomicStatus = "accepted",
+    namePublishedIn = "Taxon 72(5): 997 (2023)"
+  ) |>
+  dct_add_row(
+    scientificName = "Polypodium holophlebium Baker",
+    taxonomicStatus = "synonym",
+    acceptedNameUsage = "Nanogrammitis holophlebia (Baker) Parris, Li Bing Zhang, X.M.Zhou & Liang Zhang" #  # nolint
+  ) |>
+  dct_add_row(
+    scientificName = "Nanogrammitis synsora (Baker) Parris, Li Bing Zhang, X.M.Zhou & Liang Zhang", # nolint
+    taxonomicStatus = "accepted",
+    namePublishedIn = "Taxon 72(5): 997 (2023)"
+  ) |>
+  dct_add_row(
+    scientificName = "Polypodium synsorum Baker",
+    taxonomicStatus = "synonym",
+    acceptedNameUsage = "Nanogrammitis synsora (Baker) Parris, Li Bing Zhang, X.M.Zhou & Liang Zhang" # nolint
+  ) |>
+  dct_add_row(
+    scientificName = "Pteris fraseri Kuhn",
+    taxonomicStatus = "synonym",
+    acceptedNameUsage = "Pteris fraseri Mett. ex Kuhn"
+  ) |>
+dct_add_row(
+    new_dat = names_add
   ) |>
   dct_validate(
     check_mapping_parent = FALSE,
