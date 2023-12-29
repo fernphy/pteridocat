@@ -10,7 +10,7 @@ pteridocat <-
   # Change D. giganteum (Baker) Ching to accepted from synonym of D. maximum
   dct_modify_row(
     scientificName = "Diplazium giganteum (Baker) Ching",
-    taxonomicStatus = "Accepted",
+    taxonomicStatus = "accepted",
     nameAccordingTo = "Wei R, Schneider H, Zhang XC (2013) Taxon 62:441-457"
   )
 
