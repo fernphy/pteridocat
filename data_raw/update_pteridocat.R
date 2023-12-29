@@ -5,17 +5,13 @@ library(dwctaxon)
 
 load_all()
 
-names_add <- readr::read_csv("data_raw/names_add_2023-12-27.csv")
-
 pteridocat <-
-  dct_add_row(
-    pteridocat,
-    new_dat = names_add
-  ) |>
-  dct_validate(
-    check_mapping_parent = FALSE,
-    check_sci_name = FALSE,
-    valid_tax_status = "accepted, ambiguous synonym, provisionally accepted, synonym, variant" # nolint
+  pteridocat |>
+  # Change D. giganteum (Baker) Ching to accepted from synonym of D. maximum
+  dct_modify_row(
+    scientificName = "Diplazium giganteum (Baker) Ching",
+    taxonomicStatus = "Accepted",
+    nameAccordingTo = "Wei R, Schneider H, Zhang XC (2013) Taxon 62:441-457"
   )
 
 usethis::use_data(pteridocat, overwrite = TRUE)
