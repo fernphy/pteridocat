@@ -12,11 +12,13 @@ dct_options(
 
 pteridocat <-
   pteridocat |>
-  # Change D. giganteum (Baker) Ching to accepted from synonym of D. maximum
+  # Change Alsophila corcovadensis Fée to accepted from synonym of
+  # Cyathea glaziovii Domin
   dct_modify_row(
-    scientificName = "Diplazium giganteum (Baker) Ching",
+    scientificName = "Alsophila corcovadensis Fée",
     taxonomicStatus = "accepted",
-    nameAccordingTo = "Wei R, Schneider H, Zhang XC (2013) Taxon 62:441-457"
+    taxonRemarks =
+    "https://www.ncbi.nlm.nih.gov/nuccore/KP337975 blasts to Alsophila"
   ) |>
   dct_validate()
 
