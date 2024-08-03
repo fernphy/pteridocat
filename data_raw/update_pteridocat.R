@@ -12,13 +12,11 @@ dct_options(
 
 pteridocat <-
   pteridocat |>
-  # Change Alsophila corcovadensis Fée to accepted from synonym of
-  # Cyathea glaziovii Domin
-  dct_modify_row(
-    scientificName = "Alsophila corcovadensis Fée",
+  # Add new name: Dryopteris jinpingensis
+  dct_add_row(
+    scientificName = "Dryopteris jinpingensis Z.Y. Zuo, J. Mei Lu & D.Z.", # nolint
     taxonomicStatus = "accepted",
-    taxonRemarks =
-    "https://www.ncbi.nlm.nih.gov/nuccore/KP337975 blasts to Alsophila"
+    namePublishedIn = "PhytoKeys 239: 195-204. https://doi.org/10.3897/phytokeys.239.118655"
   ) |>
   dct_validate()
 
