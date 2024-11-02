@@ -10,57 +10,57 @@ dct_options(
   check_mapping_parent = FALSE,
   check_sci_name = FALSE)
 
-pteridocat <-
+pteridocat_new <-
   pteridocat |>
-  # Add Hemionitis ekmanii Maxon same as Hemionitis ekmanii (Maxon) Christenh.
-  # (synonym)
   dct_add_row(
-    scientificName = "Hemionitis ekmanii Maxon",
+    scientificName = "Pyrrosia polydactylos (Hance) Ching",
     taxonomicStatus = "synonym",
-    acceptedNameUsageID = "47T5J"
-  ) |>
-  # Add Hymenophyllum okadae Masam as alternate spelling of
-  # Hymenophyllum okadai Masam.
-  dct_add_row(
-    scientificName = "Hymenophyllum okadae Masam.",
-    taxonomicStatus = "synonym",
-    acceptedNameUsageID = "7WPRQ" # Hymenophyllum okadai Masam.
-  ) |>
-  # Add Quercifilix zeylanica (Houtt.) Copel. same as
-  # Quercifilix zeilanica (Houtt.) Copel. (synonym)
-  dct_add_row(
-    scientificName = "Quercifilix zeylanica (Houtt.) Copel.",
-    taxonomicStatus = "synonym",
-    acceptedNameUsageID = "553FK" # Hymenophyllum okadai Masam.
-  ) |>
-  # Add alternative presentation of author
-  dct_add_row(
-    scientificName = "Asplenium inaequilaterale Willd.",
-    taxonomicStatus = "synonym",
-    acceptedNameUsageID = "HKM4" # Asplenium inaequilaterale Bory ex Willd.
+    acceptedNameUsage = "Pyrrosia polydactyla (Hance) Ching"
   ) |>
   dct_add_row(
-    scientificName = "Asplenium paucijugum F.Ballard",
+    scientificName = "Thelypteris hattorii (H.Ito) Tagawa",
     taxonomicStatus = "synonym",
-    acceptedNameUsageID = "7KZ8C" # Asplenium variabile var. paucijugum (Ballard) Alston # nolint
+    acceptedNameUsage = "Thelypteris hattori (H. Itô) Tagawa"
   ) |>
   dct_add_row(
-    scientificName = "Asplenium schelpei Braithwaite",
+    scientificName = "Thelypteris hattorii var. hattorii (H.Ito) Tagawa",
     taxonomicStatus = "synonym",
-    acceptedNameUsageID = "686WV" # Asplenium schelpei Braithw.
+    acceptedNameUsage = "Thelypteris hattori (H. Itô) Tagawa"
   ) |>
   dct_add_row(
-    scientificName = "Danaea tenera C.V.Morton",
+    scientificName = "Thelypteris hattorii var. nemoralis (Ching) Sa.Kurata",
     taxonomicStatus = "synonym",
-    acceptedNameUsageID = "343M3" # Danaea tenera Morton
+    acceptedNameUsage = "Thelypteris hattori var. nemoralis (Ching) Sa. Kurata"
   ) |>
   dct_add_row(
-    scientificName = "Hymenophyllum schomburgkii C.Pres",
+    scientificName =
+      "Asplenium exiguum nothosubsp. glenniei (Baker) Fraser-Jenk.",
     taxonomicStatus = "synonym",
-    acceptedNameUsageID = "3NKM4" # Hymenophyllum polyanthos (Sw.) Sw.
+    acceptedNameUsage = "Asplenium exiguum subsp. glenniei (Baker) Fraser-Jenk."
   ) |>
-  # add names from CSV
-  dct_add_row(new_dat = readr::read_csv("data_raw/names_add_2024-08-03.csv")) |>
+  dct_add_row(
+    scientificName = "Athyrium fimbriatum T.Moore",
+    taxonomicStatus = "synonym",
+    acceptedNameUsage = "Athyrium fimbriatum Wall. ex T. Moore "
+  ) |>
+  dct_add_row(
+    scientificName = "Dryopteris panda (C.B. Clarke) Christ",
+    taxonomicStatus = "synonym",
+    acceptedNameUsage = "Dryopteris panda (C.B.Clarke) H.Christ"
+  ) |>
+  dct_add_row(
+    scientificName = "Dryopteris spinulosa (O.F. Mull.) Watt",
+    taxonomicStatus = "synonym",
+    acceptedNameUsage = "Dryopteris spinulosa (O. F. Müll.) Kuntze"
+  ) |>
+  dct_add_row(
+    scientificName = "Thelypteris salzmannii (Fee) C.V.Morton",
+    taxonomicStatus = "synonym",
+    acceptedNameUsage = "Thelypteris salzmannii (Fée) Morton"
+  ) |>
+  dct_add_row(new_dat = readr::read_csv("data_raw/names_add_2024-11-02.csv")) |>
   dct_validate()
+
+pteridocat <- pteridocat_new
 
 usethis::use_data(pteridocat, overwrite = TRUE)
