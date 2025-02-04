@@ -12,16 +12,7 @@ dct_options(
 
 pteridocat_new <-
   pteridocat |>
-  # Swap status of Teratophyllum leptocarpum and Lomariopsis leptocarpa
-  dct_modify_row(
-    scientificName = "Teratophyllum leptocarpum (Fée) Holttum",
-    taxonomicStatus = "accepted"
-  ) |>
-  dct_modify_row(
-    scientificName = "Lomariopsis leptocarpa Fée",
-    taxonomicStatus = "synonym",
-    acceptedNameUsage = "Teratophyllum leptocarpum (Fée) Holttum"
-  ) |>
+  dct_add_row(new_dat = read_csv("data_raw/names_add_2025-02-04.csv")) |>
   dct_validate()
 
 pteridocat <- pteridocat_new
