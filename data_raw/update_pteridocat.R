@@ -12,14 +12,7 @@ dct_options(
 
 pteridocat_new <-
   pteridocat |>
-  dct_add_row(
-    scientificName = "Ceratopteris baguangensis F.G.Wang & Zi Xiang Li",
-    taxonomicStatus = "accepted",
-    genericName = "Ceratopteris",
-    specificEpithet = "baguangensis",
-    scientificNameAuthorship = "F.G.Wang & Zi Xiang Li",
-    namePublishedIn = "10.11646/phytotaxa.658.2.8"
-  ) |>
+  dct_add_row(new_dat = read_csv("data_raw/names_add_2025-02-04.csv")) |>
   dct_validate()
 
 pteridocat <- pteridocat_new
