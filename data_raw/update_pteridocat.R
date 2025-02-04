@@ -12,7 +12,10 @@ dct_options(
 
 pteridocat_new <-
   pteridocat |>
-  dct_add_row(new_dat = read_csv("data_raw/names_add_2025-02-04.csv")) |>
+  dct_modify_row(
+    scientificName = "Teratophyllum williamsii (Underw.) Holttum",
+    taxonomicStatus = "accepted"
+  ) |>
   dct_validate()
 
 pteridocat <- pteridocat_new
