@@ -16,25 +16,37 @@ pteridocat_new <-
   pteridocat |>
   # Fix spelling
   dct_modify_row(
-    taxonID = "37Y37",
-    scientificName = "Dryopteris whangshangensis Ching"
+    taxonID = "37XGF",
+    scientificName = "Dryopteris qandoensis Ching" # from qamdoensis
   ) |>
   dct_modify_row(
-    taxonID = "37XGF",
-    scientificName = "Dryopteris qandoensis Ching"
+    taxonID = "37Y37",
+    scientificName = "Dryopteris whangshangensis Ching" # from whangshanensis
   ) |>
   # Add names
+  dct_add_row(
+    scientificName = "Ynesmexia subcordata (D.C.Eaton & Davenp.) Fauskee & Windham", # nolint
+    taxonomicStatus = "accepted",
+    taxonRank = "species",
+    namePublishedIn = "74(x): [15 of 19] (2025). "
+  ) |>
   dct_add_row(
     scientificName = "Dryopteris × tiantangzhaiensis H.J.Wei & B.Chen",
     taxonomicStatus = "accepted",
     taxonRank = "species",
-    namePublishedIn = "Taxon 73(1): 136 (2024)."
+    namePublishedIn = "Taxon 73(1): 136 (2024)"
   ) |>
   dct_add_row(
     scientificName = "Diplazium zangnanense R.Wei & M.J.Lian",
     taxonomicStatus = "accepted",
     taxonRank = "species",
-    namePublishedIn = "Nordic J. Bot. 2024(12)-e04334: 5 (2024)."
+    namePublishedIn = "Nordic J. Bot. 2024(12)-e04334: 5 (2024)"
+  ) |>
+  dct_add_row(
+    scientificName = "Ophioglossum hongii Min Y.Li, F.S.Yang & J.P.Shu",
+    taxonomicStatus = "accepted",
+    taxonRank = "species",
+    namePublishedIn = "Phytotaxa 676(2): 171 (2024)3265986599"
   ) |>
   dct_validate()
 
